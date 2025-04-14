@@ -17,10 +17,10 @@
 炸掉一片区域的教材
 
 [WALL_NUT]
-雅思墙
+出恭墙
 
 [WALL_NUT_TOOLTIP]
-阻碍教材前进, 并保护你其他的单位
+阻碍教材前进, 并保护你其他的单位（尤其在一教）
 
 [REPEATER]
 双发柯南
@@ -113,7 +113,7 @@
 一次射出三行的绿色圆圈
 
 [TANGLE_KELP]
-阴暗爬行柯南
+阴暗爬行蝌蝻
 
 [TANGLE_KELP_TOOLTIP]
 可以将教材拉入水底的水生蝌蝻
@@ -125,7 +125,7 @@
 一口气摄入过量绿色圆圈，十分生气，于是消灭整行的教材
 
 [SPIKEWEED]
-出恭
+出恭草
 
 [SPIKEWEED_TOOLTIP]
 一教门口的神秘物种，扎破轮胎, 也能伤害走在上面的教材
@@ -137,7 +137,7 @@
 通过火炬树桩的绿色圆圈将变为火球
 
 [TALL_NUT]
-托福墙
+大出恭墙
 
 [TALL_NUT_TOOLTIP]
 不会被跳过的坚实壁垒
@@ -191,10 +191,10 @@
 将铁桶, 其他金属物品从教材身上移除
 
 [CABBAGE_PULT]
-卷心菜柯南
+卷菜柯南
 
 [CABBAGE_PULT_TOOLTIP]
-向敌人投掷卷心菜
+向敌人投掷又卷又菜的绿色圆圈
 
 [FLOWER_POT]
 花盆
@@ -203,7 +203,7 @@
 可以让单位放置在屋顶上
 
 [KERNEL_PULT]
-玉米柯南
+黄油柯南
 
 [KERNEL_PULT_TOOLTIP]
 向教材投掷玉米粒或黄油
@@ -275,17 +275,17 @@
 (需要磁力柯南)
 
 [SPIKEROCK]
-出恭王
+出恭草王
 
 [SPIKEROCK_TOOLTIP]
-能扎破多个轮胎, 并伤害经过上面的教材, (需要出恭)
+能扎破多个轮胎, 并伤害经过上面的教材, (需要出恭草)
 
 [COB_CANNON]
 合肥大炮
 
 [COB_CANNON_TOOLTIP]
 点击发射致命的炮弹，目标紫金港！ 
-(需要2个玉米柯南)
+(需要2个黄油柯南)
 
 [IMITATER]
 模仿柯南
@@ -300,25 +300,25 @@
 唤醒在白天里睡觉的单位
 
 [EXPLODE_O_NUT]
-爆炸雅思墙
+爆炸出恭墙
 
 [EXPLODE_O_NUT_TOOLTIP]
 教材接近后爆炸
 
 [GIANT_WALLNUT]
-巨大坚果墙
+巨大出恭墙
 
 [SPROUT]
 发芽
 
 [MARIGOLD_SPROUT]
-金盏花之芽
+金盏柯南之芽
 
 [ZOMBIE]
-普通淑芬
+普通微积分
 
 [FLAG_ZOMBIE]
-摇旗淑芬
+摇旗微积分
 
 [CONEHEAD_ZOMBIE]
 B系列淑芬
@@ -407,26 +407,26 @@ A系列淑芬
 搭配，这种健康早餐让一切成为可能。”
 
 [SUNFLOWER_DESCRIPTION]
-向日葵，为你生产额外阳光的经济作物。尝试
+学习蝌蝻，为你生产额外阳光的经济单位。尝试
 尽可能多种植吧！
 {SHORTLINE}
 {KEYWORD}阳光产量：{STAT}中等
 {SHORTLINE}
 {FLAVOR}
-向日葵情不自禁地和着节拍起舞。是什么节拍
-呢？嗨，是大地自己用来提神的爵士节拍，这
-种频率的节拍，只有向日葵才能听到。
+学习柯南情不自禁地和着节拍起舞。是什么
+呢？嗨，是柯南自己用来提神的爵士节拍，这
+种频率的节拍，只有学习柯南才能听到。
 
 [WALL_NUT_DESCRIPTION]
-坚果墙拥有足以让你用来保护其它植物的坚硬
+出恭墙拥有足以让你用来保护其它柯南的坚硬
 外壳。
 {SHORTLINE}
 {KEYWORD}韧性：{STAT}高
 {SHORTLINE}
-{FLAVOR}坚果墙：“人们想知道，经常被僵尸啃的感觉
+{FLAVOR}出恭墙：“人们想知道，经常被啃的感觉
 怎样？他们不知道，我有限的感官，只能让我
 感到一种麻麻的感觉，像是，令人放松的背部
-按摩。”
+按摩。”数年前它诞生于一教门口时就是这么想的。
 
 [CHERRY_BOMB_DESCRIPTION]
 樱桃炸弹，能以炸掉一定区域内所有僵尸。他
@@ -2459,19 +2459,19 @@ A系列淑芬
 你确定这关不使用杨桃，叶子保护伞和坚果墙？？
 
 [SEED_CHOOSER_FLYER_WARNING]
-你没有选能干掉气球僵尸的植物，确定要继续吗？
+你没有选能干掉气球教材的植物，确定要继续吗？
 
 [SEED_CHOOSER_SUN_WARNING]
-你没有选能生产阳光的植物，确定要继续吗？
+你没有选能生产阳光的柯南，确定要继续吗？
 
 [SEED_CHOOSER_NIGHT_SUN_WARNING]
-现在是晚上，你会比白天需要更多的向日葵。确定这关不使用向日葵吗？
+现在是晚上，你会比白天需要更多的学习柯南。确定这关不使用学习蝌蝻吗？
 
 [SEED_CHOOSER_PUFFSHROOM_WARNING]
-这关如果没有小喷菇将会非常的难。你确定这关不使用小喷菇吗？
+这关如果没有小喷柯南将会非常的难。你确定这关不使用小喷柯南吗？
 
 [SEED_CHOOSER_POOL_WARNING]
-你确定这关不使用任何水生植物吗？
+你确定这关不使用任何水生蝌蝻吗？
 
 [SEED_CHOOSER_ROOF_WARNING]
 你确定这关不使用花盆吗？
@@ -2483,28 +2483,28 @@ A系列淑芬
 再完成5组配对！
 
 [ZOMBIQUARIUM_SNORKEL_TOOLTIP]
-购买潜水僵尸
+购买潜水教材
 
 [ZOMBIQUARIUM_TROPHY_TOOLTIP]
 购买奖杯
 
 [ADVICE_ZOMBIQUARIUM_CLICK_TO_FEED]
-点击鱼缸给僵尸喂食
+点击鱼缸给教材喂食
 
 [ADVICE_ZOMBIQUARIUM_COLLECT_SUN]
 需要得到{SCORE}点阳光才能通过这关
 
 [ZOMBIQUARIUM_DEATH_MESSAGE]
-你的宠物僵尸已经全部死亡了！
+你的宠物教材已经全部死亡了！
 
 [I_ZOMBIE_DEATH_MESSAGE]
-你失去了所有的僵尸！
+你失去了所有的教材！
 
 [ADVICE_ZOMBIQUARIUM_CLICK_TROPHY]
 点击战利品来完成关卡！
 
 [ADVICE_ZOMBIQUARIUM_BUY_SNORKEL]
-点击购买更多的潜水僵尸！
+点击购买更多的潜水教材！
 
 [TRY_AGAIN]
 再次尝试
@@ -2516,7 +2516,7 @@ A系列淑芬
 {COUNT}轮
 
 [SURVIVAL_DEATH_MESSAGE]
-你存活了{FLAGS}，现在接受可怕的僵尸死亡吧！！！
+你存活了{FLAGS}，现在接受可怕的教材死亡吧！！！
 
 [ENDLESS_PUZZLE_DEATH_MESSAGE]
 你已经连续通过 {STREAK}关
@@ -2540,14 +2540,11 @@ A系列淑芬
 完成更多的迷你游戏来解锁
 
 
-[ONE_MORE_CHALLENGE_TOOLTIP]
-再完成1个迷你他游戏来解锁
-
 [ONE_MORE_SCARY_POTTER_TOOLTIP]
 再打一次砸花瓶模式, 以战利品来解锁
 
 [ONE_MORE_IZOMBIE_TOOLTIP]
-再打一次我是僵尸模式, 以战利品来解锁
+再打一次我是教材模式, 以战利品来解锁
 
 [ONE_MORE_SURVIVAL_TOOLTIP]
 再打一次生存模式, 以战利品来解锁
@@ -2604,7 +2601,7 @@ A系列淑芬
 生存模式：屋顶 (无尽版)
  
 [WAR_AND_PEAS]
-植物僵尸
+柯南教材
 
 [SEEING_STARS]
 看星星
@@ -2658,34 +2655,34 @@ M的意思是金属
 宝石迷阵转转看
 
 [WALL_NUT_BOWLING]
-坚果保龄球模式
+出恭保龄球模式
 
 [GRAVE_DANGER]
 坟墓模式
 
 [I_ZOMBIE]
-我，僵尸
+我，教材
 
 [WHACK_A_ZOMBIE]
-捶僵尸
+捶教材
 
 [SLOT_MACHINE]
 老虎机
 
 [ZOMBIQUARIUM]
-僵尸水族馆
+教材水族馆
 
 [LITTLE_TROUBLE]
-小僵尸大麻烦
+小教材大麻烦
 
 [BOBSLED_BONANZA]
 雪橇区
 
 [ITS_RAINING_SEEDS ]
-雨中种植物
+雨中种柯南
 
 [INVISIGHOUL]
-隐形食脑者
+隐形食绩者
 
 [DARK_STORMY_NIGHT]
 黑暗的暴风雨夜
@@ -2703,13 +2700,13 @@ M的意思是金属
 跳跳舞会
 
 [FINAL_BOSS]
-僵王博士的复仇
+教材博士的复仇
 
 [LAST_STAND]
 谁笑到最后
 
 [ART_CHALLENGE_WALL_NUT]
-坚果保龄球 艺术锦标赛
+出恭保龄球 艺术锦标赛
 
 [SUNNY_DAY]
 晴天
@@ -2721,10 +2718,10 @@ M的意思是金属
 重要时间
 
 [ART_CHALLENGE_SUNFLOWER]
-挑战 种太阳花的艺术
+挑战 种柯南的艺术
 
 [ZOMBIES_ON_SPEED]
-僵尸快跑
+教材快跑
 
 [ICE_LEVEL]
 冰冻关卡
@@ -2736,31 +2733,31 @@ M的意思是金属
 超乎寻常的压力
 
 [WAR_AND_PEAS_2]
-植物僵尸 2
+柯南教材 2
 
 [I_ZOMBIE_TOO]
-我,僵尸 2
+我,教材 2
 
 [WALL_NUT_BOWLING_EXTREME]
-坚果保龄球 2
+出恭保龄球 2
 
 [BEAT_GAME_MESSAGE1]
-你获得了金向日葵作为战利品
+你获得了金柯南作为战利品
 
 [BEAT_GAME_MESSAGE2]
 哇哦！你集齐了所有的道具！现在是时候挑战无尽的试炼了！还有别忘了时不时去一趟你的禅境花园浇浇花锄锄草！
 
 [GOLD_SUNFLOWER_TROPHY]
-金向日葵奖杯
+金柯南奖杯
 
 [SILVER_SUNFLOWER_TROPHY]
-银向日葵奖杯
+银柯南奖杯
 
 [WIN_MESSAGE1]
-你已经打败了僵尸之王
+你已经打败了教材之王
 
 [WIN_MESSAGE2]
-恭喜你！你在僵尸的攻势下维持住了最稳固的防御！你的草坪安全了……但只是暂时的！
+恭喜你！你在教材的攻势下维持住了最稳固的防御！你的草坪安全了……但只是暂时的！
 
 [GOT_TROPHY]
  你得到了一座奖杯！
@@ -2817,19 +2814,19 @@ M的意思是金属
 点击浇灌新芽！
 
 [ADVICE_ZEN_GARDEN_KEEP_WATERING]
-保持浇灌你的植物，别让他们渴着了！
+保持浇灌你的柯南，别让他们渴着了！
 
 [ADVICE_ZEN_GARDEN_VISIT_STORE]
-你的植物需要肥料才能生长，去商店买些肥料回来！
+你的柯南需要肥料才能生长，去商店买些肥料回来！
 
 [ADVICE_ZEN_GARDEN_FERTILIZE]
-给你的植物施肥然后看着他们茁壮成长吧！
+给你的柯南施肥然后看着他们努力卷绩吧！
 
 [ADVICE_ZEN_GARDEN_NEED_MORE_FERTILIZER]
-你需要给全部植物施肥！在这儿，再买些植物吧！
+你需要给全部柯南施肥！在这儿，再买些柯南吧！
 
 [ADVICE_ZEN_GARDEN_CONTINUE_ADVENTURE]
-这就是你现在所有能做的！当你的植物需要更多培养的时候记得回来看看！
+这就是你现在所有能做的！当你的柯南需要更多培养的时候记得回来看看！
 
 [CHOOSE_SEED_TO_COPY]
 选择种子来复制
@@ -2841,7 +2838,7 @@ M的意思是金属
 限完全版
 
 [GET_FULL_VERSION_BODY]
-集齐所有道具就能使用最具威慑力的植物！
+集齐所有道具就能使用最具威慑力的柯南！
 
 [GET_FULL_VERSION_TITLE]
 道具已收集完备！
@@ -2862,7 +2859,7 @@ M的意思是金属
 这个条目只有在获得了所有道具后才能开启！
 
 [CRAZY_DAVE_WANTS]
-疯狂戴夫的选择
+疯狂丁WC的选择
 
 [NOCTURNAL_WARNING]
 夜行性的——在白天会睡觉
@@ -2871,22 +2868,22 @@ M的意思是金属
 不推荐在此关使用
 
 [CHOOSE_YOUR_PLANTS]
-选择你的植物
+选择你的柯南
 
 [ADVICE_USE_SHOVEL_ON_POTS]
 推荐在盆上使用铲子
 
 [ADVICE_DESTROY_POTS_TO_FINISH_LEVEL]
-干掉所有僵尸和花瓶来完成关卡！
+干掉所有教材和花瓶来完成关卡！
 
 [SUBURBAN_ALMANAC_INDEX]
  图鉴——索引
 
 [SUBURBAN_ALMANAC_PLANTS]
- 图鉴——植物
+ 图鉴——柯南
 
 [SUBURBAN_ALMANAC_ZOMBIES]
- 图鉴——僵尸
+ 图鉴——教材
 
 [STORE_PAGE]
 页{PAGE}的 {NUM_PAGES}
@@ -2895,10 +2892,10 @@ M的意思是金属
 {SLOTS} 槽
 
 [ADVICE_I_ZOMBIE_EAT_ALL_BRAINS]
-通过这关需要吃掉所有的大脑！
+通过这关需要吃掉所有的GPA！
 
 [ADVICE_I_ZOMBIE_PLANTS_NOT_REAL]
-不要惊慌，植物不是真的植物
+不要惊慌，柯南不是真的柯南
 
 [SQUIRRELS]
 松鼠
@@ -2910,7 +2907,7 @@ M的意思是金属
 {COUNT}还有更多的松鼠！
 
 [ADVICE_SQUIRREL_ZOMBIE]
-噢，不！在僵尸进你家前找到所有的松鼠！
+噢，不！在教材进你家前找到所有的松鼠！
 
 [BRAINS]
 食脑
@@ -2919,7 +2916,7 @@ M的意思是金属
 花费
 
 [WAIT_TIME]
-冷却时间
+卷绩时间
 
 [WAIT_TIME_SHORT]
 短
@@ -2931,10 +2928,10 @@ M的意思是金属
 非常长
 
 [ADVICE_PEASHOOTER_DIED]
-你的一颗豌豆射手死亡了！把他们种在更靠左的地方！
+你的一颗柯南射手死亡了！把他们种在更靠左的地方！
 
 [ADVICE_FOUND_PLANT]
-你为你的禅境花园找到一颗新的植物！
+你为你的禅境花园找到一颗新的柯南！
 
 [ADVICE_FOUND_CHOCOLATE]
 你找到了一些巧克力！蜗牛吃了之后将获得一段加速时间！
@@ -2958,10 +2955,10 @@ M的意思是金属
 {FLAGS}完成
 
 [I_ZOMBIE_1]
-我是僵尸！
+我是教材！
 
 [I_ZOMBIE_2]
-我也是僵尸！
+我也是教材！
 
 [I_ZOMBIE_3]
  你能铲了它么？
@@ -2976,7 +2973,7 @@ M的意思是金属
  我烂了！
 
 [I_ZOMBIE_7]
-僵尸摇摆
+教材摇摆
 
 [I_ZOMBIE_8]
  三连击
@@ -2985,10 +2982,10 @@ M的意思是金属
 你所有大脑 都是属于我的
 
 [I_ZOMBIE_ENDLESS]
-我是僵尸无尽版
+我是教材无尽版
 
 [UNLOCKED_I_ZOMBIE_LEVEL]
-你解锁了新的 我是僵尸关卡！
+你解锁了新的 我是教材关卡！
 
 [UNLOCKED_VASEBREAKER_LEVEL]
 你解锁了新的砸花瓶关卡！
@@ -3042,7 +3039,7 @@ M的意思是金属
 想要从头再尝试一次这个生存关卡吗？
 
 [SILVER_SUNFLOWER_TOOLTIP]
-收集齐所有迷你游戏, 解谜模式和生存模式里的战利品, 将获得金色向日葵! 
+收集齐所有迷你游戏, 解谜模式和生存模式里的战利品, 将获得金色柯南! 
 
 [GOLD_SUNFLOWER_TOOLTIP]
 你已经完成1次冒险咯! 
@@ -3428,8 +3425,8 @@ e”……以期会晤来自“未来”
 
 [TREE_OF_WISDOM_1100]
 谢谢你的照料！我可以给你我所
-有的智慧，但是你也可以让我长
-的更高！
+有的GPA，让你突破40%的界限，
+但是你也可以让我长的更高！
 
 [TREE_OF_WISDOM_HIEGHT]
 {HEIGHT}
@@ -3444,7 +3441,7 @@ e”……以期会晤来自“未来”
 生存模式解锁！ 可从主菜单中进入该模式！
 
 [CREDITS_GAMENAME]
-植物大战僵尸
+植物大战僵尸-USTC
 
 [CREDITS_NAMES1]
 {CREDITS1}GEORGE FAN
@@ -3485,7 +3482,7 @@ SPECIAL THANKS
 工作室监督；质监负责人；游戏检测；特别感谢
 
 [CREDITS_THANKS]
-谢谢参与游戏
+谢谢支持。
 
 [CREDITS_REPLAY_BUTTON]
 重播
@@ -3494,10 +3491,10 @@ SPECIAL THANKS
 主菜单
 
 [VISIT_TREE_HEADER]
-拜访智慧树？
+拜访GPA树？
 
 [VISIT_TREE_BODY]
-你想现在拜访智慧树吗？
+你想现在拜访GPA树吗？
 
 [CREDITS_PAUSE_HEADER]
 暂停播放播放制作名单 
@@ -3514,31 +3511,31 @@ SPECIAL THANKS
 购买完全版
 
 [UPSELL_PAUSE_HEADER]
- 暂停
+ 暂停内卷
 
 [UPSELL_PAUSE_BODY]
-点击返回继续游戏。
+点击返回继续你的USTC之旅。
 
 [UPSELL_RESUME_BUTTON]
 返回
 
 [INTRO_PRESENTS]
-USTC wingtings 绿色猪头出品 出品
+USTC wingtings 绿色猪头 出品
 
 [CANT_USE_CODE]
-你的智慧树还不够高！
+你的GPA还不够高！
 
 [ADVENTURE_COMPLETE_HEADER]
-完成冒险
+完成USTC的奇妙冒险
 
 [ADVENTURE_COMPLETE_BODY]
-新的迷你游戏, 解谜模式和生存模式, 都被解开了! 疯狂戴夫的店里也有新道具啦, 快去看看吧. 
+新的迷你游戏, 解谜模式和生存模式, 都被解开了! 疯狂丁WC的店里也有新道具啦, 快去看看吧. 
 
 [ADVICE_NEED_WHEELBARROW]
-想要在花园之间搬运植物们，需要先在商店里买辆手推车！
+想要在花园之间搬运柯南们，需要先在商店里买辆手推车！
 
 [AVAILABLE_IN_FULL_VERSION]
-此植物仅可在完全版中使用！
+此柯南仅可在完全版中使用！
 
 
 [REPLAY_LEVEL_HEADER]
