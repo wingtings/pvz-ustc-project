@@ -240,7 +240,7 @@ python tools/build_p04_sprites.py --build --preview --check
 | `Wallnut_cracked1.png` | 100×100 | `F649BAE9218B758CA1DCDA0E4E47CB5AD6D4383BF7521CB03AAD0A2FA7587113` | 改动 5184 像素，Alpha 不变 |
 | `Wallnut_cracked2.png` | 100×100 | `C2F61BA4EA797F9845FA1040A73C17C0A1727C164AD7572FA28F09C349C4DF6B` | 改动 4734 像素，Alpha 不变 |
 
-`--preview` 会生成 `.work/previews/p04-damage-stages-5x.png`。三张合成 PNG 和五倍预览都被 Git 忽略；仓库保留重绘配方、原件与候选哈希、像素契约和[静态验收记录](../tests/checklists/v0.5-p04-static.md)。白天生存关还实际触发了完整、轻伤、重伤三档，结果记在 [P02/P04 累计包实机观察](../tests/checklists/v0.5-p02-p04-ingame.md)。
+`--preview` 会生成 `.work/previews/p04-damage-stages-5x.png`。三张合成 PNG 和五倍预览都被 Git 忽略；仓库保留重绘配方、原件与候选哈希、像素契约和[静态验收记录](../tests/checklists/v0.5-p04-static.md)。白天生存关实际触发了完整、轻伤、重伤三档，结果记在 [P02/P04 累计包实机观察](../tests/checklists/v0.5-p02-p04-ingame.md)；同一累计 PAK 与 4200 临时耐久补丁的组合结果见 [P04 4200 组合实机验证](../tests/checklists/v0.5-p04-4200-combo.md)。
 
 ## 正式替换清单格式
 
@@ -284,7 +284,7 @@ python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-p02-p04-ing
 python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-ingame.json
 ```
 
-输出仍有 2413 个资源，SHA-256 为 `ECDBA376D631EA59F738E35AA5F78C36722AA20A5EEC0339900A4433ED0CB12B`。这套累计包已完成 P02 选卡、待机、产出、图鉴和 P04 选卡、图鉴、三档受伤的白天观察；没有覆盖的眨眼、4200 耐久补丁和跨场景项目继续留在回归清单里。
+输出仍有 2413 个资源，SHA-256 为 `ECDBA376D631EA59F738E35AA5F78C36722AA20A5EEC0339900A4433ED0CB12B`。这套累计包已完成 P02 选卡、待机、产出、图鉴和 P04 选卡、图鉴、三档受伤的白天观察，也已与 v0.3 的 4200 临时耐久补丁共同运行。没有覆盖的眨眼和跨场景项目继续留在回归清单里。
 
 ## 绿圈科豆如何进入这条链
 

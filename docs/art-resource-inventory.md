@@ -78,7 +78,7 @@
 
 三档主体已经分别建立 [`Wallnut_body.contract.json`](../assets-src/game/p04/Wallnut_body.contract.json)、[`Wallnut_cracked1.contract.json`](../assets-src/game/p04/Wallnut_cracked1.contract.json) 和 [`Wallnut_cracked2.contract.json`](../assets-src/game/p04/Wallnut_cracked2.contract.json)。首版保留原 Alpha 缺口与脸部表演，只重绘外壳；契约要求灰褐墙面与蓝色编号牌同时存在，并防止三档资源串装。
 
-首轮差分稿已经完成。外壳按原明暗改成灰褐石墙，砖缝在三档间沿用同一走向，左下角固定一块蓝色“14”编号牌。最初用矩形保护眼睛和嘴时会留下突兀的黄块，现已改成按原色保护深色线稿、裂纹和眼白，因此脸部与损伤细节能自然留在新墙面上。三张候选保持原 Alpha，分别改动 5359、5184 和 4734 个可见像素。白天生存关已确认选卡、图鉴、完整外观和两次受伤切换；裂口逐档扩大时没有跳位。测试使用的是原版耐久基线，设计值 4200 仍需与 v0.3 补丁一起复测。静态结果见 [`v0.5-p04-static.md`](../tests/checklists/v0.5-p04-static.md)，实机记录见 [`v0.5-p02-p04-ingame.md`](../tests/checklists/v0.5-p02-p04-ingame.md)。
+首轮差分稿已经完成。外壳按原明暗改成灰褐石墙，砖缝在三档间沿用同一走向，左下角固定一块蓝色“14”编号牌。最初用矩形保护眼睛和嘴时会留下突兀的黄块，现已改成按原色保护深色线稿、裂纹和眼白，因此脸部与损伤细节能自然留在新墙面上。三张候选保持原 Alpha，分别改动 5359、5184 和 4734 个可见像素。白天生存关已确认选卡、图鉴、完整外观和两次受伤切换；裂口逐档扩大时没有跳位。随后又把累计 PAK 与 v0.3 临时 4200 耐久补丁一起运行，当前耐久下降时最大耐久保持 4200，三档仍能正常切换。静态结果见 [`v0.5-p04-static.md`](../tests/checklists/v0.5-p04-static.md)，原版耐久实机记录见 [`v0.5-p02-p04-ingame.md`](../tests/checklists/v0.5-p02-p04-ingame.md)，组合结果见 [`v0.5-p04-4200-combo.md`](../tests/checklists/v0.5-p04-4200-combo.md)。
 
 ### Z01 普通微积分
 
