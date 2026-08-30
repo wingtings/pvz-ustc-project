@@ -1,6 +1,6 @@
 # 原创素材 PAK 开发构建
 
-状态：可重复构建链已完成；P01、P02 与 P04 共八张原尺寸候选已通过契约并进入累计 PAK，三个槽位均已完成首轮白天实机观察。
+状态：可重复构建链已完成；P01、P02、P04、Z03 共十一张原尺寸候选已通过契约并进入累计 PAK。前三个槽位已完成首轮白天实机观察，Z03 等待实机检查。
 
 验证日期：2026-08-30
 
@@ -242,6 +242,22 @@ python tools/build_p04_sprites.py --build --preview --check
 
 `--preview` 会生成 `.work/previews/p04-damage-stages-5x.png`。三张合成 PNG 和五倍预览都被 Git 忽略；仓库保留重绘配方、原件与候选哈希、像素契约和[静态验收记录](../tests/checklists/v0.5-p04-static.md)。白天生存关实际触发了完整、轻伤、重伤三档，结果记在 [P02/P04 累计包实机观察](../tests/checklists/v0.5-p02-p04-ingame.md)；同一累计 PAK 与 4200 临时耐久补丁的组合结果见 [P04 4200 组合实机验证](../tests/checklists/v0.5-p04-4200-combo.md)。
 
+## Z03 三档差分生成
+
+Z03 从三张经过哈希核对的路障原件生成书套。脚本保留下沿头部接触带，重新绘制上半部轮廓：深蓝封面和浅色页块组成一本倾斜的厚习题册，白色题签上只留一个缩小后仍能辨认的“B”。轻伤与重伤阶段继续沿用同一书脊方向，再逐步撕开封面、露出散页：
+
+```powershell
+python tools/build_z03_sprites.py --build --preview --check
+```
+
+| 阶段 | 部件 | 候选 SHA-256 | 改动 / 新增 / 删除 | 浅色页像素 | 可见像素 |
+| --- | --- | --- | ---: | ---: | ---: |
+| 完整 | `Zombie_cone1.png` | `371FA2B9BDAA9F99B6C5855C5A5965307CB0CDC6E2BD9D49ABC339B1F8451A3B` | 1954 / 372 / 300 | 481 | 1654 |
+| 轻伤 | `Zombie_cone2.png` | `6974580329C9F460624624A20A16662D1761F2AFC1D29A3E8C367EB92EC97C07` | 1892 / 250 / 388 | 652 | 1504 |
+| 重伤 | `Zombie_cone3.png` | `E8D9AA0A07C30429D7AF7DA1F90FD3D94E34C1FDB46E34C086C05F2E92E937C9` | 1805 / 181 / 471 | 726 | 1334 |
+
+三张画布均为 59×57，`y=43..56` 的 Alpha 与对应原件逐像素一致。页块随损伤增加，可见轮廓则连续收缩，因此三档不会只像换了颜色的路障。`--preview` 生成 `.work/previews/z03-book-stages-8x.png`；候选、预览和完整 PAK 都被 Git 忽略。仓库只保存生成配方、契约、哈希和[静态验收记录](../tests/checklists/v0.5-z03-static.md)，也没有修改 `Zombie.reanim.compiled`。
+
 ## 正式替换清单格式
 
 原尺寸候选完成后，在替换清单里加入类似记录：
@@ -285,6 +301,15 @@ python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-ing
 ```
 
 输出仍有 2413 个资源，SHA-256 为 `ECDBA376D631EA59F738E35AA5F78C36722AA20A5EEC0339900A4433ED0CB12B`。这套累计包已完成 P02 选卡、待机、产出、图鉴和 P04 选卡、图鉴、三档受伤的白天观察，也已与 v0.3 的 4200 临时耐久补丁共同运行。没有覆盖的眨眼和跨场景项目继续留在回归清单里。
+
+再加入 Z03 三档书套后，累计清单为 `patches/manifests/v0.5-p01-p02-p04-z03-ingame.json`，共替换十一项：
+
+```powershell
+python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-p02-p04-z03-ingame.json
+python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-z03-ingame.json
+```
+
+输出仍有 2413 个资源，SHA-256 为 `B575640C88DFE52EC9919B4B55803D7C6EA717086C14E98A922C500A67ED613A`。构建链与 Z03 静态契约已经通过，图鉴、行走、损伤切换和书套脱落要等实机测试后再记为通过。
 
 ## 绿圈科豆如何进入这条链
 

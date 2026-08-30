@@ -77,6 +77,14 @@ python tools/build_p04_sprites.py --build --preview --check
 
 脚本保留三张原件的 Alpha、脸部线稿和裂纹，只重绘灰褐墙面、连续砖缝与蓝色“14”编号牌。三张合成候选同样只用于本地构建。
 
+生成 Z03 完整、轻伤、重伤三档蓝色习题册书套，并输出八倍预览：
+
+```powershell
+python tools/build_z03_sprites.py --build --preview --check
+```
+
+脚本保留 59×57 画布和下沿头部接触带，受损越重，封面越破、露出的浅色页块越多。三张候选和预览同样只留在本地。
+
 验证 PAK 在没有替换件时能逐字节往返：
 
 ```powershell
@@ -109,6 +117,13 @@ python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-ingame.
 ```powershell
 python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-p02-p04-ingame.json
 python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-ingame.json
+```
+
+生成再加入 Z03 三档书套的十一替换开发包：
+
+```powershell
+python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-p02-p04-z03-ingame.json
+python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-z03-ingame.json
 ```
 
 正式素材清单只允许引用 `assets-src` 下的原创替换件。格式与尺寸门禁见 [原创素材 PAK 构建](../docs/asset-build-pipeline.md)。

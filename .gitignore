@@ -15,6 +15,9 @@ __pycache__/
 /assets-src/game/p04/Wallnut_body.png
 /assets-src/game/p04/Wallnut_cracked1.png
 /assets-src/game/p04/Wallnut_cracked2.png
+/assets-src/game/z03/Zombie_cone1.png
+/assets-src/game/z03/Zombie_cone2.png
+/assets-src/game/z03/Zombie_cone3.png
 
 *.dmp
 *.log
