@@ -1,6 +1,6 @@
 # 原创素材 PAK 开发构建
 
-状态：可重复构建链已完成；P01、P02 与 P04 共八张原尺寸候选已通过契约并进入累计 PAK。P01 已完成白天实机观察，P02 与 P04 仍待实机验收。
+状态：可重复构建链已完成；P01、P02 与 P04 共八张原尺寸候选已通过契约并进入累计 PAK，三个槽位均已完成首轮白天实机观察。
 
 验证日期：2026-08-30
 
@@ -136,7 +136,7 @@ P02 的最小可辨切片是三张：
 | `SunFlower_toppetals.png`，16×10 | `assets-src/game/p02/SunFlower_toppetals.contract.json` | 把顶部成组花瓣改成蓝白便签 |
 | `SunFlower_bottompetals.png`，19×15 | `assets-src/game/p02/SunFlower_bottompetals.contract.json` | 把底部成组花瓣改成蓝白便签 |
 
-其余 17 张独立小花瓣暂时保留暖黄，让玩家仍能一眼识别生产单位。首轮实机确认蓝白点缀在战场缩放下可见后，再决定是否扩到更多花瓣，而不是一次修改全部 29 张资源。
+其余 17 张独立小花瓣暂时保留暖黄，让玩家仍能一眼识别生产单位。首轮白天观察已经确认蓝白点缀在战场和图鉴缩放下可见；在眨眼和跨场景检查完成前，先不把冷色扩到更多花瓣。
 
 上下花瓣原件是 8 位索引色 PNG，头部是 RGBA PNG。像素检查器会读取原调色板与 `tRNS` 透明表，统一解码为 RGBA 进行比较；候选可以保存为 RGBA，不需要为了匹配容器格式重新量化成索引色。测试已经覆盖“索引色原件→RGBA 候选”且保持画布与 Alpha 不变的路径。
 
@@ -240,7 +240,7 @@ python tools/build_p04_sprites.py --build --preview --check
 | `Wallnut_cracked1.png` | 100×100 | `F649BAE9218B758CA1DCDA0E4E47CB5AD6D4383BF7521CB03AAD0A2FA7587113` | 改动 5184 像素，Alpha 不变 |
 | `Wallnut_cracked2.png` | 100×100 | `C2F61BA4EA797F9845FA1040A73C17C0A1727C164AD7572FA28F09C349C4DF6B` | 改动 4734 像素，Alpha 不变 |
 
-`--preview` 会生成 `.work/previews/p04-damage-stages-5x.png`。三张合成 PNG 和五倍预览都被 Git 忽略；仓库保留重绘配方、原件与候选哈希、像素契约和[静态验收记录](../tests/checklists/v0.5-p04-static.md)。
+`--preview` 会生成 `.work/previews/p04-damage-stages-5x.png`。三张合成 PNG 和五倍预览都被 Git 忽略；仓库保留重绘配方、原件与候选哈希、像素契约和[静态验收记录](../tests/checklists/v0.5-p04-static.md)。白天生存关还实际触发了完整、轻伤、重伤三档，结果记在 [P02/P04 累计包实机观察](../tests/checklists/v0.5-p02-p04-ingame.md)。
 
 ## 正式替换清单格式
 
@@ -284,7 +284,7 @@ python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-p02-p04-ing
 python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-ingame.json
 ```
 
-输出仍有 2413 个资源，SHA-256 为 `ECDBA376D631EA59F738E35AA5F78C36722AA20A5EEC0339900A4433ED0CB12B`。这只证明三组差分能一起装入容器；P02 动作与 P04 三档耐久切换还要在游戏里分别观察。
+输出仍有 2413 个资源，SHA-256 为 `ECDBA376D631EA59F738E35AA5F78C36722AA20A5EEC0339900A4433ED0CB12B`。这套累计包已完成 P02 选卡、待机、产出、图鉴和 P04 选卡、图鉴、三档受伤的白天观察；没有覆盖的眨眼、4200 耐久补丁和跨场景项目继续留在回归清单里。
 
 ## 绿圈科豆如何进入这条链
 

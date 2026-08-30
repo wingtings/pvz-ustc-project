@@ -1,6 +1,6 @@
 # v0.2.1 首批美术资源清单
 
-状态：资源清单和首批五槽位的 12 份像素契约已完成；P01 已完成白天实机观察，P02 与 P04 已完成首轮静态差分，其余两槽位留在后续 v0.5 提交。
+状态：资源清单和首批五槽位的 12 份像素契约已完成；P01、P02、P04 已完成首轮白天实机观察，其余两槽位留在后续 v0.5 提交。
 
 盘点日期：2026-08-30
 
@@ -61,7 +61,7 @@
 
 首轮不改全部 29 张资源。当前战斗 reanim 只引用基础头部而不引用 PAK 中的 `head_sing1..5` 和 `head_wink`；因此先用 [`SunFlower_head.contract.json`](../assets-src/game/p02/SunFlower_head.contract.json) 保持眼睛与眨眼对位，在眉形和脸侧加入专注感、科大蓝小标记。顶部与底部成组花瓣分别由 [`SunFlower_toppetals.contract.json`](../assets-src/game/p02/SunFlower_toppetals.contract.json) 和 [`SunFlower_bottompetals.contract.json`](../assets-src/game/p02/SunFlower_bottompetals.contract.json) 改成蓝白便签，其余花瓣保留暖黄。
 
-当前差分稿把科大蓝标记做成窄学习头带，并用两条向内收的眉形表达专注；上下成组花瓣分别采用白纸/蓝纸和蓝纸/白纸分区。三张候选已通过契约并进入累计 PAK，但尚未完成战斗摆动、眨眼覆盖和生产瞬间的实机观察。
+当前差分稿把科大蓝标记做成窄学习头带，并用两条向内收的眉形表达专注；上下成组花瓣分别采用白纸/蓝纸和蓝纸/白纸分区。白天生存关已经覆盖选卡、落地待机、产出瞬间和图鉴放大，头带与蓝白花瓣能随原动画稳定摆动。单独眨眼帧、完整一波和其余场景仍未观察，因此暂不扩改另外 17 张独立花瓣。
 
 ### P04 出恭墙
 
@@ -78,7 +78,7 @@
 
 三档主体已经分别建立 [`Wallnut_body.contract.json`](../assets-src/game/p04/Wallnut_body.contract.json)、[`Wallnut_cracked1.contract.json`](../assets-src/game/p04/Wallnut_cracked1.contract.json) 和 [`Wallnut_cracked2.contract.json`](../assets-src/game/p04/Wallnut_cracked2.contract.json)。首版保留原 Alpha 缺口与脸部表演，只重绘外壳；契约要求灰褐墙面与蓝色编号牌同时存在，并防止三档资源串装。
 
-首轮差分稿已经完成。外壳按原明暗改成灰褐石墙，砖缝在三档间沿用同一走向，左下角固定一块蓝色“14”编号牌。最初用矩形保护眼睛和嘴时会留下突兀的黄块，现已改成按原色保护深色线稿、裂纹和眼白，因此脸部与损伤细节能自然留在新墙面上。三张候选保持原 Alpha，分别改动 5359、5184 和 4734 个可见像素，已进入 P01+P02+P04 的八替换累计 PAK；耐久阈值切换、选卡与图鉴缩放仍待实机观察。静态结果和未完成项见 [`v0.5-p04-static.md`](../tests/checklists/v0.5-p04-static.md)。
+首轮差分稿已经完成。外壳按原明暗改成灰褐石墙，砖缝在三档间沿用同一走向，左下角固定一块蓝色“14”编号牌。最初用矩形保护眼睛和嘴时会留下突兀的黄块，现已改成按原色保护深色线稿、裂纹和眼白，因此脸部与损伤细节能自然留在新墙面上。三张候选保持原 Alpha，分别改动 5359、5184 和 4734 个可见像素。白天生存关已确认选卡、图鉴、完整外观和两次受伤切换；裂口逐档扩大时没有跳位。测试使用的是原版耐久基线，设计值 4200 仍需与 v0.3 补丁一起复测。静态结果见 [`v0.5-p04-static.md`](../tests/checklists/v0.5-p04-static.md)，实机记录见 [`v0.5-p02-p04-ingame.md`](../tests/checklists/v0.5-p02-p04-ingame.md)。
 
 ### Z01 普通微积分
 
