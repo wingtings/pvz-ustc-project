@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "z01-zombie-body-calculus-paper",
+  "description": "Repaint the shared basic-zombie jacket as a worn calculus exam sheet with pencil-grey shading and red correction marks, while preserving the original dark outline, tears, silhouette, and 53x63 anchor.",
+  "pakPath": "reanim/Zombie_body.png",
+  "original": {
+    "sha256": "7A455D5AA3BC3DFCFBD5C8D7E16C01948BB3EE3AB210894B446D8ADD04CE194D",
+    "width": 53,
+    "height": 63,
+    "visiblePixels": 1932
+  },
+  "pixelPolicy": {
+    "alphaMode": "preserve",
+    "allowedChangeRect": {
+      "left": 0,
+      "top": 0,
+      "right": 52,
+      "bottom": 62
+    },
+    "protectedRects": [],
+    "protectedOriginalColors": [
+      {
+        "name": "dark-ink-outline-and-tears",
+        "redMax": 60,
+        "greenMax": 55,
+        "blueMax": 50,
+        "alphaMin": 80
+      }
+    ],
+    "minChangedPixels": 1000,
+    "maxChangedPixels": 1700,
+    "colorRequirements": [
+      {
+        "name": "aged-paper",
+        "changedOnly": true,
+        "minPixels": 750,
+        "redMin": 155,
+        "redMax": 235,
+        "greenMin": 145,
+        "greenMax": 225,
+        "blueMin": 125,
+        "blueMax": 205,
+        "alphaMin": 140
+      },
+      {
+        "name": "pencil-grey",
+        "changedOnly": true,
+        "minPixels": 120,
+        "redMin": 75,
+        "redMax": 155,
+        "greenMin": 75,
+        "greenMax": 155,
+        "blueMin": 70,
+        "blueMax": 150,
+        "alphaMin": 140
+      },
+      {
+        "name": "correction-red",
+        "changedOnly": true,
+        "minPixels": 35,
+        "redMin": 145,
+        "greenMax": 105,
+        "blueMax": 95,
+        "alphaMin": 160
+      }
+    ]
+  }
+}

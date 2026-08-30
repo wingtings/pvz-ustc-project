@@ -106,3 +106,11 @@ Get-ChildItem assets-src/game/p02/*.contract.json | ForEach-Object {
   python tools/check_game_asset.py --contract $_.FullName
 }
 ```
+
+检查 Z01 共享躯干的旧卷面契约：
+
+```powershell
+python tools/check_game_asset.py --contract assets-src/game/z01/Zombie_body.contract.json
+```
+
+该契约还会保护原图中所有深色外轮廓与破损线条；这类保护由 `protectedOriginalColors` 描述，不依赖固定矩形位置。

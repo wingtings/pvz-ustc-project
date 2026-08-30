@@ -113,6 +113,26 @@ def _inside(x: int, y: int, rect: tuple[int, int, int, int]) -> bool:
     return left <= x <= right and top <= y <= bottom
 
 
+def _matches_color(rule: dict[str, Any], rgba: tuple[int, int, int, int]) -> bool:
+    channels = ("red", "green", "blue", "alpha")
+    return all(
+        int(rule.get(f"{channel}Min", 0))
+        <= value
+        <= int(rule.get(f"{channel}Max", 255))
+        for channel, value in zip(channels, rgba)
+    )
+
+
+def _validate_color_rule(target: str, rule: Any, label: str) -> None:
+    if not isinstance(rule, dict):
+        raise ValueError(f"{target} {label} 无效")
+    for channel in ("red", "green", "blue", "alpha"):
+        lower = int(rule.get(f"{channel}Min", 0))
+        upper = int(rule.get(f"{channel}Max", 255))
+        if not (0 <= lower <= upper <= 255):
+            raise ValueError(f"{target} {label} 的 {channel} 范围无效")
+
+
 def validate_contract_baseline(
     contract: dict[str, Any], target: str, original: bytes
 ) -> png_assets.RgbaPng:
@@ -172,8 +192,7 @@ def validate_contract_baseline(
         if not (0 <= minimum_value <= maximum_value <= image.width * image.height):
             raise ValueError(f"{target} 契约{label}范围无效")
     for index, requirement in enumerate(policy.get("colorRequirements", []), start=1):
-        if not isinstance(requirement, dict):
-            raise ValueError(f"{target} colorRequirements[{index}] 无效")
+        _validate_color_rule(target, requirement, f"colorRequirements[{index}]")
         _rect(
             requirement.get("rect", policy.get("allowedChangeRect")),
             f"colorRequirements[{index}].rect",
@@ -183,13 +202,8 @@ def validate_contract_baseline(
         minimum_pixels = int(requirement.get("minPixels", 1))
         if not (0 < minimum_pixels <= image.width * image.height):
             raise ValueError(f"{target} colorRequirements[{index}] 像素数无效")
-        for channel in ("red", "green", "blue", "alpha"):
-            lower = int(requirement.get(f"{channel}Min", 0))
-            upper = int(requirement.get(f"{channel}Max", 255))
-            if not (0 <= lower <= upper <= 255):
-                raise ValueError(
-                    f"{target} colorRequirements[{index}] 的 {channel} 范围无效"
-                )
+    for index, rule in enumerate(policy.get("protectedOriginalColors", []), start=1):
+        _validate_color_rule(target, rule, f"protectedOriginalColors[{index}]")
     return image
 
 
@@ -247,6 +261,7 @@ def validate_replacement_contract(
             original_image.height,
         )
         color_requirements.append((requirement, requirement_rect, 0))
+    protected_original_colors = policy.get("protectedOriginalColors", [])
 
     for y in range(original_image.height):
         for x in range(original_image.width):
@@ -262,6 +277,12 @@ def validate_replacement_contract(
                 added_visible += 1
             elif old_visible and not new_visible:
                 removed_visible += 1
+            for rule in protected_original_colors:
+                if old_visible and _matches_color(rule, old) and old != new:
+                    name = rule.get("name", "原色保护")
+                    raise ValueError(
+                        f"{target} 改动了受保护的原色“{name}”：({x}, {y})"
+                    )
             if alpha_mode == "preserve" and old[3] != new[3]:
                 raise ValueError(f"{target} 改变了 Alpha 蒙版：({x}, {y})")
             if alpha_mode == "add-only" and new[3] < old[3]:
@@ -279,19 +300,7 @@ def validate_replacement_contract(
                     continue
                 if requirement.get("changedOnly", False) and not rendered_change:
                     continue
-                red, green, blue, alpha = new
-                values = {
-                    "red": red,
-                    "green": green,
-                    "blue": blue,
-                    "alpha": alpha,
-                }
-                if all(
-                    int(requirement.get(f"{channel}Min", 0))
-                    <= value
-                    <= int(requirement.get(f"{channel}Max", 255))
-                    for channel, value in values.items()
-                ):
+                if _matches_color(requirement, new):
                     color_requirements[requirement_index] = (
                         requirement,
                         requirement_rect,
