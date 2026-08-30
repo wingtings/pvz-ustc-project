@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "id": "v0.5-first-slice-contracts",
+  "description": "Complete registry for the first five USTC art slots before any candidate sprite is accepted into a PAK overlay.",
+  "expectedSlots": [
+    "P01",
+    "P02",
+    "P04",
+    "Z01",
+    "Z03"
+  ],
+  "entries": [
+    {
+      "slot": "P01",
+      "role": "round-glasses-head",
+      "contract": "assets-src/game/p01/PeaShooter_Head.contract.json"
+    },
+    {
+      "slot": "P01",
+      "role": "blue-textbook-frontleaf",
+      "contract": "assets-src/game/p01/PeaShooter_frontleaf.contract.json"
+    },
+    {
+      "slot": "P02",
+      "role": "focused-study-head",
+      "contract": "assets-src/game/p02/SunFlower_head.contract.json"
+    },
+    {
+      "slot": "P02",
+      "role": "top-note-petals",
+      "contract": "assets-src/game/p02/SunFlower_toppetals.contract.json"
+    },
+    {
+      "slot": "P02",
+      "role": "bottom-note-petals",
+      "contract": "assets-src/game/p02/SunFlower_bottompetals.contract.json"
+    },
+    {
+      "slot": "P04",
+      "role": "intact-wall",
+      "contract": "assets-src/game/p04/Wallnut_body.contract.json"
+    },
+    {
+      "slot": "P04",
+      "role": "damaged-wall",
+      "contract": "assets-src/game/p04/Wallnut_cracked1.contract.json"
+    },
+    {
+      "slot": "P04",
+      "role": "heavily-damaged-wall",
+      "contract": "assets-src/game/p04/Wallnut_cracked2.contract.json"
+    },
+    {
+      "slot": "Z01",
+      "role": "calculus-paper-body",
+      "contract": "assets-src/game/z01/Zombie_body.contract.json"
+    },
+    {
+      "slot": "Z03",
+      "role": "intact-book-cover",
+      "contract": "assets-src/game/z03/Zombie_cone1.contract.json"
+    },
+    {
+      "slot": "Z03",
+      "role": "damaged-book-cover",
+      "contract": "assets-src/game/z03/Zombie_cone2.contract.json"
+    },
+    {
+      "slot": "Z03",
+      "role": "heavily-damaged-book-cover",
+      "contract": "assets-src/game/z03/Zombie_cone3.contract.json"
+    }
+  ]
+}

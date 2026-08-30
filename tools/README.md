@@ -114,3 +114,10 @@ python tools/check_game_asset.py --contract assets-src/game/z01/Zombie_body.cont
 ```
 
 该契约还会保护原图中所有深色外轮廓与破损线条；这类保护由 `protectedOriginalColors` 描述，不依赖固定矩形位置。
+
+一次检查首批五槽位全部 12 份契约，并确认没有未登记文件或重复 PAK 目标：
+
+```powershell
+python tools/check_game_asset.py `
+  --registry patches/manifests/v0.5-first-slice-contracts.json
+```
