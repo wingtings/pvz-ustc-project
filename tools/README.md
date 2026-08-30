@@ -18,3 +18,23 @@ python tools/sync_lawnstrings.py --check
 第二条命令还会验证同步是幂等的。只要设计文档和游戏文件一致，重复执行不会产生新改动。
 
 同步工具认得当前仓库最初的文案哈希 `B974C89344A19F5A056133E1F776598693CFCD0E2C8A82E1C9535CD5CCFB131B`，但不会要求工作文件永远保持这个哈希。这样可以在后续版本继续追加文本，同时保留基线记录。
+
+查看 PAK 内与某个单位有关的资源：
+
+```powershell
+python tools/pak_assets.py --list "*peashooter*" "*sunflower*"
+```
+
+选择性提取时，工具只允许写到被 Git 忽略的 `.work` 目录，并先校验 `main.pak` 哈希：
+
+```powershell
+python tools/pak_assets.py --extract "*peashooter*" --out .work/pak-reference
+```
+
+这些文件只用于识别原动画部件和制作本地差分，不应作为整套原版素材提交或发布。
+
+检查首批资源数量和 P01 概念稿的 RGBA 透明边界：
+
+```powershell
+python tools/check_art_assets.py
+```
