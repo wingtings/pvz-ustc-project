@@ -38,3 +38,15 @@ python tools/pak_assets.py --extract "*peashooter*" --out .work/pak-reference
 ```powershell
 python tools/check_art_assets.py
 ```
+
+## 常量补丁工具
+
+v0.3 只在 `dist` 生成开发副本，绝不覆盖仓库中的基线 EXE：
+
+```powershell
+python tools/apply_binary_patches.py --check
+python tools/apply_binary_patches.py --apply
+python tools/apply_binary_patches.py --reverse
+```
+
+补丁位置、旧字节、新字节和回滚字节都在机器可读的 `patches/manifests/v0.3-constant-proof.json`。详细安全边界与哈希见 [v0.3 常量补丁文档](../docs/v0.3-patching.md)。

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "v0.3-constant-proof",
+  "description": "Temporary constant changes used to prove a reproducible and reversible patch pipeline.",
+  "baseline": {
+    "path": "PlantsVsZombies.exe",
+    "version": "1.0.0.1051",
+    "sha256": "6F1729369AC9C5F859E8F3B55FE7D513FBC20B5C54127FD3A1C7E500237FDE6F"
+  },
+  "outputs": {
+    "patchedPath": "dist/v0.3/PlantsVsZombies-v0.3-proof.exe",
+    "restoredPath": "dist/v0.3/PlantsVsZombies-v0.3-restored.exe",
+    "patchedSha256": "CB0E0FFF4A530164582E3E0A86FA046A5217AC4293F961A75FB3097C853899B8"
+  },
+  "patches": [
+    {
+      "id": "p01-seed-cost-proof",
+      "description": "Temporarily change 绿圈科豆 seed cost from 100 to 75.",
+      "temporary": true,
+      "aob": "00 00 00 00 00 00 00 00 04 00 00 00 00 00 00 00 ?? ?? ?? ?? EE 02 00 00 01 00 00 00 96 00 00 00 ?? ?? ?? ?? 01 00 00 00 00 00 00 00 07 00 00 00 01 00 00 00 32 00 00 00",
+      "expectedMatches": 1,
+      "patchOffset": 16,
+      "before": "64 00 00 00",
+      "after": "4B 00 00 00",
+      "rollback": "64 00 00 00",
+      "baselineFileOffset": "0x29F2C0",
+      "virtualAddress": "0x0069F2C0"
+    },
+    {
+      "id": "p04-health-proof",
+      "description": "Temporarily change 出恭墙 initialization health from 4000 to 4200.",
+      "temporary": true,
+      "aob": "83 F8 03 75 09 C7 43 40 ?? ?? ?? ?? EB 73 83 F8 31 75 4D B8 E8 03 00 00 C7 43 40 A0 0F 00 00",
+      "expectedMatches": 1,
+      "patchOffset": 8,
+      "before": "A0 0F 00 00",
+      "after": "68 10 00 00",
+      "rollback": "A0 0F 00 00",
+      "baselineFileOffset": "0x0005E1A7",
+      "virtualAddress": "0x0045E1A7"
+    }
+  ],
+  "textAssertions": [
+    {
+      "id": "z21-almanac-health",
+      "path": "properties/LawnStrings.txt",
+      "encoding": "cp936",
+      "section": "BUNGEE_ZOMBIE_DESCRIPTION",
+      "contains": [
+        "耐久：{STAT}450"
+      ],
+      "description": "DDL 空投图鉴耐久已经在 v0.2 修正为 450."
+    }
+  ]
+}
