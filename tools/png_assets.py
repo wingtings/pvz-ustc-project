@@ -189,3 +189,33 @@ def pixel(image: RgbaPng, x: int, y: int) -> tuple[int, int, int, int]:
 
 def visible_pixel_count(image: RgbaPng) -> int:
     return sum(alpha > 0 for alpha in image.pixels[3::4])
+
+
+def _chunk(name: bytes, payload: bytes) -> bytes:
+    checksum = zlib.crc32(name + payload) & 0xFFFFFFFF
+    return struct.pack(">I", len(payload)) + name + payload + struct.pack(">I", checksum)
+
+
+def encode_rgba8(image: RgbaPng, *, compression_level: int = 9) -> bytes:
+    """Encode an RGBA image as a deterministic 8-bit, non-interlaced PNG."""
+
+    expected = image.width * image.height * 4
+    if image.width <= 0 or image.height <= 0 or len(image.pixels) != expected:
+        raise ValueError("RGBA 像素数量与画布尺寸不一致")
+    if not 0 <= compression_level <= 9:
+        raise ValueError("PNG 压缩级别必须在 0–9 之间")
+
+    stride = image.width * 4
+    rows = b"".join(
+        b"\x00" + image.pixels[offset : offset + stride]
+        for offset in range(0, len(image.pixels), stride)
+    )
+    header = struct.pack(
+        ">IIBBBBB", image.width, image.height, 8, 6, 0, 0, 0
+    )
+    return (
+        PNG_SIGNATURE
+        + _chunk(b"IHDR", header)
+        + _chunk(b"IDAT", zlib.compress(rows, level=compression_level))
+        + _chunk(b"IEND", b"")
+    )

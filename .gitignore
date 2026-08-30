@@ -5,5 +5,10 @@ __pycache__/
 /dist/
 /main_unpack/
 
+# Generated from the verified original PAK by tools/build_p01_sprites.py.
+# Keep the overlay recipe in Git, not derivative PNGs containing base-game pixels.
+/assets-src/game/p01/PeaShooter_Head.png
+/assets-src/game/p01/PeaShooter_frontleaf.png
+
 *.dmp
 *.log

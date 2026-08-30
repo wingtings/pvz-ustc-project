@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "v0.5-p01-first-ingame",
+  "description": "First in-game P01 visual slice: round academic glasses and a compact blue Electromagnetism exercise book.",
+  "baseline": {
+    "path": "main.pak",
+    "sha256": "3B5291C6600076AAF1791AE1FB2DBF247290A23E903D1D376413DA17358E049D"
+  },
+  "output": {
+    "path": "dist/v0.5/main-p01-first-ingame.pak",
+    "sha256": "137121F3317FD710BEE0A918A73C1A8A3666E9363C920CA64E08D8276DBB96EB"
+  },
+  "replacements": [
+    {
+      "pakPath": "reanim/PeaShooter_Head.png",
+      "source": "assets-src/game/p01/PeaShooter_Head.png",
+      "sha256": "DE8EBE694C2AEF2D477EA3866332B32B5BC11F2F03B170EE2C47BDACBA7B5610",
+      "originalSha256": "89489D1DF066B4C89541455525447220437C5913F0F1E3E850A7A6116F241882",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/p01/PeaShooter_Head.contract.json"
+    },
+    {
+      "pakPath": "reanim/PeaShooter_frontleaf.png",
+      "source": "assets-src/game/p01/PeaShooter_frontleaf.png",
+      "sha256": "5814BE53B1EE2A122726FD1EE6E83C43A9599B529BA2E00B14B973BA4AC3624C",
+      "originalSha256": "26CE3AFA0788A624D8A1747DAB2BA51223489A04AED61F08A453C0D073BFBDDD",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/p01/PeaShooter_frontleaf.contract.json"
+    }
+  ]
+}

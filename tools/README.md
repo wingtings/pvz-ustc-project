@@ -53,6 +53,14 @@ python tools/apply_binary_patches.py --reverse
 
 ## PAK 增量构建
 
+从经过验证的本地原件生成 P01 圆框眼镜和蓝色《电磁学千题解》候选，并输出十倍静态预览：
+
+```powershell
+python tools/build_p01_sprites.py --build --preview --check
+```
+
+两张候选 PNG 和预览都被 Git 忽略。仓库只保存局部像素配方、输出哈希和契约；不要手工把生成 PNG 强制加入版本控制。
+
 验证 PAK 在没有替换件时能逐字节往返：
 
 ```powershell
@@ -64,6 +72,13 @@ python tools/build_pak_overlay.py --check patches/manifests/v0.5-pak-roundtrip.j
 
 ```powershell
 python tools/build_pak_overlay.py --build patches/manifests/v0.5-pak-roundtrip.json
+```
+
+生成 P01 双替换开发包：
+
+```powershell
+python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-first-ingame.json
+python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-first-ingame.json
 ```
 
 正式素材清单只允许引用 `assets-src` 下的原创替换件。格式与尺寸门禁见 [原创素材 PAK 构建](../docs/asset-build-pipeline.md)。

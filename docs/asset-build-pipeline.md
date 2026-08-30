@@ -1,6 +1,6 @@
 # 原创素材 PAK 开发构建
 
-状态：可重复构建链和 P01 头部、前叶像素契约已完成；尚无原尺寸角色替换件进入游戏。
+状态：可重复构建链已完成；P01 头部、前叶差分已生成原尺寸候选并通过契约，双替换 PAK 已构建，实机动画观察待完成。
 
 验证日期：2026-08-30
 
@@ -193,9 +193,26 @@ python tools/build_pak_overlay.py --build patches/manifests/v0.5-pak-roundtrip.j
 
 三种路径都得到与基线相同的哈希。`dist/v0.5/main-roundtrip.pak` 是本地验证产物，不进入 Git。
 
+## P01 差分生成
+
+P01 不把带有原版像素的合成 PNG 提交到 Git。`tools/build_p01_sprites.py` 从经过哈希验证的本地 `main.pak` 读取两张原件，只叠加圆框眼镜、深蓝书封、浅色书页、书名节奏线和金色书签，再生成被 `.gitignore` 排除的本地候选：
+
+```powershell
+python tools/build_p01_sprites.py --build --preview --check
+```
+
+当前确定性输出为：
+
+| 部件 | 画布 | 候选 SHA-256 | 契约结果 |
+| --- | ---: | --- | --- |
+| `PeaShooter_Head.png` | 70×65 | `DE8EBE694C2AEF2D477EA3866332B32B5BC11F2F03B170EE2C47BDACBA7B5610` | 改动 144 像素，Alpha 零变化，117 个明显变暗像素 |
+| `PeaShooter_frontleaf.png` | 67×40 | `5814BE53B1EE2A122726FD1EE6E83C43A9599B529BA2E00B14B973BA4AC3624C` | 改动 551 像素，新增 117 个可见像素，未删除原叶片 |
+
+`--preview` 会在 `.work/previews/p01-sprites-10x.png` 生成十倍最近邻静态预览。预览和两张合成候选都属于本地测试产物；仓库保存的是差分配方、契约、候选哈希和构建清单。
+
 ## 正式替换清单格式
 
-第一张原尺寸贴图完成后，在新的清单里加入类似记录：
+原尺寸候选完成后，在替换清单里加入类似记录：
 
 ```json
 {
@@ -210,12 +227,21 @@ python tools/build_pak_overlay.py --build patches/manifests/v0.5-pak-roundtrip.j
 
 `pakPath` 使用 PAK 内的正斜杠路径。`preserveCanvas` 默认为 `true`；只有已经修改 reanim 锚点并有对应测试时，才允许显式关闭。
 
+P01 已登记在 `patches/manifests/v0.5-p01-first-ingame.json`。下面两条命令分别预演和生成本地开发包：
+
+```powershell
+python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-first-ingame.json
+python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-first-ingame.json
+```
+
+结果包含 2413 个资源，只替换两项，SHA-256 为 `137121F3317FD710BEE0A918A73C1A8A3666E9363C920CA64E08D8276DBB96EB`。
+
 ## 绿圈科豆如何进入这条链
 
 1. 以[概念稿](../assets-src/concepts/p01-greencircle-pea-concept.png)确定眼镜、蓝书和蓝白书签的造型。
-2. 单独制作 70×65 的带眼镜头部，不移动原眼睛、嘴和喷口锚点，并通过 P01 像素契约。
-3. 书本已确认可以合入 67×40 前叶画布；先走同尺寸替换，只有实机遮挡失败时再改 reanim。
-4. 为每个游戏部件记录原图哈希、新图哈希、尺寸和目标 PAK 路径。
-5. 用新清单生成 `dist` PAK，再进行待机、眨眼、发射、选卡和图鉴实机检查。
+2. 已用差分配方生成 70×65 的带眼镜头部，未移动原眼睛、嘴和喷口锚点，并通过 P01 像素契约。
+3. 已把书本合入 67×40 前叶画布并通过同尺寸门禁；只有实机遮挡失败时才修改 reanim。
+4. 两个部件都已记录原图哈希、新图哈希、尺寸和目标 PAK 路径。
+5. 双替换 PAK 已生成；下一步进行待机、眨眼、发射、选卡和图鉴实机检查。
 
 公开发行时仍只提供原创素材、清单和应用工具，不提供这里生成的完整 PAK。
