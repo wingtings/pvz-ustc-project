@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "p01-peashooter-frontleaf-blue-textbook",
+  "description": "Add a compact blue Electromagnetism exercise book above the original front leaves without deleting the leaves or changing their outer silhouette.",
+  "pakPath": "reanim/PeaShooter_frontleaf.png",
+  "original": {
+    "sha256": "26CE3AFA0788A624D8A1747DAB2BA51223489A04AED61F08A453C0D073BFBDDD",
+    "width": 67,
+    "height": 40,
+    "visiblePixels": 1620
+  },
+  "pixelPolicy": {
+    "alphaMode": "add-only",
+    "allowedChangeRect": {
+      "left": 20,
+      "top": 0,
+      "right": 48,
+      "bottom": 32
+    },
+    "protectedRects": [],
+    "minChangedPixels": 180,
+    "maxChangedPixels": 650,
+    "minAddedAlphaPixels": 80,
+    "maxAddedAlphaPixels": 320,
+    "colorRequirements": [
+      {
+        "name": "deep-blue-cover",
+        "changedOnly": true,
+        "minPixels": 120,
+        "redMax": 85,
+        "greenMax": 150,
+        "blueMin": 100,
+        "alphaMin": 180
+      },
+      {
+        "name": "light-page-or-title",
+        "changedOnly": true,
+        "minPixels": 8,
+        "redMin": 190,
+        "greenMin": 190,
+        "blueMin": 190,
+        "alphaMin": 180
+      }
+    ]
+  }
+}

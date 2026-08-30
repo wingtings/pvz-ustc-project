@@ -10,7 +10,7 @@
     "visiblePixels": 3332
   },
   "pixelPolicy": {
-    "preserveAlpha": true,
+    "alphaMode": "preserve",
     "allowedChangeRect": {
       "left": 34,
       "top": 7,

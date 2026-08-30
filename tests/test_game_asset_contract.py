@@ -18,8 +18,10 @@ import pak_assets  # noqa: E402
 import png_assets  # noqa: E402
 
 
-CONTRACT_PATH = "assets-src/game/p01/PeaShooter_Head.contract.json"
-TARGET = "reanim/PeaShooter_Head.png"
+HEAD_CONTRACT_PATH = "assets-src/game/p01/PeaShooter_Head.contract.json"
+HEAD_TARGET = "reanim/PeaShooter_Head.png"
+BOOK_CONTRACT_PATH = "assets-src/game/p01/PeaShooter_frontleaf.contract.json"
+BOOK_TARGET = "reanim/PeaShooter_frontleaf.png"
 
 
 def _chunk(name: bytes, payload: bytes) -> bytes:
@@ -50,12 +52,12 @@ def set_pixel(pixels: bytearray, width: int, x: int, y: int, rgba: tuple[int, ..
 class GameAssetContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.contract = builder.load_asset_contract(CONTRACT_PATH)
+        cls.contract = builder.load_asset_contract(HEAD_CONTRACT_PATH)
         decoded, entries = pak_assets.parse_pak(pak_assets.PAK_PATH)
         entry = next(
             item
             for item in entries
-            if builder.normalize_name(item.name) == TARGET
+            if builder.normalize_name(item.name) == HEAD_TARGET
         )
         cls.original = builder.entry_payload(decoded, entry)
         cls.image = png_assets.decode_rgba8(cls.original)
@@ -93,7 +95,7 @@ class GameAssetContractTests(unittest.TestCase):
 
     def test_contract_baseline_matches_pak_original(self) -> None:
         image = builder.validate_contract_baseline(
-            self.contract, TARGET, self.original
+            self.contract, HEAD_TARGET, self.original
         )
         self.assertEqual((image.width, image.height), (70, 65))
         self.assertEqual(png_assets.visible_pixel_count(image), 3332)
@@ -101,13 +103,13 @@ class GameAssetContractTests(unittest.TestCase):
     def test_minimal_dark_glasses_fixture_passes(self) -> None:
         candidate = encode_rgba8(self.image, bytes(self.valid_candidate_pixels()))
         builder.validate_replacement_contract(
-            self.contract, TARGET, self.original, candidate
+            self.contract, HEAD_TARGET, self.original, candidate
         )
 
     def test_unchanged_original_is_rejected(self) -> None:
         with self.assertRaisesRegex(ValueError, "可见改动像素数异常"):
             builder.validate_replacement_contract(
-                self.contract, TARGET, self.original, self.original
+                self.contract, HEAD_TARGET, self.original, self.original
             )
 
     def test_alpha_change_is_rejected(self) -> None:
@@ -117,7 +119,7 @@ class GameAssetContractTests(unittest.TestCase):
         candidate = encode_rgba8(self.image, bytes(pixels))
         with self.assertRaisesRegex(ValueError, "Alpha 蒙版"):
             builder.validate_replacement_contract(
-                self.contract, TARGET, self.original, candidate
+                self.contract, HEAD_TARGET, self.original, candidate
             )
 
     def test_visible_change_outside_allowed_rect_is_rejected(self) -> None:
@@ -128,7 +130,7 @@ class GameAssetContractTests(unittest.TestCase):
         candidate = encode_rgba8(self.image, bytes(pixels))
         with self.assertRaisesRegex(ValueError, "允许区域外"):
             builder.validate_replacement_contract(
-                self.contract, TARGET, self.original, candidate
+                self.contract, HEAD_TARGET, self.original, candidate
             )
 
     def test_protected_eye_core_change_is_rejected(self) -> None:
@@ -138,9 +140,90 @@ class GameAssetContractTests(unittest.TestCase):
         replacement = (255, 0, 255, old[3]) if old[:3] != (255, 0, 255) else (0, 0, 0, old[3])
         set_pixel(pixels, self.image.width, 44, 22, replacement)
         candidate = encode_rgba8(self.image, bytes(pixels))
-        with self.assertRaisesRegex(ValueError, "受保护的眼睛核心"):
+        with self.assertRaisesRegex(ValueError, "受保护区域"):
             builder.validate_replacement_contract(
-                self.contract, TARGET, self.original, candidate
+                self.contract, HEAD_TARGET, self.original, candidate
+            )
+
+
+class BookAssetContractTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.contract = builder.load_asset_contract(BOOK_CONTRACT_PATH)
+        decoded, entries = pak_assets.parse_pak(pak_assets.PAK_PATH)
+        entry = next(
+            item
+            for item in entries
+            if builder.normalize_name(item.name) == BOOK_TARGET
+        )
+        cls.original = builder.entry_payload(decoded, entry)
+        cls.image = png_assets.decode_rgba8(cls.original)
+
+    def valid_candidate_pixels(self) -> bytearray:
+        pixels = bytearray(self.image.pixels)
+        for y in range(3, 29):
+            for x in range(25, 44):
+                set_pixel(pixels, self.image.width, x, y, (35, 80, 150, 255))
+        for x in range(27, 41):
+            set_pixel(pixels, self.image.width, x, 6, (225, 230, 235, 255))
+        return pixels
+
+    def test_book_contract_baseline_matches_pak_original(self) -> None:
+        image = builder.validate_contract_baseline(
+            self.contract, BOOK_TARGET, self.original
+        )
+        self.assertEqual((image.width, image.height), (67, 40))
+        self.assertEqual(png_assets.visible_pixel_count(image), 1620)
+
+    def test_blue_book_fixture_passes(self) -> None:
+        candidate = encode_rgba8(self.image, bytes(self.valid_candidate_pixels()))
+        builder.validate_replacement_contract(
+            self.contract, BOOK_TARGET, self.original, candidate
+        )
+
+    def test_removing_original_leaf_alpha_is_rejected(self) -> None:
+        pixels = self.valid_candidate_pixels()
+        old = png_assets.pixel(self.image, 21, 31)
+        self.assertGreater(old[3], 0)
+        set_pixel(pixels, self.image.width, 21, 31, (*old[:3], 0))
+        candidate = encode_rgba8(self.image, bytes(pixels))
+        with self.assertRaisesRegex(ValueError, "削减了原件 Alpha"):
+            builder.validate_replacement_contract(
+                self.contract, BOOK_TARGET, self.original, candidate
+            )
+
+    def test_added_alpha_outside_book_area_is_rejected(self) -> None:
+        pixels = self.valid_candidate_pixels()
+        old = png_assets.pixel(self.image, 10, 2)
+        self.assertEqual(old[3], 0)
+        set_pixel(pixels, self.image.width, 10, 2, (35, 80, 150, 255))
+        candidate = encode_rgba8(self.image, bytes(pixels))
+        with self.assertRaisesRegex(ValueError, "允许区域外"):
+            builder.validate_replacement_contract(
+                self.contract, BOOK_TARGET, self.original, candidate
+            )
+
+    def test_missing_blue_cover_is_rejected(self) -> None:
+        pixels = self.valid_candidate_pixels()
+        for y in range(3, 29):
+            for x in range(25, 44):
+                set_pixel(pixels, self.image.width, x, y, (170, 55, 40, 255))
+        for x in range(27, 41):
+            set_pixel(pixels, self.image.width, x, 6, (225, 230, 235, 255))
+        candidate = encode_rgba8(self.image, bytes(pixels))
+        with self.assertRaisesRegex(ValueError, "deep-blue-cover"):
+            builder.validate_replacement_contract(
+                self.contract, BOOK_TARGET, self.original, candidate
+            )
+
+    def test_missing_light_page_detail_is_rejected(self) -> None:
+        pixels = self.valid_candidate_pixels()
+        for x in range(27, 41):
+            set_pixel(pixels, self.image.width, x, 6, (35, 80, 150, 255))
+        candidate = encode_rgba8(self.image, bytes(pixels))
+        with self.assertRaisesRegex(ValueError, "light-page-or-title"):
+            builder.validate_replacement_contract(
+                self.contract, BOOK_TARGET, self.original, candidate
             )
 
 

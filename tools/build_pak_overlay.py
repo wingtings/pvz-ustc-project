@@ -150,6 +150,34 @@ def validate_contract_baseline(
     maximum = int(policy.get("maxChangedPixels", image.width * image.height))
     if not (0 < minimum <= maximum <= image.width * image.height):
         raise ValueError(f"{target} 契约改动像素范围无效")
+    alpha_mode = policy.get(
+        "alphaMode", "preserve" if policy.get("preserveAlpha", True) else "unrestricted"
+    )
+    if alpha_mode not in {"preserve", "add-only", "unrestricted"}:
+        raise ValueError(f"{target} 契约 alphaMode 无效：{alpha_mode}")
+    minimum_added = int(policy.get("minAddedAlphaPixels", 0))
+    maximum_added = int(policy.get("maxAddedAlphaPixels", image.width * image.height))
+    if not (0 <= minimum_added <= maximum_added <= image.width * image.height):
+        raise ValueError(f"{target} 契约新增 Alpha 像素范围无效")
+    for index, requirement in enumerate(policy.get("colorRequirements", []), start=1):
+        if not isinstance(requirement, dict):
+            raise ValueError(f"{target} colorRequirements[{index}] 无效")
+        _rect(
+            requirement.get("rect", policy.get("allowedChangeRect")),
+            f"colorRequirements[{index}].rect",
+            image.width,
+            image.height,
+        )
+        minimum_pixels = int(requirement.get("minPixels", 1))
+        if not (0 < minimum_pixels <= image.width * image.height):
+            raise ValueError(f"{target} colorRequirements[{index}] 像素数无效")
+        for channel in ("red", "green", "blue", "alpha"):
+            lower = int(requirement.get(f"{channel}Min", 0))
+            upper = int(requirement.get(f"{channel}Max", 255))
+            if not (0 <= lower <= upper <= 255):
+                raise ValueError(
+                    f"{target} colorRequirements[{index}] 的 {channel} 范围无效"
+                )
     return image
 
 
@@ -178,27 +206,70 @@ def validate_replacement_contract(
         _rect(value, f"protectedRects[{index}]", original_image.width, original_image.height)
         for index, value in enumerate(policy.get("protectedRects", []), start=1)
     ]
-    preserve_alpha = bool(policy.get("preserveAlpha", True))
+    alpha_mode = policy.get(
+        "alphaMode", "preserve" if policy.get("preserveAlpha", True) else "unrestricted"
+    )
     changed = 0
     darkened = 0
+    added_alpha = 0
     darkening_threshold = int(policy.get("darkeningThreshold", 0))
+    color_requirements: list[tuple[dict[str, Any], tuple[int, int, int, int], int]] = []
+    for index, requirement in enumerate(policy.get("colorRequirements", []), start=1):
+        requirement_rect = _rect(
+            requirement.get("rect", policy["allowedChangeRect"]),
+            f"colorRequirements[{index}].rect",
+            original_image.width,
+            original_image.height,
+        )
+        color_requirements.append((requirement, requirement_rect, 0))
 
     for y in range(original_image.height):
         for x in range(original_image.width):
             old = png_assets.pixel(original_image, x, y)
             new = png_assets.pixel(source_image, x, y)
-            if preserve_alpha and old[3] != new[3]:
+            if alpha_mode == "preserve" and old[3] != new[3]:
                 raise ValueError(f"{target} 改变了 Alpha 蒙版：({x}, {y})")
-            # RGB stored under a fully transparent pixel does not affect the sprite.
-            visible_change = old[3] > 0 and old[:3] != new[:3]
-            if not visible_change:
+            if alpha_mode == "add-only" and new[3] < old[3]:
+                raise ValueError(f"{target} 削减了原件 Alpha：({x}, {y})")
+            # RGB stored under two fully transparent pixels does not affect the sprite.
+            rendered_change = old[3] != new[3] or (
+                (old[3] > 0 or new[3] > 0) and old[:3] != new[:3]
+            )
+            for requirement_index, (requirement, requirement_rect, count) in enumerate(
+                color_requirements
+            ):
+                if not _inside(x, y, requirement_rect):
+                    continue
+                if requirement.get("changedOnly", False) and not rendered_change:
+                    continue
+                red, green, blue, alpha = new
+                values = {
+                    "red": red,
+                    "green": green,
+                    "blue": blue,
+                    "alpha": alpha,
+                }
+                if all(
+                    int(requirement.get(f"{channel}Min", 0))
+                    <= value
+                    <= int(requirement.get(f"{channel}Max", 255))
+                    for channel, value in values.items()
+                ):
+                    color_requirements[requirement_index] = (
+                        requirement,
+                        requirement_rect,
+                        count + 1,
+                    )
+            if not rendered_change:
                 continue
             if not _inside(x, y, allowed):
-                raise ValueError(f"{target} 在允许区域外改色：({x}, {y})")
+                raise ValueError(f"{target} 在允许区域外改动：({x}, {y})")
             if any(_inside(x, y, rect) for rect in protected):
-                raise ValueError(f"{target} 改动了受保护的眼睛核心：({x}, {y})")
+                raise ValueError(f"{target} 改动了受保护区域：({x}, {y})")
             changed += 1
-            if sum(old[:3]) - sum(new[:3]) >= darkening_threshold:
+            if new[3] > old[3]:
+                added_alpha += 1
+            if darkening_threshold > 0 and sum(old[:3]) - sum(new[:3]) >= darkening_threshold:
                 darkened += 1
 
     minimum = int(policy["minChangedPixels"])
@@ -212,9 +283,25 @@ def validate_replacement_contract(
         raise ValueError(
             f"{target} 深色镜框像素不足：{darkened}，至少 {minimum_darkened}"
         )
+    minimum_added = int(policy.get("minAddedAlphaPixels", 0))
+    maximum_added = int(
+        policy.get("maxAddedAlphaPixels", original_image.width * original_image.height)
+    )
+    if not minimum_added <= added_alpha <= maximum_added:
+        raise ValueError(
+            f"{target} 新增 Alpha 像素数异常：{added_alpha}，"
+            f"要求 {minimum_added}–{maximum_added}"
+        )
+    for requirement, _, count in color_requirements:
+        minimum_pixels = int(requirement.get("minPixels", 1))
+        if count < minimum_pixels:
+            name = requirement.get("name", "未命名颜色")
+            raise ValueError(
+                f"{target} 的颜色要求“{name}”不足：{count}，至少 {minimum_pixels}"
+            )
     print(
         f"素材契约通过：{target}；可见改动 {changed} 像素，"
-        f"其中深色镜框 {darkened} 像素"
+        f"新增 Alpha {added_alpha} 像素，深色改动 {darkened} 像素"
     )
 
 

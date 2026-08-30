@@ -72,9 +72,13 @@ python tools/build_pak_overlay.py --build patches/manifests/v0.5-pak-roundtrip.j
 
 ```powershell
 python tools/check_game_asset.py --contract assets-src/game/p01/PeaShooter_Head.contract.json
+python tools/check_game_asset.py --contract assets-src/game/p01/PeaShooter_frontleaf.contract.json
 python tools/check_game_asset.py `
   --contract assets-src/game/p01/PeaShooter_Head.contract.json `
   --candidate assets-src/game/p01/PeaShooter_Head.png
+python tools/check_game_asset.py `
+  --contract assets-src/game/p01/PeaShooter_frontleaf.contract.json `
+  --candidate assets-src/game/p01/PeaShooter_frontleaf.png
 ```
 
 PAK 替换记录可用 `contract` 字段引用同一份契约，构建时会再次执行相同门禁。
