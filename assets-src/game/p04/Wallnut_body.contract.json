@@ -17,27 +17,21 @@
       "right": 93,
       "bottom": 99
     },
-    "protectedRects": [
+    "protectedRects": [],
+    "protectedOriginalColors": [
       {
-        "name": "left-eye",
-        "left": 33,
-        "top": 27,
-        "right": 56,
-        "bottom": 49
+        "name": "ink-eyes-mouth-and-cracks",
+        "redMax": 75,
+        "greenMax": 65,
+        "blueMax": 50,
+        "alphaMin": 120
       },
       {
-        "name": "right-eye",
-        "left": 60,
-        "top": 27,
-        "right": 81,
-        "bottom": 49
-      },
-      {
-        "name": "mouth",
-        "left": 47,
-        "top": 47,
-        "right": 69,
-        "bottom": 66
+        "name": "eye-whites",
+        "redMin": 190,
+        "greenMin": 175,
+        "blueMin": 130,
+        "alphaMin": 180
       }
     ],
     "minChangedPixels": 1800,

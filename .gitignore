@@ -12,6 +12,9 @@ __pycache__/
 /assets-src/game/p02/SunFlower_head.png
 /assets-src/game/p02/SunFlower_toppetals.png
 /assets-src/game/p02/SunFlower_bottompetals.png
+/assets-src/game/p04/Wallnut_body.png
+/assets-src/game/p04/Wallnut_cracked1.png
+/assets-src/game/p04/Wallnut_cracked2.png
 
 *.dmp
 *.log

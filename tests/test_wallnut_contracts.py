@@ -106,6 +106,7 @@ class WallnutContractTests(unittest.TestCase):
             builder._rect(value, "protected", image.width, image.height)
             for value in policy["protectedRects"]
         ]
+        protected_colors = policy.get("protectedOriginalColors", [])
         for y in range(image.height):
             for x in range(image.width):
                 old = png_assets.pixel(image, x, y)
@@ -113,12 +114,15 @@ class WallnutContractTests(unittest.TestCase):
                     old[3] > 0
                     and builder._inside(x, y, allowed)
                     and not any(builder._inside(x, y, rect) for rect in protected)
+                    and not any(builder._matches_color(rule, old) for rule in protected_colors)
                 ):
                     set_pixel(pixels, image.width, x, y, (130, 120, 105, old[3]))
         for y in range(70, 80):
             for x in range(20, 36):
                 old = png_assets.pixel(image, x, y)
-                if old[3] > 0:
+                if old[3] > 0 and not any(
+                    builder._matches_color(rule, old) for rule in protected_colors
+                ):
                     set_pixel(pixels, image.width, x, y, (35, 100, 160, old[3]))
         return pixels
 
@@ -151,10 +155,15 @@ class WallnutContractTests(unittest.TestCase):
     def test_missing_blue_number_plate_is_rejected(self) -> None:
         contract, target, original, image, _ = self.stage_data[0]
         pixels = self.valid_candidate_pixels(contract, image)
+        policy = contract["pixelPolicy"]
+        assert isinstance(policy, dict)
+        protected_colors = policy.get("protectedOriginalColors", [])
         for y in range(70, 80):
             for x in range(20, 36):
                 old = png_assets.pixel(image, x, y)
-                if old[3] > 0:
+                if old[3] > 0 and not any(
+                    builder._matches_color(rule, old) for rule in protected_colors
+                ):
                     set_pixel(pixels, image.width, x, y, (130, 120, 105, old[3]))
         candidate = encode_rgba8(image, bytes(pixels))
         with self.assertRaisesRegex(ValueError, "blue-number-plate"):
@@ -162,7 +171,7 @@ class WallnutContractTests(unittest.TestCase):
                 contract, target, original, candidate
             )
 
-    def test_face_change_is_rejected(self) -> None:
+    def test_eye_detail_change_is_rejected(self) -> None:
         contract, target, original, image, _ = self.stage_data[0]
         pixels = self.valid_candidate_pixels(contract, image)
         old = png_assets.pixel(image, 44, 35)
@@ -171,7 +180,7 @@ class WallnutContractTests(unittest.TestCase):
         self.assertNotEqual(old, replacement)
         set_pixel(pixels, image.width, 44, 35, replacement)
         candidate = encode_rgba8(image, bytes(pixels))
-        with self.assertRaisesRegex(ValueError, "受保护区域"):
+        with self.assertRaisesRegex(ValueError, "受保护的原色"):
             builder.validate_replacement_contract(
                 contract, target, original, candidate
             )

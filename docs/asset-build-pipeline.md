@@ -1,6 +1,6 @@
 # 原创素材 PAK 开发构建
 
-状态：可重复构建链已完成；P01 头部、前叶差分已生成原尺寸候选并通过契约，双替换 PAK 已完成白天待机、发射、选卡和图鉴观察。
+状态：可重复构建链已完成；P01、P02 与 P04 共八张原尺寸候选已通过契约并进入累计 PAK。P01 已完成白天实机观察，P02 与 P04 仍待实机验收。
 
 验证日期：2026-08-30
 
@@ -86,7 +86,7 @@ python tools/check_game_asset.py `
 | 轻伤 | `assets-src/game/p04/Wallnut_cracked1.contract.json` | 6650 |
 | 重伤 | `assets-src/game/p04/Wallnut_cracked2.contract.json` | 6414 |
 
-三份契约各自绑定原件哈希，不能把完整阶段误装到受伤槽位。首版要求逐像素保留每档 Alpha，从而继承原来的椭圆轮廓、缺口和裂损递进；眼睛、嘴和眨眼表演区也禁止改色。外壳必须出现足量灰褐墙面，并在左下位置保留一块缩小后仍可辨认的蓝色编号牌。
+三份契约各自绑定原件哈希，不能把完整阶段误装到受伤槽位。首版要求逐像素保留每档 Alpha，从而继承原来的椭圆轮廓、缺口和裂损递进；原图中的深色眼睛、嘴、轮廓、裂纹和浅色眼白按颜色保护，不再使用会在外壳上留下硬边的矩形遮罩。外壳必须出现足量灰褐墙面，并在左下位置保留一块缩小后仍可辨认的蓝色编号牌。
 
 逐个检查三份基线契约：
 
@@ -226,6 +226,22 @@ python tools/build_p02_sprites.py --build --preview --check
 
 头部只加入蓝色学习头带和向内收的专注眉形，暖色花盘、眼睛、嘴和眨眼覆盖层继续使用原版。上下成组花瓣改成蓝白纸张，其余独立花瓣保持黄色，避免经济单位在战场缩放下变成一团冷色。
 
+## P04 三档差分生成
+
+P04 仍从三张经过哈希核对的本地原件生成。脚本按原图明暗重绘灰褐石墙，补上连续砖缝和固定的蓝色“14”编号牌；完整、轻伤、重伤各自保留原来的透明缺口与裂纹：
+
+```powershell
+python tools/build_p04_sprites.py --build --preview --check
+```
+
+| 部件 | 画布 | 候选 SHA-256 | 契约结果 |
+| --- | ---: | --- | --- |
+| `Wallnut_body.png` | 100×100 | `182D862C209D1F4B1A26D45563BC04E49AE7BC1E1D4C96F9CAC83BA64252EE0F` | 改动 5359 像素，Alpha 不变 |
+| `Wallnut_cracked1.png` | 100×100 | `F649BAE9218B758CA1DCDA0E4E47CB5AD6D4383BF7521CB03AAD0A2FA7587113` | 改动 5184 像素，Alpha 不变 |
+| `Wallnut_cracked2.png` | 100×100 | `C2F61BA4EA797F9845FA1040A73C17C0A1727C164AD7572FA28F09C349C4DF6B` | 改动 4734 像素，Alpha 不变 |
+
+`--preview` 会生成 `.work/previews/p04-damage-stages-5x.png`。三张合成 PNG 和五倍预览都被 Git 忽略；仓库保留重绘配方、原件与候选哈希、像素契约和[静态验收记录](../tests/checklists/v0.5-p04-static.md)。
+
 ## 正式替换清单格式
 
 原尺寸候选完成后，在替换清单里加入类似记录：
@@ -260,6 +276,15 @@ python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-ingame.
 ```
 
 累计输出 SHA-256 为 `AE0C1C67441AA6CD93161DF1C327B319B8EF1B6B5C202AD08B78F74F94E051BA`。
+
+加入 P04 三档墙体后的累计清单为 `patches/manifests/v0.5-p01-p02-p04-ingame.json`，共替换八项：
+
+```powershell
+python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-p02-p04-ingame.json
+python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-ingame.json
+```
+
+输出仍有 2413 个资源，SHA-256 为 `ECDBA376D631EA59F738E35AA5F78C36722AA20A5EEC0339900A4433ED0CB12B`。这只证明三组差分能一起装入容器；P02 动作与 P04 三档耐久切换还要在游戏里分别观察。
 
 ## 绿圈科豆如何进入这条链
 
