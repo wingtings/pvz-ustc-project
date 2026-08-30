@@ -50,3 +50,20 @@ python tools/apply_binary_patches.py --reverse
 ```
 
 补丁位置、旧字节、新字节和回滚字节都在机器可读的 `patches/manifests/v0.3-constant-proof.json`。详细安全边界与哈希见 [v0.3 常量补丁文档](../docs/v0.3-patching.md)。
+
+## PAK 增量构建
+
+验证 PAK 在没有替换件时能逐字节往返：
+
+```powershell
+python tools/build_pak_overlay.py --roundtrip-check
+python tools/build_pak_overlay.py --check patches/manifests/v0.5-pak-roundtrip.json
+```
+
+生成被 Git 忽略的本地验证包：
+
+```powershell
+python tools/build_pak_overlay.py --build patches/manifests/v0.5-pak-roundtrip.json
+```
+
+正式素材清单只允许引用 `assets-src` 下的原创替换件。格式与尺寸门禁见 [原创素材 PAK 构建](../docs/asset-build-pipeline.md)。

@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "v0.5-pak-roundtrip",
+  "description": "Zero-replacement manifest used to prove byte-exact PAK rebuilding before adding game art.",
+  "baseline": {
+    "path": "main.pak",
+    "sha256": "3B5291C6600076AAF1791AE1FB2DBF247290A23E903D1D376413DA17358E049D"
+  },
+  "output": {
+    "path": "dist/v0.5/main-roundtrip.pak",
+    "sha256": "3B5291C6600076AAF1791AE1FB2DBF247290A23E903D1D376413DA17358E049D"
+  },
+  "replacements": []
+}

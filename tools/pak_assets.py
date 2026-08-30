@@ -39,10 +39,11 @@ def sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest().upper()
 
 
-def parse_pak(path: Path) -> tuple[bytes, list[PakEntry]]:
-    encoded = path.read_bytes()
+def parse_pak_bytes(
+    encoded: bytes, expected_hash: str | None = None
+) -> tuple[bytes, list[PakEntry]]:
     actual_hash = sha256(encoded)
-    if actual_hash != PAK_SHA256:
+    if expected_hash and actual_hash != expected_hash.upper():
         raise ValueError(f"main.pak 哈希不匹配：{actual_hash}")
 
     data = encoded.translate(XOR_TABLE)
@@ -79,6 +80,10 @@ def parse_pak(path: Path) -> tuple[bytes, list[PakEntry]]:
     if data_offset != len(data):
         raise ValueError(f"PAK 末尾存在 {len(data) - data_offset} 个未解释字节")
     return data, entries
+
+
+def parse_pak(path: Path) -> tuple[bytes, list[PakEntry]]:
+    return parse_pak_bytes(path.read_bytes(), PAK_SHA256)
 
 
 def normalize_name(name: str) -> str:
