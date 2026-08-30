@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "p02-sunflower-focused-study-face",
+  "description": "Add a focused study expression and a small USTC-blue cue to the battle Sunflower head while preserving the original eye cores, blink alignment, silhouette, and warm face color.",
+  "pakPath": "reanim/SunFlower_head.png",
+  "original": {
+    "sha256": "3813EA881B25465DEC25E75B7FA2A20FDE4B421E7DD7C3B1FFABF4EB1FD61FB3",
+    "width": 57,
+    "height": 43,
+    "visiblePixels": 1892
+  },
+  "pixelPolicy": {
+    "alphaMode": "preserve",
+    "allowedChangeRect": {
+      "left": 0,
+      "top": 0,
+      "right": 56,
+      "bottom": 42
+    },
+    "protectedRects": [
+      {
+        "name": "left-eye-core",
+        "left": 19,
+        "top": 12,
+        "right": 24,
+        "bottom": 22
+      },
+      {
+        "name": "right-eye-core",
+        "left": 38,
+        "top": 12,
+        "right": 43,
+        "bottom": 22
+      }
+    ],
+    "minChangedPixels": 30,
+    "maxChangedPixels": 180,
+    "darkeningThreshold": 60,
+    "minDarkenedPixels": 8,
+    "colorRequirements": [
+      {
+        "name": "warm-face-base",
+        "changedOnly": false,
+        "minPixels": 900,
+        "redMin": 75,
+        "redMax": 225,
+        "greenMin": 35,
+        "greenMax": 165,
+        "blueMax": 105,
+        "alphaMin": 150
+      },
+      {
+        "name": "ustc-blue-study-cue",
+        "changedOnly": true,
+        "minPixels": 16,
+        "redMax": 85,
+        "greenMax": 160,
+        "blueMin": 100,
+        "alphaMin": 180
+      }
+    ]
+  }
+}

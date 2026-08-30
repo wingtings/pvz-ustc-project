@@ -124,6 +124,22 @@ Get-ChildItem assets-src/game/p04/*.contract.json | ForEach-Object {
 | `add-only` | 可增加部件，不得削掉原件 | P01 前叶蓝书 |
 | `bounded` | 可受限增删，同时保护指定锚点带 | Z03 三档书套 |
 
+## P02 首轮三部件契约
+
+当前 `SunFlower.reanim.compiled` 的战斗动画引用基础头部、两张眨眼覆盖层和分散花瓣轨道。PAK 中另外存在五张 `head_sing` 与一张 `head_wink`，但它们不在这份战斗 reanim 的图像引用中；首轮不为未引用资源制作重复稿。
+
+P02 的最小可辨切片是三张：
+
+| 部件 | 契约 | 作用 |
+| --- | --- | --- |
+| `SunFlower_head.png`，57×43 | `assets-src/game/p02/SunFlower_head.contract.json` | 保留眼睛核心和暖色脸，加入专注眉形及小块科大蓝学习标记 |
+| `SunFlower_toppetals.png`，16×10 | `assets-src/game/p02/SunFlower_toppetals.contract.json` | 把顶部成组花瓣改成蓝白便签 |
+| `SunFlower_bottompetals.png`，19×15 | `assets-src/game/p02/SunFlower_bottompetals.contract.json` | 把底部成组花瓣改成蓝白便签 |
+
+其余 17 张独立小花瓣暂时保留暖黄，让玩家仍能一眼识别生产单位。首轮实机确认蓝白点缀在战场缩放下可见后，再决定是否扩到更多花瓣，而不是一次修改全部 29 张资源。
+
+上下花瓣原件是 8 位索引色 PNG，头部是 RGBA PNG。像素检查器会读取原调色板与 `tRNS` 透明表，统一解码为 RGBA 进行比较；候选可以保存为 RGBA，不需要为了匹配容器格式重新量化成索引色。测试已经覆盖“索引色原件→RGBA 候选”且保持画布与 Alpha 不变的路径。
+
 ## 基线往返
 
 先运行不写文件的底层往返检查：

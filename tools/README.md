@@ -98,3 +98,11 @@ Get-ChildItem assets-src/game/z03/*.contract.json | ForEach-Object {
   python tools/check_game_asset.py --contract $_.FullName
 }
 ```
+
+P02 首轮三部件也可批量检查。工具能读取原版索引色花瓣 PNG，并与 RGBA 候选逐像素比较：
+
+```powershell
+Get-ChildItem assets-src/game/p02/*.contract.json | ForEach-Object {
+  python tools/check_game_asset.py --contract $_.FullName
+}
+```

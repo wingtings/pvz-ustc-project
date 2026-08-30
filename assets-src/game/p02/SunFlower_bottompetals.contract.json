@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "p02-sunflower-bottom-note-petals",
+  "description": "Recolor the grouped bottom petals as small blue-and-white study notes while preserving their 19x15 silhouette and animation anchor.",
+  "pakPath": "reanim/SunFlower_bottompetals.png",
+  "original": {
+    "sha256": "034CE4342F4C972ECF9E5DF758164AC35E1E7B96972FCCE022BA992C6E5256FE",
+    "width": 19,
+    "height": 15,
+    "visiblePixels": 211
+  },
+  "pixelPolicy": {
+    "alphaMode": "preserve",
+    "allowedChangeRect": {
+      "left": 0,
+      "top": 0,
+      "right": 18,
+      "bottom": 14
+    },
+    "protectedRects": [],
+    "minChangedPixels": 130,
+    "maxChangedPixels": 211,
+    "colorRequirements": [
+      {
+        "name": "blue-note",
+        "changedOnly": true,
+        "minPixels": 65,
+        "redMax": 90,
+        "greenMax": 170,
+        "blueMin": 105,
+        "alphaMin": 140
+      },
+      {
+        "name": "white-paper",
+        "changedOnly": true,
+        "minPixels": 40,
+        "redMin": 185,
+        "greenMin": 185,
+        "blueMin": 175,
+        "alphaMin": 140
+      }
+    ]
+  }
+}

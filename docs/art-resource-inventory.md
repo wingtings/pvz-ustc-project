@@ -56,6 +56,8 @@
 | 受伤与死亡 | 无分段受伤图；沿用普通植物消失流程 |
 | 是否改 reanim | 同尺寸换头和花瓣不需要。若增加能独立摆动的校园卡、水杯或草稿纸，则需要新增轨道 |
 
+首轮不改全部 29 张资源。当前战斗 reanim 只引用基础头部而不引用 PAK 中的 `head_sing1..5` 和 `head_wink`；因此先用 [`SunFlower_head.contract.json`](../assets-src/game/p02/SunFlower_head.contract.json) 保持眼睛与眨眼对位，在眉形和脸侧加入专注感、科大蓝小标记。顶部与底部成组花瓣分别由 [`SunFlower_toppetals.contract.json`](../assets-src/game/p02/SunFlower_toppetals.contract.json) 和 [`SunFlower_bottompetals.contract.json`](../assets-src/game/p02/SunFlower_bottompetals.contract.json) 改成蓝白便签，其余花瓣保留暖黄。
+
 ### P04 出恭墙
 
 | 项目 | 记录 |

@@ -31,14 +31,17 @@ def _paeth(left: int, up: int, upper_left: int) -> int:
 
 
 def decode_rgba8(data: bytes) -> RgbaPng:
-    """Decode an 8-bit, non-interlaced RGBA PNG and verify chunk CRCs."""
+    """Decode an 8-bit, non-interlaced PNG to RGBA and verify chunk CRCs."""
 
     if data[:8] != PNG_SIGNATURE:
         raise ValueError("文件不是 PNG")
 
     position = 8
     width = height = 0
+    color_type = -1
     compressed = bytearray()
+    palette = b""
+    transparency = b""
     saw_header = False
     saw_end = False
     while position < len(data):
@@ -71,15 +74,17 @@ def decode_rgba8(data: bytes) -> RgbaPng:
             ) = struct.unpack(">IIBBBBB", chunk)
             if width <= 0 or height <= 0:
                 raise ValueError("PNG 画布尺寸无效")
-            if (bit_depth, color_type, compression, filtering, interlace) != (
-                8,
-                6,
-                0,
-                0,
-                0,
-            ):
-                raise ValueError("PNG 必须是 8 位 RGBA、非隔行格式")
+            if bit_depth != 8 or color_type not in {0, 2, 3, 4, 6}:
+                raise ValueError("PNG 必须是受支持的 8 位灰度、RGB、索引色或 RGBA 格式")
+            if (compression, filtering, interlace) != (0, 0, 0):
+                raise ValueError("PNG 必须使用标准压缩、过滤和非隔行格式")
             saw_header = True
+        elif chunk_type == b"PLTE":
+            if len(chunk) == 0 or len(chunk) % 3 != 0 or len(chunk) > 768:
+                raise ValueError("PNG 调色板无效")
+            palette = bytes(chunk)
+        elif chunk_type == b"tRNS":
+            transparency = bytes(chunk)
         elif chunk_type == b"IDAT":
             if not saw_header:
                 raise ValueError("PNG 的 IDAT 出现在 IHDR 之前")
@@ -91,13 +96,13 @@ def decode_rgba8(data: bytes) -> RgbaPng:
     if not saw_header or not saw_end or not compressed:
         raise ValueError("PNG 缺少 IHDR、IDAT 或 IEND")
 
-    bytes_per_pixel = 4
+    bytes_per_pixel = {0: 1, 2: 3, 3: 1, 4: 2, 6: 4}[color_type]
     stride = width * bytes_per_pixel
     raw = zlib.decompress(bytes(compressed))
     if len(raw) != height * (stride + 1):
         raise ValueError("PNG 扫描线长度异常")
 
-    pixels = bytearray(height * stride)
+    samples = bytearray(height * stride)
     source = 0
     for row in range(height):
         filter_type = raw[source]
@@ -107,9 +112,9 @@ def decode_rgba8(data: bytes) -> RgbaPng:
         previous_start = (row - 1) * stride
         for column in range(stride):
             left = current[column - bytes_per_pixel] if column >= bytes_per_pixel else 0
-            up = pixels[previous_start + column] if row else 0
+            up = samples[previous_start + column] if row else 0
             upper_left = (
-                pixels[previous_start + column - bytes_per_pixel]
+                samples[previous_start + column - bytes_per_pixel]
                 if row and column >= bytes_per_pixel
                 else 0
             )
@@ -126,7 +131,53 @@ def decode_rgba8(data: bytes) -> RgbaPng:
             elif filter_type != 0:
                 raise ValueError(f"不支持的 PNG 过滤器：{filter_type}")
         start = row * stride
-        pixels[start : start + stride] = current
+        samples[start : start + stride] = current
+
+    if color_type == 6:
+        pixels = samples
+    else:
+        pixels = bytearray(width * height * 4)
+        transparent_gray = (
+            struct.unpack(">H", transparency)[0] & 0xFF
+            if color_type == 0 and len(transparency) == 2
+            else None
+        )
+        transparent_rgb = (
+            tuple(value & 0xFF for value in struct.unpack(">HHH", transparency))
+            if color_type == 2 and len(transparency) == 6
+            else None
+        )
+        if color_type == 3 and not palette:
+            raise ValueError("索引色 PNG 缺少 PLTE")
+
+        source = 0
+        destination = 0
+        for _ in range(width * height):
+            if color_type == 0:
+                gray = samples[source]
+                source += 1
+                alpha = 0 if transparent_gray == gray else 255
+                rgba = (gray, gray, gray, alpha)
+            elif color_type == 2:
+                red, green, blue = samples[source : source + 3]
+                source += 3
+                alpha = 0 if transparent_rgb == (red, green, blue) else 255
+                rgba = (red, green, blue, alpha)
+            elif color_type == 3:
+                index = samples[source]
+                source += 1
+                palette_offset = index * 3
+                if palette_offset + 3 > len(palette):
+                    raise ValueError(f"PNG 调色板索引越界：{index}")
+                red, green, blue = palette[palette_offset : palette_offset + 3]
+                alpha = transparency[index] if index < len(transparency) else 255
+                rgba = (red, green, blue, alpha)
+            else:
+                gray, alpha = samples[source : source + 2]
+                source += 2
+                rgba = (gray, gray, gray, alpha)
+            pixels[destination : destination + 4] = bytes(rgba)
+            destination += 4
 
     return RgbaPng(width=width, height=height, pixels=bytes(pixels))
 
