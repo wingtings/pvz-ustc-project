@@ -1,6 +1,6 @@
 # 原创素材 PAK 开发构建
 
-状态：可重复构建链已完成；P01、P02、P04、Z03 共十一张原尺寸候选已通过契约并进入累计 PAK。前三个槽位已完成首轮白天实机观察，Z03 等待实机检查。
+状态：可重复构建链已完成；P01、P02、P04、Z03 共十一张原尺寸候选已通过契约并进入累计 PAK。四个槽位都已完成各自首轮实机切片，跨场景回归仍待补齐。
 
 验证日期：2026-08-30
 
@@ -256,7 +256,7 @@ python tools/build_z03_sprites.py --build --preview --check
 | 轻伤 | `Zombie_cone2.png` | `6974580329C9F460624624A20A16662D1761F2AFC1D29A3E8C367EB92EC97C07` | 1892 / 250 / 388 | 652 | 1504 |
 | 重伤 | `Zombie_cone3.png` | `E8D9AA0A07C30429D7AF7DA1F90FD3D94E34C1FDB46E34C086C05F2E92E937C9` | 1805 / 181 / 471 | 726 | 1334 |
 
-三张画布均为 59×57，`y=43..56` 的 Alpha 与对应原件逐像素一致。页块随损伤增加，可见轮廓则连续收缩，因此三档不会只像换了颜色的路障。`--preview` 生成 `.work/previews/z03-book-stages-8x.png`；候选、预览和完整 PAK 都被 Git 忽略。仓库只保存生成配方、契约、哈希和[静态验收记录](../tests/checklists/v0.5-z03-static.md)，也没有修改 `Zombie.reanim.compiled`。
+三张画布均为 59×57，`y=43..56` 的 Alpha 与对应原件逐像素一致。页块随损伤增加，可见轮廓则连续收缩，因此三档不会只像换了颜色的路障。`--preview` 生成 `.work/previews/z03-book-stages-8x.png`；候选、预览和完整 PAK 都被 Git 忽略。仓库只保存生成配方、契约、哈希、[静态验收记录](../tests/checklists/v0.5-z03-static.md)和[实机观察记录](../tests/checklists/v0.5-z03-ingame.md)，也没有修改 `Zombie.reanim.compiled`。
 
 ## 正式替换清单格式
 
@@ -309,7 +309,7 @@ python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-p02-p04-z03
 python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-z03-ingame.json
 ```
 
-输出仍有 2413 个资源，SHA-256 为 `B575640C88DFE52EC9919B4B55803D7C6EA717086C14E98A922C500A67ED613A`。构建链与 Z03 静态契约已经通过，图鉴、行走、损伤切换和书套脱落要等实机测试后再记为通过。
+输出仍有 2413 个资源，SHA-256 为 `B575640C88DFE52EC9919B4B55803D7C6EA717086C14E98A922C500A67ED613A`。构建链与 Z03 静态契约已经通过；图鉴、泳池行走与啃食、完整到脱落的四个状态也已实机观察。夜间、雾夜、屋顶和普通水池冒险关仍留在回归清单中。
 
 ## 绿圈科豆如何进入这条链
 
