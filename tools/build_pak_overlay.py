@@ -146,6 +146,8 @@ def validate_contract_baseline(
     _rect(policy.get("allowedChangeRect"), "allowedChangeRect", image.width, image.height)
     for index, protected in enumerate(policy.get("protectedRects", []), start=1):
         _rect(protected, f"protectedRects[{index}]", image.width, image.height)
+    for index, protected in enumerate(policy.get("preserveAlphaRects", []), start=1):
+        _rect(protected, f"preserveAlphaRects[{index}]", image.width, image.height)
     minimum = int(policy.get("minChangedPixels", 1))
     maximum = int(policy.get("maxChangedPixels", image.width * image.height))
     if not (0 < minimum <= maximum <= image.width * image.height):
@@ -153,12 +155,22 @@ def validate_contract_baseline(
     alpha_mode = policy.get(
         "alphaMode", "preserve" if policy.get("preserveAlpha", True) else "unrestricted"
     )
-    if alpha_mode not in {"preserve", "add-only", "unrestricted"}:
+    if alpha_mode not in {"preserve", "add-only", "bounded", "unrestricted"}:
         raise ValueError(f"{target} 契约 alphaMode 无效：{alpha_mode}")
     minimum_added = int(policy.get("minAddedAlphaPixels", 0))
     maximum_added = int(policy.get("maxAddedAlphaPixels", image.width * image.height))
     if not (0 <= minimum_added <= maximum_added <= image.width * image.height):
         raise ValueError(f"{target} 契约新增 Alpha 像素范围无效")
+    for minimum_key, maximum_key, label in (
+        ("minVisiblePixels", "maxVisiblePixels", "候选可见像素"),
+        ("minRetainedVisiblePixels", "maxRetainedVisiblePixels", "保留可见像素"),
+        ("minAddedVisiblePixels", "maxAddedVisiblePixels", "新增可见像素"),
+        ("minRemovedVisiblePixels", "maxRemovedVisiblePixels", "删除可见像素"),
+    ):
+        minimum_value = int(policy.get(minimum_key, 0))
+        maximum_value = int(policy.get(maximum_key, image.width * image.height))
+        if not (0 <= minimum_value <= maximum_value <= image.width * image.height):
+            raise ValueError(f"{target} 契约{label}范围无效")
     for index, requirement in enumerate(policy.get("colorRequirements", []), start=1):
         if not isinstance(requirement, dict):
             raise ValueError(f"{target} colorRequirements[{index}] 无效")
@@ -206,12 +218,25 @@ def validate_replacement_contract(
         _rect(value, f"protectedRects[{index}]", original_image.width, original_image.height)
         for index, value in enumerate(policy.get("protectedRects", []), start=1)
     ]
+    preserve_alpha_rects = [
+        _rect(
+            value,
+            f"preserveAlphaRects[{index}]",
+            original_image.width,
+            original_image.height,
+        )
+        for index, value in enumerate(policy.get("preserveAlphaRects", []), start=1)
+    ]
     alpha_mode = policy.get(
         "alphaMode", "preserve" if policy.get("preserveAlpha", True) else "unrestricted"
     )
     changed = 0
     darkened = 0
     added_alpha = 0
+    candidate_visible = 0
+    retained_visible = 0
+    added_visible = 0
+    removed_visible = 0
     darkening_threshold = int(policy.get("darkeningThreshold", 0))
     color_requirements: list[tuple[dict[str, Any], tuple[int, int, int, int], int]] = []
     for index, requirement in enumerate(policy.get("colorRequirements", []), start=1):
@@ -227,10 +252,22 @@ def validate_replacement_contract(
         for x in range(original_image.width):
             old = png_assets.pixel(original_image, x, y)
             new = png_assets.pixel(source_image, x, y)
+            old_visible = old[3] > 0
+            new_visible = new[3] > 0
+            if new_visible:
+                candidate_visible += 1
+            if old_visible and new_visible:
+                retained_visible += 1
+            elif not old_visible and new_visible:
+                added_visible += 1
+            elif old_visible and not new_visible:
+                removed_visible += 1
             if alpha_mode == "preserve" and old[3] != new[3]:
                 raise ValueError(f"{target} 改变了 Alpha 蒙版：({x}, {y})")
             if alpha_mode == "add-only" and new[3] < old[3]:
                 raise ValueError(f"{target} 削减了原件 Alpha：({x}, {y})")
+            if any(_inside(x, y, rect) for rect in preserve_alpha_rects) and old[3] != new[3]:
+                raise ValueError(f"{target} 改变了锚点保护带 Alpha：({x}, {y})")
             # RGB stored under two fully transparent pixels does not affect the sprite.
             rendered_change = old[3] != new[3] or (
                 (old[3] > 0 or new[3] > 0) and old[:3] != new[:3]
@@ -292,6 +329,31 @@ def validate_replacement_contract(
             f"{target} 新增 Alpha 像素数异常：{added_alpha}，"
             f"要求 {minimum_added}–{maximum_added}"
         )
+    metric_values = (
+        ("minVisiblePixels", "maxVisiblePixels", candidate_visible, "候选可见像素"),
+        (
+            "minRetainedVisiblePixels",
+            "maxRetainedVisiblePixels",
+            retained_visible,
+            "保留可见像素",
+        ),
+        ("minAddedVisiblePixels", "maxAddedVisiblePixels", added_visible, "新增可见像素"),
+        (
+            "minRemovedVisiblePixels",
+            "maxRemovedVisiblePixels",
+            removed_visible,
+            "删除可见像素",
+        ),
+    )
+    for minimum_key, maximum_key, value, label in metric_values:
+        minimum_value = int(policy.get(minimum_key, 0))
+        maximum_value = int(
+            policy.get(maximum_key, original_image.width * original_image.height)
+        )
+        if not minimum_value <= value <= maximum_value:
+            raise ValueError(
+                f"{target} {label}异常：{value}，要求 {minimum_value}–{maximum_value}"
+            )
     for requirement, _, count in color_requirements:
         minimum_pixels = int(requirement.get("minPixels", 1))
         if count < minimum_pixels:
@@ -301,7 +363,8 @@ def validate_replacement_contract(
             )
     print(
         f"素材契约通过：{target}；可见改动 {changed} 像素，"
-        f"新增 Alpha {added_alpha} 像素，深色改动 {darkened} 像素"
+        f"新增/删除可见 {added_visible}/{removed_visible}，"
+        f"深色改动 {darkened} 像素"
     )
 
 

@@ -97,6 +97,8 @@
 | 受伤与死亡 | 370 点附加耐久由三张书套图表达，脱落后继续使用 270 点本体和基础死亡动画 |
 | 是否改 reanim | 不需要。三张书套严格保留 59×57 画布和原锚点即可；只有书页要独立飘落时才改粒子或动画 |
 
+三档书套已经分别建立 [`Zombie_cone1.contract.json`](../assets-src/game/z03/Zombie_cone1.contract.json)、[`Zombie_cone2.contract.json`](../assets-src/game/z03/Zombie_cone2.contract.json) 和 [`Zombie_cone3.contract.json`](../assets-src/game/z03/Zombie_cone3.contract.json)。它们保留下沿头部接触带，允许上半部从三角路障受控改成倾斜书套，并要求白页暴露量随损伤递增；只把路障涂成蓝色不能通过。
+
 ## 首批制作顺序
 
 1. 先把 P01 的眼镜合入头部，原尺寸替换并验证眨眼、发射和图鉴。

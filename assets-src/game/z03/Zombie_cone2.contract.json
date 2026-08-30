@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "z03-book-cover-damaged",
+  "description": "Turn the first damaged cone stage into a torn blue B-series book cover with more exposed white pages, while retaining the lower contact band and anchor.",
+  "pakPath": "reanim/Zombie_cone2.png",
+  "original": {
+    "sha256": "2D2D522BFCF885B9EB07A5E015F627CB71D863DC88F4D7DD0908E9BBA1A38C26",
+    "width": 59,
+    "height": 57,
+    "visiblePixels": 1642
+  },
+  "pixelPolicy": {
+    "alphaMode": "bounded",
+    "allowedChangeRect": {
+      "left": 0,
+      "top": 0,
+      "right": 58,
+      "bottom": 56
+    },
+    "protectedRects": [],
+    "preserveAlphaRects": [
+      {
+        "name": "head-contact-band",
+        "left": 0,
+        "top": 43,
+        "right": 58,
+        "bottom": 56
+      }
+    ],
+    "minChangedPixels": 1150,
+    "maxChangedPixels": 2500,
+    "minVisiblePixels": 1300,
+    "maxVisiblePixels": 1950,
+    "minRetainedVisiblePixels": 750,
+    "maxRetainedVisiblePixels": 1640,
+    "minAddedVisiblePixels": 150,
+    "maxAddedVisiblePixels": 700,
+    "minRemovedVisiblePixels": 200,
+    "maxRemovedVisiblePixels": 850,
+    "colorRequirements": [
+      {
+        "name": "deep-blue-cover",
+        "changedOnly": true,
+        "minPixels": 500,
+        "redMax": 85,
+        "greenMax": 150,
+        "blueMin": 100,
+        "alphaMin": 180
+      },
+      {
+        "name": "white-page-block",
+        "changedOnly": true,
+        "minPixels": 180,
+        "redMin": 185,
+        "greenMin": 180,
+        "blueMin": 165,
+        "alphaMin": 180
+      }
+    ]
+  }
+}

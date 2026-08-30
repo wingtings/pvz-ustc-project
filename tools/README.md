@@ -90,3 +90,11 @@ Get-ChildItem assets-src/game/p04/*.contract.json | ForEach-Object {
   python tools/check_game_asset.py --contract $_.FullName
 }
 ```
+
+Z03 三档书套使用相同的批量检查方式：
+
+```powershell
+Get-ChildItem assets-src/game/z03/*.contract.json | ForEach-Object {
+  python tools/check_game_asset.py --contract $_.FullName
+}
+```

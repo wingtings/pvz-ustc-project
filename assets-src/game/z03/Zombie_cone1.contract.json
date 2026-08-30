@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "z03-book-cover-intact",
+  "description": "Turn the intact traffic-cone helmet into a thick blue B-series exercise-book cover while retaining the lower head-contact band and the original 59x57 anchor.",
+  "pakPath": "reanim/Zombie_cone1.png",
+  "original": {
+    "sha256": "F534854721CDC25FE57DCB4862CC5FB583F3F6F282192A9E8378BD4960988B79",
+    "width": 59,
+    "height": 57,
+    "visiblePixels": 1582
+  },
+  "pixelPolicy": {
+    "alphaMode": "bounded",
+    "allowedChangeRect": {
+      "left": 0,
+      "top": 0,
+      "right": 58,
+      "bottom": 56
+    },
+    "protectedRects": [],
+    "preserveAlphaRects": [
+      {
+        "name": "head-contact-band",
+        "left": 0,
+        "top": 43,
+        "right": 58,
+        "bottom": 56
+      }
+    ],
+    "minChangedPixels": 1200,
+    "maxChangedPixels": 2500,
+    "minVisiblePixels": 1400,
+    "maxVisiblePixels": 2000,
+    "minRetainedVisiblePixels": 850,
+    "maxRetainedVisiblePixels": 1600,
+    "minAddedVisiblePixels": 180,
+    "maxAddedVisiblePixels": 700,
+    "minRemovedVisiblePixels": 100,
+    "maxRemovedVisiblePixels": 700,
+    "colorRequirements": [
+      {
+        "name": "deep-blue-cover",
+        "changedOnly": true,
+        "minPixels": 650,
+        "redMax": 85,
+        "greenMax": 150,
+        "blueMin": 100,
+        "alphaMin": 180
+      },
+      {
+        "name": "white-page-block",
+        "changedOnly": true,
+        "minPixels": 100,
+        "redMin": 185,
+        "greenMin": 180,
+        "blueMin": 165,
+        "alphaMin": 180
+      }
+    ]
+  }
+}
