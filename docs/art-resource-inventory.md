@@ -69,6 +69,8 @@
 | 受伤与死亡 | 耐久阈值由程序切换 `body`、`cracked1`、`cracked2`；裂纹位置必须连续，粒子第一轮复用 |
 | 是否改 reanim | 不需要。保持三张主体图均为 100×100，透明外边界和原锚点不变即可 |
 
+三档主体已经分别建立 [`Wallnut_body.contract.json`](../assets-src/game/p04/Wallnut_body.contract.json)、[`Wallnut_cracked1.contract.json`](../assets-src/game/p04/Wallnut_cracked1.contract.json) 和 [`Wallnut_cracked2.contract.json`](../assets-src/game/p04/Wallnut_cracked2.contract.json)。首版保留原 Alpha 缺口与脸部表演，只重绘外壳；契约要求灰褐墙面与蓝色编号牌同时存在，并防止三档资源串装。
+
 ### Z01 普通微积分
 
 | 项目 | 记录 |

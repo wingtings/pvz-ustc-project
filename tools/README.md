@@ -82,3 +82,11 @@ python tools/check_game_asset.py `
 ```
 
 PAK 替换记录可用 `contract` 字段引用同一份契约，构建时会再次执行相同门禁。
+
+批量检查 P04 出恭墙的完整、轻伤和重伤原件契约：
+
+```powershell
+Get-ChildItem assets-src/game/p04/*.contract.json | ForEach-Object {
+  python tools/check_game_asset.py --contract $_.FullName
+}
+```

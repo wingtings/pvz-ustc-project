@@ -76,6 +76,28 @@ python tools/check_game_asset.py `
 
 契约只保证“确实是在原件上做了受控的局部改动”。镜框是否圆润、书本是否像被叶片托住、缩放后是否清楚，仍要通过静态预览与实机动画截图验收。
 
+## P04 三档受伤契约
+
+出恭墙继续使用 `Wallnut.reanim.compiled` 的原轨道。完整、轻伤、重伤分别由三张 100×100 主体图表达：
+
+| 阶段 | 契约 | 原件可见像素 |
+| --- | --- | ---: |
+| 完整 | `assets-src/game/p04/Wallnut_body.contract.json` | 6766 |
+| 轻伤 | `assets-src/game/p04/Wallnut_cracked1.contract.json` | 6650 |
+| 重伤 | `assets-src/game/p04/Wallnut_cracked2.contract.json` | 6414 |
+
+三份契约各自绑定原件哈希，不能把完整阶段误装到受伤槽位。首版要求逐像素保留每档 Alpha，从而继承原来的椭圆轮廓、缺口和裂损递进；眼睛、嘴和眨眼表演区也禁止改色。外壳必须出现足量灰褐墙面，并在左下位置保留一块缩小后仍可辨认的蓝色编号牌。
+
+逐个检查三份基线契约：
+
+```powershell
+Get-ChildItem assets-src/game/p04/*.contract.json | ForEach-Object {
+  python tools/check_game_asset.py --contract $_.FullName
+}
+```
+
+绘制时应先完成无裂纹稿，再沿三张原图已有的缺口位置制作两档损伤。三档必须共享墙面纹理走向和编号牌位置，不能只做三张彼此无关的灰色贴图。
+
 ## 基线往返
 
 先运行不写文件的底层往返检查：

@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "p04-wallnut-cracked2-campus-wall",
+  "description": "Repaint the heavily damaged Wall-nut stage as a broken campus wall while preserving the original damage silhouette, face, and anchors.",
+  "pakPath": "reanim/Wallnut_cracked2.png",
+  "original": {
+    "sha256": "A7F68DE19400558089B6D1AEED2696C56BFF8CCB51965776FB93C46588D9666C",
+    "width": 100,
+    "height": 100,
+    "visiblePixels": 6414
+  },
+  "pixelPolicy": {
+    "alphaMode": "preserve",
+    "allowedChangeRect": {
+      "left": 8,
+      "top": 0,
+      "right": 93,
+      "bottom": 99
+    },
+    "protectedRects": [
+      {
+        "name": "left-eye",
+        "left": 33,
+        "top": 27,
+        "right": 56,
+        "bottom": 49
+      },
+      {
+        "name": "right-eye",
+        "left": 60,
+        "top": 27,
+        "right": 81,
+        "bottom": 49
+      },
+      {
+        "name": "mouth",
+        "left": 47,
+        "top": 47,
+        "right": 69,
+        "bottom": 66
+      }
+    ],
+    "minChangedPixels": 1600,
+    "maxChangedPixels": 5400,
+    "colorRequirements": [
+      {
+        "name": "grey-brown-wall",
+        "changedOnly": true,
+        "minPixels": 1050,
+        "redMin": 75,
+        "redMax": 185,
+        "greenMin": 70,
+        "greenMax": 175,
+        "blueMin": 60,
+        "blueMax": 160,
+        "alphaMin": 160
+      },
+      {
+        "name": "blue-number-plate",
+        "changedOnly": true,
+        "minPixels": 30,
+        "redMax": 80,
+        "greenMax": 160,
+        "blueMin": 100,
+        "alphaMin": 180
+      }
+    ]
+  }
+}

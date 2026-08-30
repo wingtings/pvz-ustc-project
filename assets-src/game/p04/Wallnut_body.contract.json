@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "p04-wallnut-intact-campus-wall",
+  "description": "Repaint the intact Wall-nut shell as a grey-brown campus wall while preserving its silhouette, face, and animation anchors.",
+  "pakPath": "reanim/Wallnut_body.png",
+  "original": {
+    "sha256": "5B38DC3365F2D1BA44AF43A979E328973C2B1AE9E1A4371857A00310518911BA",
+    "width": 100,
+    "height": 100,
+    "visiblePixels": 6766
+  },
+  "pixelPolicy": {
+    "alphaMode": "preserve",
+    "allowedChangeRect": {
+      "left": 8,
+      "top": 0,
+      "right": 93,
+      "bottom": 99
+    },
+    "protectedRects": [
+      {
+        "name": "left-eye",
+        "left": 33,
+        "top": 27,
+        "right": 56,
+        "bottom": 49
+      },
+      {
+        "name": "right-eye",
+        "left": 60,
+        "top": 27,
+        "right": 81,
+        "bottom": 49
+      },
+      {
+        "name": "mouth",
+        "left": 47,
+        "top": 47,
+        "right": 69,
+        "bottom": 66
+      }
+    ],
+    "minChangedPixels": 1800,
+    "maxChangedPixels": 5700,
+    "colorRequirements": [
+      {
+        "name": "grey-brown-wall",
+        "changedOnly": true,
+        "minPixels": 1200,
+        "redMin": 75,
+        "redMax": 185,
+        "greenMin": 70,
+        "greenMax": 175,
+        "blueMin": 60,
+        "blueMax": 160,
+        "alphaMin": 160
+      },
+      {
+        "name": "blue-number-plate",
+        "changedOnly": true,
+        "minPixels": 40,
+        "redMax": 80,
+        "greenMax": 160,
+        "blueMin": 100,
+        "alphaMin": 180
+      }
+    ]
+  }
+}
