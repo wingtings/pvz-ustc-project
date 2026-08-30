@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any
 
 import pak_assets
+import png_assets
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -84,6 +85,139 @@ def resolve_asset_source(value: str) -> Path:
     return path
 
 
+def load_asset_contract(value: str) -> dict[str, Any]:
+    path = resolve_asset_source(value)
+    contract = json.loads(path.read_text(encoding="utf-8"))
+    if contract.get("schemaVersion") != 1:
+        raise ValueError(f"素材契约只支持 schemaVersion 1：{path}")
+    return contract
+
+
+def _rect(value: Any, label: str, width: int, height: int) -> tuple[int, int, int, int]:
+    if not isinstance(value, dict):
+        raise ValueError(f"{label} 必须是坐标对象")
+    try:
+        left = int(value["left"])
+        top = int(value["top"])
+        right = int(value["right"])
+        bottom = int(value["bottom"])
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError(f"{label} 坐标无效") from error
+    if not (0 <= left <= right < width and 0 <= top <= bottom < height):
+        raise ValueError(f"{label} 超出 {width}×{height} 画布")
+    return left, top, right, bottom
+
+
+def _inside(x: int, y: int, rect: tuple[int, int, int, int]) -> bool:
+    left, top, right, bottom = rect
+    return left <= x <= right and top <= y <= bottom
+
+
+def validate_contract_baseline(
+    contract: dict[str, Any], target: str, original: bytes
+) -> png_assets.RgbaPng:
+    contract_target = normalize_name(str(contract.get("pakPath", "")))
+    if contract_target != target:
+        raise ValueError(
+            f"素材契约目标不匹配：清单 {target}，契约 {contract_target or '未填写'}"
+        )
+    original_spec = contract.get("original", {})
+    expected_hash = str(original_spec.get("sha256", "")).upper()
+    actual_hash = sha256(original)
+    if not expected_hash or actual_hash != expected_hash:
+        raise ValueError(f"{target} 契约原件哈希不匹配：{actual_hash}")
+
+    image = png_assets.decode_rgba8(original)
+    expected_size = (original_spec.get("width"), original_spec.get("height"))
+    if expected_size != (image.width, image.height):
+        raise ValueError(
+            f"{target} 契约原件尺寸不匹配：{image.width}×{image.height}"
+        )
+    expected_visible = original_spec.get("visiblePixels")
+    actual_visible = png_assets.visible_pixel_count(image)
+    if expected_visible is not None and int(expected_visible) != actual_visible:
+        raise ValueError(
+            f"{target} 契约可见像素不匹配：预期 {expected_visible}，实际 {actual_visible}"
+        )
+
+    policy = contract.get("pixelPolicy")
+    if not isinstance(policy, dict):
+        raise ValueError(f"{target} 契约缺少 pixelPolicy")
+    _rect(policy.get("allowedChangeRect"), "allowedChangeRect", image.width, image.height)
+    for index, protected in enumerate(policy.get("protectedRects", []), start=1):
+        _rect(protected, f"protectedRects[{index}]", image.width, image.height)
+    minimum = int(policy.get("minChangedPixels", 1))
+    maximum = int(policy.get("maxChangedPixels", image.width * image.height))
+    if not (0 < minimum <= maximum <= image.width * image.height):
+        raise ValueError(f"{target} 契约改动像素范围无效")
+    return image
+
+
+def validate_replacement_contract(
+    contract: dict[str, Any], target: str, original: bytes, source: bytes
+) -> None:
+    original_image = validate_contract_baseline(contract, target, original)
+    source_image = png_assets.decode_rgba8(source)
+    if (source_image.width, source_image.height) != (
+        original_image.width,
+        original_image.height,
+    ):
+        raise ValueError(
+            f"{target} 契约画布不一致：原件 {original_image.width}×{original_image.height}，"
+            f"替换件 {source_image.width}×{source_image.height}"
+        )
+
+    policy = contract["pixelPolicy"]
+    allowed = _rect(
+        policy["allowedChangeRect"],
+        "allowedChangeRect",
+        original_image.width,
+        original_image.height,
+    )
+    protected = [
+        _rect(value, f"protectedRects[{index}]", original_image.width, original_image.height)
+        for index, value in enumerate(policy.get("protectedRects", []), start=1)
+    ]
+    preserve_alpha = bool(policy.get("preserveAlpha", True))
+    changed = 0
+    darkened = 0
+    darkening_threshold = int(policy.get("darkeningThreshold", 0))
+
+    for y in range(original_image.height):
+        for x in range(original_image.width):
+            old = png_assets.pixel(original_image, x, y)
+            new = png_assets.pixel(source_image, x, y)
+            if preserve_alpha and old[3] != new[3]:
+                raise ValueError(f"{target} 改变了 Alpha 蒙版：({x}, {y})")
+            # RGB stored under a fully transparent pixel does not affect the sprite.
+            visible_change = old[3] > 0 and old[:3] != new[:3]
+            if not visible_change:
+                continue
+            if not _inside(x, y, allowed):
+                raise ValueError(f"{target} 在允许区域外改色：({x}, {y})")
+            if any(_inside(x, y, rect) for rect in protected):
+                raise ValueError(f"{target} 改动了受保护的眼睛核心：({x}, {y})")
+            changed += 1
+            if sum(old[:3]) - sum(new[:3]) >= darkening_threshold:
+                darkened += 1
+
+    minimum = int(policy["minChangedPixels"])
+    maximum = int(policy["maxChangedPixels"])
+    if not minimum <= changed <= maximum:
+        raise ValueError(
+            f"{target} 可见改动像素数异常：{changed}，要求 {minimum}–{maximum}"
+        )
+    minimum_darkened = int(policy.get("minDarkenedPixels", 0))
+    if darkened < minimum_darkened:
+        raise ValueError(
+            f"{target} 深色镜框像素不足：{darkened}，至少 {minimum_darkened}"
+        )
+    print(
+        f"素材契约通过：{target}；可见改动 {changed} 像素，"
+        f"其中深色镜框 {darkened} 像素"
+    )
+
+
 def require_dist_output(path: Path) -> None:
     resolved = path.resolve()
     if resolved != DIST_ROOT and DIST_ROOT not in resolved.parents:
@@ -137,6 +271,10 @@ def load_replacements(
                     f"{target} 画布尺寸不一致：原件 {original_size[0]}×{original_size[1]}，"
                     f"替换件 {source_size[0]}×{source_size[1]}"
                 )
+        contract_path = replacement.get("contract")
+        if contract_path:
+            contract = load_asset_contract(contract_path)
+            validate_replacement_contract(contract, target, original, source)
         loaded[target] = source
         print(f"替换源通过：{target} <- {source_path.relative_to(ROOT)}")
     return loaded

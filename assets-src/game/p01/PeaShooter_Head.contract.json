@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "p01-peashooter-head-round-glasses",
+  "description": "Add thin round academic glasses while preserving the original Peashooter head, silhouette, anchors, eyes, and transparent padding.",
+  "pakPath": "reanim/PeaShooter_Head.png",
+  "original": {
+    "sha256": "89489D1DF066B4C89541455525447220437C5913F0F1E3E850A7A6116F241882",
+    "width": 70,
+    "height": 65,
+    "visiblePixels": 3332
+  },
+  "pixelPolicy": {
+    "preserveAlpha": true,
+    "allowedChangeRect": {
+      "left": 34,
+      "top": 7,
+      "right": 65,
+      "bottom": 32
+    },
+    "protectedRects": [
+      {
+        "name": "near-eye-core",
+        "left": 43,
+        "top": 21,
+        "right": 46,
+        "bottom": 25
+      },
+      {
+        "name": "far-eye-core",
+        "left": 54,
+        "top": 16,
+        "right": 57,
+        "bottom": 19
+      }
+    ],
+    "minChangedPixels": 24,
+    "maxChangedPixels": 260,
+    "darkeningThreshold": 60,
+    "minDarkenedPixels": 18
+  }
+}

@@ -39,6 +39,8 @@
 
 首张方向稿见[绿圈科豆概念稿](../assets-src/concepts/p01-greencircle-pea-concept.png)，生成记录与完整提示见[概念稿说明](../assets-src/concepts/p01-greencircle-pea-concept.md)。它是造型参考，不是能直接覆盖 70×65 头部贴图的成品。
 
+头部原件的尺寸、哈希、Alpha 蒙版、眼镜允许区域和瞳孔保护区已经写入 [`PeaShooter_Head.contract.json`](../assets-src/game/p01/PeaShooter_Head.contract.json)。正式候选图必须通过该契约，不能把放大重绘或不透明背景缩回 70×65 冒充原尺寸修改。
+
 ### P02 学习蝌蝻
 
 | 项目 | 记录 |

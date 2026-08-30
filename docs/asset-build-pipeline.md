@@ -1,6 +1,6 @@
 # 原创素材 PAK 开发构建
 
-状态：可重复构建链已完成；尚无原尺寸角色替换件进入游戏。
+状态：可重复构建链和 P01 头部像素契约已完成；尚无原尺寸角色替换件进入游戏。
 
 验证日期：2026-08-30
 
@@ -19,6 +19,39 @@
 - 替换目标必须在 PAK 中存在且只能声明一次。
 - 输出只能写到被 Git 忽略的 `dist`，不能覆盖 `main.pak`。
 - 重建后会再次解析 PAK，确认 2413 个条目、尺寸和数据边界仍然成立。
+
+## P01 头部像素契约
+
+`assets-src/game/p01/PeaShooter_Head.contract.json` 把“在原版素材上局部修改”写成了机器可检查的条件，而不是只靠肉眼判断。
+
+| 条件 | 当前门禁 |
+| --- | --- |
+| PAK 目标 | `reanim/PeaShooter_Head.png` |
+| 原件 | SHA-256 `89489D1DF066B4C89541455525447220437C5913F0F1E3E850A7A6116F241882` |
+| 格式与画布 | 8 位非隔行 RGBA PNG，70×65 |
+| 轮廓 | 4550 个像素的 Alpha 值必须逐一保持不变 |
+| 允许改色范围 | 双眼周围 `x=34..65, y=7..32` |
+| 保护范围 | 两只眼睛的瞳孔核心不得改色 |
+| 改动规模 | 24–260 个可见像素 |
+| 镜框要求 | 至少 18 个像素相对原件明显变暗 |
+
+这里的 Alpha 门禁保留全部半透明抗锯齿值，不只是要求四角透明。允许区域之外的可见 RGB 也必须与原件一致，因此放大重绘、整体调色、改变脸型、棋盘格背景和误伤喷口都会被拒绝。
+
+只检查契约与 PAK 原件是否吻合：
+
+```powershell
+python tools/check_game_asset.py --contract assets-src/game/p01/PeaShooter_Head.contract.json
+```
+
+完成候选图后再检查实际像素；候选图必须位于 `assets-src`：
+
+```powershell
+python tools/check_game_asset.py `
+  --contract assets-src/game/p01/PeaShooter_Head.contract.json `
+  --candidate assets-src/game/p01/PeaShooter_Head.png
+```
+
+契约只保证“确实是在原件上做了受控的眼镜改动”。镜框是否圆润、缩放后是否清楚，仍要通过静态预览与实机动画截图验收。
 
 ## 基线往返
 
@@ -47,7 +80,8 @@ python tools/build_pak_overlay.py --build patches/manifests/v0.5-pak-roundtrip.j
   "source": "assets-src/game/p01/PeaShooter_Head.png",
   "sha256": "替换件的 SHA-256",
   "originalSha256": "原 70×65 头部的 SHA-256",
-  "preserveCanvas": true
+  "preserveCanvas": true,
+  "contract": "assets-src/game/p01/PeaShooter_Head.contract.json"
 }
 ```
 
@@ -56,7 +90,7 @@ python tools/build_pak_overlay.py --build patches/manifests/v0.5-pak-roundtrip.j
 ## 绿圈科豆如何进入这条链
 
 1. 以[概念稿](../assets-src/concepts/p01-greencircle-pea-concept.png)确定眼镜、蓝书和蓝白书签的造型。
-2. 单独制作 70×65 的带眼镜头部，不移动原眼睛、嘴和喷口锚点。
+2. 单独制作 70×65 的带眼镜头部，不移动原眼睛、嘴和喷口锚点，并通过 P01 像素契约。
 3. 书本先作为独立透明工作件，确认能否合入前叶画布；放不下时再修改 reanim，而不是缩成看不清的一团。
 4. 为每个游戏部件记录原图哈希、新图哈希、尺寸和目标 PAK 路径。
 5. 用新清单生成 `dist` PAK，再进行待机、眨眼、发射、选卡和图鉴实机检查。
