@@ -210,6 +210,22 @@ python tools/build_p01_sprites.py --build --preview --check
 
 `--preview` 会在 `.work/previews/p01-sprites-10x.png` 生成十倍最近邻静态预览。预览和两张合成候选都属于本地测试产物；仓库保存的是差分配方、契约、候选哈希和构建清单。
 
+## P02 差分生成
+
+P02 沿用同样的原件隔离策略。下面的命令从本地 PAK 生成专注头部与两组便签花瓣，并把十倍静态预览写入 `.work`：
+
+```powershell
+python tools/build_p02_sprites.py --build --preview --check
+```
+
+| 部件 | 画布 | 候选 SHA-256 | 契约结果 |
+| --- | ---: | --- | --- |
+| `SunFlower_head.png` | 57×43 | `AA1798442092C73A0FF301DB46BFFB2D5B9F90543987B5E328F46592223D564B` | 改动 104 像素，眼睛核心与 Alpha 不变 |
+| `SunFlower_toppetals.png` | 16×10 | `F7689588A98A398BD4B508F8D82ACAAB135D87115E862B6B85E13CF2599BC67A` | 137 个可见像素改为蓝白便签，Alpha 不变 |
+| `SunFlower_bottompetals.png` | 19×15 | `598695E935B0D099A9463BE1F366E47355BC34A145ADC679BA3DA8F58F0D3604` | 211 个可见像素改为蓝白便签，Alpha 不变 |
+
+头部只加入蓝色学习头带和向内收的专注眉形，暖色花盘、眼睛、嘴和眨眼覆盖层继续使用原版。上下成组花瓣改成蓝白纸张，其余独立花瓣保持黄色，避免经济单位在战场缩放下变成一团冷色。
+
 ## 正式替换清单格式
 
 原尺寸候选完成后，在替换清单里加入类似记录：
@@ -235,6 +251,15 @@ python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-first-ingam
 ```
 
 结果包含 2413 个资源，只替换两项，SHA-256 为 `137121F3317FD710BEE0A918A73C1A8A3666E9363C920CA64E08D8276DBB96EB`。
+
+累计 P01 与 P02 的清单为 `patches/manifests/v0.5-p01-p02-ingame.json`，共替换五项：
+
+```powershell
+python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-p02-ingame.json
+python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-ingame.json
+```
+
+累计输出 SHA-256 为 `AE0C1C67441AA6CD93161DF1C327B319B8EF1B6B5C202AD08B78F74F94E051BA`。
 
 ## 绿圈科豆如何进入这条链
 

@@ -61,6 +61,8 @@
 
 首轮不改全部 29 张资源。当前战斗 reanim 只引用基础头部而不引用 PAK 中的 `head_sing1..5` 和 `head_wink`；因此先用 [`SunFlower_head.contract.json`](../assets-src/game/p02/SunFlower_head.contract.json) 保持眼睛与眨眼对位，在眉形和脸侧加入专注感、科大蓝小标记。顶部与底部成组花瓣分别由 [`SunFlower_toppetals.contract.json`](../assets-src/game/p02/SunFlower_toppetals.contract.json) 和 [`SunFlower_bottompetals.contract.json`](../assets-src/game/p02/SunFlower_bottompetals.contract.json) 改成蓝白便签，其余花瓣保留暖黄。
 
+当前差分稿把科大蓝标记做成窄学习头带，并用两条向内收的眉形表达专注；上下成组花瓣分别采用白纸/蓝纸和蓝纸/白纸分区。三张候选已通过契约并进入累计 P01+P02 PAK，但尚未完成战斗摆动、眨眼覆盖和生产瞬间的实机观察。
+
 ### P04 出恭墙
 
 | 项目 | 记录 |

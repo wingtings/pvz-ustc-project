@@ -61,6 +61,14 @@ python tools/build_p01_sprites.py --build --preview --check
 
 两张候选 PNG 和预览都被 Git 忽略。仓库只保存局部像素配方、输出哈希和契约；不要手工把生成 PNG 强制加入版本控制。
 
+生成 P02 专注头部和两组蓝白便签花瓣：
+
+```powershell
+python tools/build_p02_sprites.py --build --preview --check
+```
+
+这三张合成候选同样被 Git 忽略。
+
 验证 PAK 在没有替换件时能逐字节往返：
 
 ```powershell
@@ -79,6 +87,13 @@ python tools/build_pak_overlay.py --build patches/manifests/v0.5-pak-roundtrip.j
 ```powershell
 python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-first-ingame.json
 python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-first-ingame.json
+```
+
+生成累计 P01+P02 五替换开发包：
+
+```powershell
+python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-p02-ingame.json
+python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-ingame.json
 ```
 
 正式素材清单只允许引用 `assets-src` 下的原创替换件。格式与尺寸门禁见 [原创素材 PAK 构建](../docs/asset-build-pipeline.md)。
