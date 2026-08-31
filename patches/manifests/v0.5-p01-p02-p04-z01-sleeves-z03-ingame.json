@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "id": "v0.5-p01-p02-p04-z01-sleeves-z03-ingame",
+  "description": "Cumulative PAK with P01, P02, P04, Z01 calculus-paper body and three sleeve parts, plus Z03 book-helmet stages.",
+  "baseline": {
+    "path": "main.pak",
+    "sha256": "3B5291C6600076AAF1791AE1FB2DBF247290A23E903D1D376413DA17358E049D"
+  },
+  "output": {
+    "path": "dist/v0.5/main-p01-p02-p04-z01-sleeves-z03-ingame.pak",
+    "sha256": "8DBD88B7BE5A198F7B6D5308A4DDF5D3AE344B30DCD3DDC0D0002CC5506AA3D2"
+  },
+  "replacements": [
+    {
+      "pakPath": "reanim/PeaShooter_Head.png",
+      "source": "assets-src/game/p01/PeaShooter_Head.png",
+      "sha256": "DE8EBE694C2AEF2D477EA3866332B32B5BC11F2F03B170EE2C47BDACBA7B5610",
+      "originalSha256": "89489D1DF066B4C89541455525447220437C5913F0F1E3E850A7A6116F241882",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/p01/PeaShooter_Head.contract.json"
+    },
+    {
+      "pakPath": "reanim/PeaShooter_frontleaf.png",
+      "source": "assets-src/game/p01/PeaShooter_frontleaf.png",
+      "sha256": "5814BE53B1EE2A122726FD1EE6E83C43A9599B529BA2E00B14B973BA4AC3624C",
+      "originalSha256": "26CE3AFA0788A624D8A1747DAB2BA51223489A04AED61F08A453C0D073BFBDDD",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/p01/PeaShooter_frontleaf.contract.json"
+    },
+    {
+      "pakPath": "reanim/SunFlower_head.png",
+      "source": "assets-src/game/p02/SunFlower_head.png",
+      "sha256": "AA1798442092C73A0FF301DB46BFFB2D5B9F90543987B5E328F46592223D564B",
+      "originalSha256": "3813EA881B25465DEC25E75B7FA2A20FDE4B421E7DD7C3B1FFABF4EB1FD61FB3",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/p02/SunFlower_head.contract.json"
+    },
+    {
+      "pakPath": "reanim/SunFlower_toppetals.png",
+      "source": "assets-src/game/p02/SunFlower_toppetals.png",
+      "sha256": "F7689588A98A398BD4B508F8D82ACAAB135D87115E862B6B85E13CF2599BC67A",
+      "originalSha256": "DADBD5ED1F98867E35A29164F83E735C14554ADBE1E62A41C8588E07017C1B07",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/p02/SunFlower_toppetals.contract.json"
+    },
+    {
+      "pakPath": "reanim/SunFlower_bottompetals.png",
+      "source": "assets-src/game/p02/SunFlower_bottompetals.png",
+      "sha256": "598695E935B0D099A9463BE1F366E47355BC34A145ADC679BA3DA8F58F0D3604",
+      "originalSha256": "034CE4342F4C972ECF9E5DF758164AC35E1E7B96972FCCE022BA992C6E5256FE",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/p02/SunFlower_bottompetals.contract.json"
+    },
+    {
+      "pakPath": "reanim/Wallnut_body.png",
+      "source": "assets-src/game/p04/Wallnut_body.png",
+      "sha256": "182D862C209D1F4B1A26D45563BC04E49AE7BC1E1D4C96F9CAC83BA64252EE0F",
+      "originalSha256": "5B38DC3365F2D1BA44AF43A979E328973C2B1AE9E1A4371857A00310518911BA",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/p04/Wallnut_body.contract.json"
+    },
+    {
+      "pakPath": "reanim/Wallnut_cracked1.png",
+      "source": "assets-src/game/p04/Wallnut_cracked1.png",
+      "sha256": "F649BAE9218B758CA1DCDA0E4E47CB5AD6D4383BF7521CB03AAD0A2FA7587113",
+      "originalSha256": "13C3533479147545823144AC5816FBA137F5900E6065E38B7C4A4CAA64A4DACD",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/p04/Wallnut_cracked1.contract.json"
+    },
+    {
+      "pakPath": "reanim/Wallnut_cracked2.png",
+      "source": "assets-src/game/p04/Wallnut_cracked2.png",
+      "sha256": "C2F61BA4EA797F9845FA1040A73C17C0A1727C164AD7572FA28F09C349C4DF6B",
+      "originalSha256": "A7F68DE19400558089B6D1AEED2696C56BFF8CCB51965776FB93C46588D9666C",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/p04/Wallnut_cracked2.contract.json"
+    },
+    {
+      "pakPath": "reanim/Zombie_body.png",
+      "source": "assets-src/game/z01/Zombie_body.png",
+      "sha256": "DA899F703AA5322A9042281A2DE78522556D737F7D4FD456500EEA85917D3A63",
+      "originalSha256": "7A455D5AA3BC3DFCFBD5C8D7E16C01948BB3EE3AB210894B446D8ADD04CE194D",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/z01/Zombie_body.contract.json"
+    },
+    {
+      "pakPath": "reanim/Zombie_innerarm_upper.png",
+      "source": "assets-src/game/z01/Zombie_innerarm_upper.png",
+      "sha256": "1D5EBB886617F53761D2FB7E49E39C5116544AF5530DBCFBDCFCB3B051A1E41D",
+      "originalSha256": "343CA5D76242394B329F49F3FA82C2AC1EF478504CF5B59B54090E9F7324DFB6",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/z01/Zombie_innerarm_upper.contract.json"
+    },
+    {
+      "pakPath": "reanim/Zombie_outerarm_upper.png",
+      "source": "assets-src/game/z01/Zombie_outerarm_upper.png",
+      "sha256": "41BD9C001C6F58BF88FEE39F8BCF739E4E3C7716D3524C9EBE9DEC559AAB9ECB",
+      "originalSha256": "27B13FB81C6835F66F90CC51712F1622A6D955EAC91301FAC15A7E7BC2D8634B",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/z01/Zombie_outerarm_upper.contract.json"
+    },
+    {
+      "pakPath": "reanim/Zombie_outerarm_upper2.png",
+      "source": "assets-src/game/z01/Zombie_outerarm_upper2.png",
+      "sha256": "D0F2143D926AD4E7DCABFCB26E17D45CD9C80C6780CFFB75AC199084F13B8CD5",
+      "originalSha256": "5D1363D989A5F988ACFE50C49188971D786FFA506CCF43BF30120187A1A72ADC",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/z01/Zombie_outerarm_upper2.contract.json"
+    },
+    {
+      "pakPath": "reanim/Zombie_cone1.png",
+      "source": "assets-src/game/z03/Zombie_cone1.png",
+      "sha256": "371FA2B9BDAA9F99B6C5855C5A5965307CB0CDC6E2BD9D49ABC339B1F8451A3B",
+      "originalSha256": "F534854721CDC25FE57DCB4862CC5FB583F3F6F282192A9E8378BD4960988B79",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/z03/Zombie_cone1.contract.json"
+    },
+    {
+      "pakPath": "reanim/Zombie_cone2.png",
+      "source": "assets-src/game/z03/Zombie_cone2.png",
+      "sha256": "6974580329C9F460624624A20A16662D1761F2AFC1D29A3E8C367EB92EC97C07",
+      "originalSha256": "2D2D522BFCF885B9EB07A5E015F627CB71D863DC88F4D7DD0908E9BBA1A38C26",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/z03/Zombie_cone2.contract.json"
+    },
+    {
+      "pakPath": "reanim/Zombie_cone3.png",
+      "source": "assets-src/game/z03/Zombie_cone3.png",
+      "sha256": "E8D9AA0A07C30429D7AF7DA1F90FD3D94E34C1FDB46E34C086C05F2E92E937C9",
+      "originalSha256": "51FB258E0974447418AE845A2284DE55957DD8199D18AB7D1DF3F3CAA36FA30C",
+      "preserveCanvas": true,
+      "contract": "assets-src/game/z03/Zombie_cone3.contract.json"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "z01-zombie-innerarm-upper-calculus-paper",
+  "description": "Repaint the inner upper sleeve as aged calculus paper while preserving the original 15x25 alpha, near-black ink outline, and shared reanim anchor.",
+  "pakPath": "reanim/Zombie_innerarm_upper.png",
+  "original": {
+    "sha256": "343CA5D76242394B329F49F3FA82C2AC1EF478504CF5B59B54090E9F7324DFB6",
+    "width": 15,
+    "height": 25,
+    "visiblePixels": 256
+  },
+  "pixelPolicy": {
+    "alphaMode": "preserve",
+    "allowedChangeRect": {
+      "left": 0,
+      "top": 0,
+      "right": 14,
+      "bottom": 24
+    },
+    "protectedRects": [],
+    "protectedOriginalColors": [
+      {
+        "name": "near-black-sleeve-ink",
+        "redMax": 35,
+        "greenMax": 30,
+        "blueMax": 25,
+        "alphaMin": 80
+      }
+    ],
+    "minChangedPixels": 140,
+    "maxChangedPixels": 180,
+    "colorRequirements": [
+      {
+        "name": "aged-paper",
+        "changedOnly": true,
+        "minPixels": 110,
+        "redMin": 155,
+        "redMax": 235,
+        "greenMin": 145,
+        "greenMax": 225,
+        "blueMin": 125,
+        "blueMax": 205,
+        "alphaMin": 140
+      },
+      {
+        "name": "pencil-grey",
+        "changedOnly": true,
+        "minPixels": 12,
+        "redMin": 75,
+        "redMax": 155,
+        "greenMin": 75,
+        "greenMax": 155,
+        "blueMin": 70,
+        "blueMax": 150,
+        "alphaMin": 140
+      },
+      {
+        "name": "correction-red",
+        "changedOnly": true,
+        "minPixels": 4,
+        "redMin": 145,
+        "greenMax": 105,
+        "blueMax": 95,
+        "alphaMin": 160
+      }
+    ]
+  }
+}

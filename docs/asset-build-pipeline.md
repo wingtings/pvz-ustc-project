@@ -167,9 +167,21 @@ python tools/build_z01_sprites.py --build --preview --check
 
 脚本先按原明暗把棕色衣料映射成三档米黄纸色，再在纸面范围内加入 `LIM`、极限式布局、铅笔横线、红色勾号与下划线。整张 Alpha、受保护深色线稿和原版红领带逐像素不变。`--preview` 生成 `.work/previews/z01-body-before-after-10x.png`；候选与预览都被 Git 忽略，仓库只保存生成配方、契约、哈希、测试和[静态验收记录](../tests/checklists/v0.5-z01-static.md)。
 
+### Z01 袖片扩展
+
+12 项包的图鉴观察确认躯干后片接入安全，也暴露了前后上臂仍为棕色。第二个 Z01 静态切片因此只加入 `Zombie_innerarm_upper.png`、`Zombie_outerarm_upper.png` 与 `Zombie_outerarm_upper2.png`，不动下臂、手掌和 reanim。袖片使用比躯干更窄的近黑墨线保护阈值，让棕色阴影能转为纸色，同时保留断臂替代图的白色骨口：
+
+| 部件 | 画布 | 候选 SHA-256 | 改动 | 旧纸 / 铅笔 / 批改红 |
+| --- | ---: | --- | ---: | ---: |
+| `Zombie_innerarm_upper.png` | 15×25 | `1D5EBB886617F53761D2FB7E49E39C5116544AF5530DBCFBDCFCB3B051A1E41D` | 157 | 130 / 15 / 5 |
+| `Zombie_outerarm_upper.png` | 17×35 | `41BD9C001C6F58BF88FEE39F8BCF739E4E3C7716D3524C9EBE9DEC559AAB9ECB` | 397 | 308 / 30 / 8 |
+| `Zombie_outerarm_upper2.png` | 17×35 | `D0F2143D926AD4E7DCABFCB26E17D45CD9C80C6780CFFB75AC199084F13B8CD5` | 367 | 266 / 24 / 8 |
+
+三张候选的 Alpha、新增可见、删除可见和受保护墨线改动均为 0。十二倍预览写到 `.work/previews/z01-sleeves-before-after-12x.png`；详细静态门槛见 [`v0.5-z01-sleeves-static.md`](../tests/checklists/v0.5-z01-sleeves-static.md)。这套袖片尚未继承 12 项包的图鉴结论，必须在新累计包中重新观察。
+
 ## 首批契约注册表
 
-`patches/manifests/v0.5-first-slice-contracts.json` 是 P01、P02、P04、Z01、Z03 的完整注册表，当前包含 12 份契约和 12 个唯一 PAK 目标。它不是候选贴图清单，不会生成带替换资源的 PAK；作用是证明首批门禁本身没有漏项。
+`patches/manifests/v0.5-first-slice-contracts.json` 是 P01、P02、P04、Z01、Z03 的完整注册表，当前包含 15 份契约和 15 个唯一 PAK 目标。它不是候选贴图清单，不会生成带替换资源的 PAK；作用是证明首批门禁本身没有漏项。
 
 一条命令同时检查：
 
@@ -331,6 +343,15 @@ python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-z01
 ```
 
 输出仍有 2413 个资源，SHA-256 为 `B89F7ACAB46F94EAD882D4AF81F08F6746FB08A3F9AA34E3F38D5DC11B4C76DD`。12 项资源均通过各自的原件哈希和像素契约，Z01 静态结果见 [`v0.5-z01-static.md`](../tests/checklists/v0.5-z01-static.md)。无装备 Z01 与完整书套 Z03 的图鉴层级后来也已实机通过，见 [`v0.5-z01-almanac.md`](../tests/checklists/v0.5-z01-almanac.md)；书套受损与脱落、行走、啃食、断臂、死亡和游泳动画仍不能用构建或图鉴结果代替。
+
+再加入三张 Z01 袖片后的当前累计清单为 `patches/manifests/v0.5-p01-p02-p04-z01-sleeves-z03-ingame.json`，共替换十五项：
+
+```powershell
+python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-p02-p04-z01-sleeves-z03-ingame.json
+python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-z01-sleeves-z03-ingame.json
+```
+
+输出仍有 2413 个资源，SHA-256 为 `8DBD88B7BE5A198F7B6D5308A4DDF5D3AE344B30DCD3DDC0D0002CC5506AA3D2`。15 项资源和 15 份首批契约均通过静态门禁；新袖片尚未做图鉴、行走、啃食、断臂和装备受损回归。
 
 ## 绿圈科豆如何进入这条链
 

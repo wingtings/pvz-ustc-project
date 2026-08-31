@@ -85,13 +85,13 @@ python tools/build_z03_sprites.py --build --preview --check
 
 脚本保留 59×57 画布和下沿头部接触带，受损越重，封面越破、露出的浅色页块越多。三张候选和预览同样只留在本地。
 
-生成 Z01 旧卷面共享躯干，并输出十倍前后对照：
+生成 Z01 旧卷面共享躯干和三张上臂袖片，并输出躯干十倍、袖片十二倍前后对照：
 
 ```powershell
 python tools/build_z01_sprites.py --build --preview --check
 ```
 
-脚本保留 53×63 画布、整张 Alpha、深色外轮廓、衣物破口和原版红领带，只把棕色西装面改成带极限式、铅笔痕迹与红色批改的旧卷面。候选会影响所有复用基础僵尸躯干的槽位，因此静态通过后仍要单独做装备存在、受损和脱落回归。
+脚本保留 53×63 躯干与 15×25、17×35、17×35 三张袖片的画布和整张 Alpha。躯干保护深色外轮廓、衣物破口与原版红领带；袖片保护近黑墨线和断臂白色骨口，只把棕色衣料改成带铅笔痕迹与红色批改的旧卷面。四张候选都会影响复用基础僵尸骨架的槽位，因此静态通过后仍要单独做断臂、装备存在、受损和脱落回归。
 
 验证 PAK 在没有替换件时能逐字节往返：
 
@@ -141,6 +141,13 @@ python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-p02-p04-z01
 python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-z01-z03-ingame.json
 ```
 
+生成再加入 Z01 三张卷面袖片的十五替换开发包：
+
+```powershell
+python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-p02-p04-z01-sleeves-z03-ingame.json
+python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-z01-sleeves-z03-ingame.json
+```
+
 正式素材清单只允许引用 `assets-src` 下的原创替换件。格式与尺寸门禁见 [原创素材 PAK 构建](../docs/asset-build-pipeline.md)。
 
 检查 P01 眼镜头部的原件契约；加入 `--candidate` 后还会逐像素检查候选图：
@@ -182,18 +189,20 @@ Get-ChildItem assets-src/game/p02/*.contract.json | ForEach-Object {
 }
 ```
 
-检查 Z01 共享躯干的旧卷面契约；加入候选路径后还会执行像素门禁：
+批量检查 Z01 共享躯干和三张袖片的旧卷面契约与本地候选：
 
 ```powershell
-python tools/check_game_asset.py --contract assets-src/game/z01/Zombie_body.contract.json
-python tools/check_game_asset.py `
-  --contract assets-src/game/z01/Zombie_body.contract.json `
-  --candidate assets-src/game/z01/Zombie_body.png
+Get-ChildItem assets-src/game/z01/*.contract.json | ForEach-Object {
+  $candidate = $_.FullName -replace '\.contract\.json$', '.png'
+  python tools/check_game_asset.py `
+    --contract $_.FullName `
+    --candidate $candidate
+}
 ```
 
-该契约还会保护原图中所有深色外轮廓与破损线条；这类保护由 `protectedOriginalColors` 描述，不依赖固定矩形位置。
+躯干契约保护原图中所有深色外轮廓与破损线条；袖片契约保护更深的近黑墨线，同时允许棕色阴影转成纸色。两类保护都由 `protectedOriginalColors` 描述，不依赖固定矩形位置。
 
-一次检查首批五槽位全部 12 份契约，并确认没有未登记文件或重复 PAK 目标：
+一次检查首批五槽位全部 15 份契约，并确认没有未登记文件或重复 PAK 目标：
 
 ```powershell
 python tools/check_game_asset.py `

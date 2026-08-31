@@ -28,7 +28,7 @@ class AssetContractRegistryTests(unittest.TestCase):
         contract_count, slot_count = checker.validate_registry(
             self.registry, self.payloads
         )
-        self.assertEqual(contract_count, 12)
+        self.assertEqual(contract_count, 15)
         self.assertEqual(slot_count, 5)
 
     def test_registry_paths_equal_discovered_contract_paths(self) -> None:

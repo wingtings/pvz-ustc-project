@@ -56,6 +56,21 @@
       "contract": "assets-src/game/z01/Zombie_body.contract.json"
     },
     {
+      "slot": "Z01",
+      "role": "calculus-paper-inner-sleeve",
+      "contract": "assets-src/game/z01/Zombie_innerarm_upper.contract.json"
+    },
+    {
+      "slot": "Z01",
+      "role": "calculus-paper-outer-sleeve",
+      "contract": "assets-src/game/z01/Zombie_outerarm_upper.contract.json"
+    },
+    {
+      "slot": "Z01",
+      "role": "calculus-paper-detached-sleeve",
+      "contract": "assets-src/game/z01/Zombie_outerarm_upper2.contract.json"
+    },
+    {
       "slot": "Z03",
       "role": "intact-book-cover",
       "contract": "assets-src/game/z03/Zombie_cone1.contract.json"
