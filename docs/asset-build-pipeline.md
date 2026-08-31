@@ -1,6 +1,6 @@
 # 原创素材 PAK 开发构建
 
-状态：可重复构建链已完成；P01、P02、P04、Z01、Z03 共十六张原尺寸候选已通过契约并进入累计 PAK。绿色圆圈通过白天飞行与命中，Z01 袖片通过白天行走和装备受击层级，其余首批对象也有各自范围内的实机切片。
+状态：可重复构建链已完成；P01、P02、P04、Z01、Z03 共十六张原尺寸候选已通过契约并进入累计 PAK。绿色圆圈通过飞行、命中、双发与三线复用、暖气片火化，Z01 袖片通过白天行走和装备受击层级，其余首批对象也有各自范围内的实机切片。
 
 验证日期：2026-08-31
 
@@ -372,7 +372,7 @@ python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-green-circl
 python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-green-circle-p02-p04-z01-sleeves-z03-ingame.json
 ```
 
-输出仍有 2413 个资源，SHA-256 为 `9DB70BB44031EF6B12ED92FF9F79BC9737B382D2F0D0383607DA1AAABAADB90B`。16 份契约、候选哈希和 PAK 重建都已通过。白天冒险切片也确认绿色圆圈能保持透明中心飞行，并在命中后触发原版反馈；Z01 袖片在基础行走和带书套 Z03 受击时没有跳层。火化、家族复用、啃食、断臂、死亡和跨场景仍待观察，见 [`v0.5-p01-z01-z03-runtime.md`](../tests/checklists/v0.5-p01-z01-z03-runtime.md)。
+输出仍有 2413 个资源，SHA-256 为 `9DB70BB44031EF6B12ED92FF9F79BC9737B382D2F0D0383607DA1AAABAADB90B`。16 份契约、候选哈希和 PAK 重建都已通过。白天冒险切片确认绿色圆圈保持透明中心飞行，并在命中后触发原版反馈；Z01 袖片在基础行走和带书套 Z03 受击时没有跳层，见 [`v0.5-p01-z01-z03-runtime.md`](../tests/checklists/v0.5-p01-z01-z03-runtime.md)。泳池切片又确认双发与三线复用同一圆圈，P01 弹丸经过暖气片后切换成原版火化弹丸，见 [`v0.5-p01-family-fire-runtime.md`](../tests/checklists/v0.5-p01-family-fire-runtime.md)。其他射手、寒冰弹丸、啃食、断臂、死亡和跨场景仍待观察。
 
 ## 绿圈科豆如何进入这条链
 
@@ -381,8 +381,8 @@ python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-green-circl
 3. 已把书本合入 67×40 前叶画布并通过同尺寸门禁；只有实机遮挡失败时才修改 reanim。
 4. 已把共享的 28×28 豌豆弹丸改成带透明中心的绿色圆圈，外沿抗锯齿和明暗方向继续沿用原件。
 5. 三个部件都已记录原图哈希、新图哈希、尺寸和目标 PAK 路径。
-6. 头部与蓝书组成的双替换 PAK 已在白天场景完成待机、发射、选卡和图鉴检查。绿色圆圈是后加入的第三项，已经补到白天飞行和命中；眨眼、火化、家族复用和跨场景抽查仍待补齐。
+6. 头部与蓝书组成的双替换 PAK 已在白天场景完成待机、发射、选卡和图鉴检查。绿色圆圈是后加入的第三项，已经补到飞行、命中、双发与三线复用、暖气片火化；眨眼、其他射手、寒冰弹丸和跨场景抽查仍待补齐。
 
-原双替换包的实机步骤、证据截图和恢复哈希见 [`v0.5-p01-ingame.md`](../tests/checklists/v0.5-p01-ingame.md)。新弹丸的静态边界见 [`v0.5-p01-green-circle-static.md`](../tests/checklists/v0.5-p01-green-circle-static.md)，白天飞行、命中和共享骨架层级见 [`v0.5-p01-z01-z03-runtime.md`](../tests/checklists/v0.5-p01-z01-z03-runtime.md)。
+原双替换包的实机步骤、证据截图和恢复哈希见 [`v0.5-p01-ingame.md`](../tests/checklists/v0.5-p01-ingame.md)。新弹丸的静态边界见 [`v0.5-p01-green-circle-static.md`](../tests/checklists/v0.5-p01-green-circle-static.md)，白天飞行、命中和共享骨架层级见 [`v0.5-p01-z01-z03-runtime.md`](../tests/checklists/v0.5-p01-z01-z03-runtime.md)，双发与三线复用、暖气片火化见 [`v0.5-p01-family-fire-runtime.md`](../tests/checklists/v0.5-p01-family-fire-runtime.md)。
 
 公开发行时仍只提供原创素材、清单和应用工具，不提供这里生成的完整 PAK。
