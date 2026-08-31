@@ -188,7 +188,7 @@ python tools/build_z01_sprites.py --build --preview --check
 | `Zombie_outerarm_upper.png` | 17×35 | `41BD9C001C6F58BF88FEE39F8BCF739E4E3C7716D3524C9EBE9DEC559AAB9ECB` | 397 | 308 / 30 / 8 |
 | `Zombie_outerarm_upper2.png` | 17×35 | `D0F2143D926AD4E7DCABFCB26E17D45CD9C80C6780CFFB75AC199084F13B8CD5` | 367 | 266 / 24 / 8 |
 
-三张候选的 Alpha、新增可见、删除可见和受保护墨线改动均为 0。十二倍预览写到 `.work/previews/z01-sleeves-before-after-12x.png`；详细静态门槛见 [`v0.5-z01-sleeves-static.md`](../tests/checklists/v0.5-z01-sleeves-static.md)。16 项包已经补到白天基础行走和带书套 Z03 受击，袖片与共享躯干保持原层级；啃食、断臂、死亡和书套脱落仍要继续观察。
+三张候选的 Alpha、新增可见、删除可见和受保护墨线改动均为 0。十二倍预览写到 `.work/previews/z01-sleeves-before-after-12x.png`；详细静态门槛见 [`v0.5-z01-sleeves-static.md`](../tests/checklists/v0.5-z01-sleeves-static.md)。16 项包已经补到白天基础行走、泳池啃食和头部脱落阶段，袖片与共享躯干没有跳层；同一包中的 Z03 书套四阶段也保持共享层级。手臂掉落动作已经出现，但替代袖片被另一个实例遮挡，仍需单体复核。
 
 ## 首批契约注册表
 
@@ -372,7 +372,7 @@ python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-green-circl
 python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-green-circle-p02-p04-z01-sleeves-z03-ingame.json
 ```
 
-输出仍有 2413 个资源，SHA-256 为 `9DB70BB44031EF6B12ED92FF9F79BC9737B382D2F0D0383607DA1AAABAADB90B`。16 份契约、候选哈希和 PAK 重建都已通过。白天冒险切片确认绿色圆圈保持透明中心飞行，并在命中后触发原版反馈；Z01 袖片在基础行走和带书套 Z03 受击时没有跳层，见 [`v0.5-p01-z01-z03-runtime.md`](../tests/checklists/v0.5-p01-z01-z03-runtime.md)。泳池切片又确认双发与三线复用同一圆圈，P01 弹丸经过暖气片后切换成原版火化弹丸，见 [`v0.5-p01-family-fire-runtime.md`](../tests/checklists/v0.5-p01-family-fire-runtime.md)。其他射手、寒冰弹丸、啃食、断臂、死亡和跨场景仍待观察。
+输出仍有 2413 个资源，SHA-256 为 `9DB70BB44031EF6B12ED92FF9F79BC9737B382D2F0D0383607DA1AAABAADB90B`。16 份契约、候选哈希和 PAK 重建都已通过。白天冒险切片确认绿色圆圈保持透明中心飞行，并在命中后触发原版反馈；Z01 袖片在基础行走和带书套 Z03 受击时没有跳层，见 [`v0.5-p01-z01-z03-runtime.md`](../tests/checklists/v0.5-p01-z01-z03-runtime.md)。泳池切片又确认双发与三线复用同一圆圈，P01 弹丸经过暖气片后切换成原版火化弹丸，见 [`v0.5-p01-family-fire-runtime.md`](../tests/checklists/v0.5-p01-family-fire-runtime.md)。随后补到 Z01 啃食和头部脱落阶段，并在这版累计包中重新观察 Z03 书套完整、轻伤、重伤和脱落，见 [`v0.5-z01-z03-actions-runtime.md`](../tests/checklists/v0.5-z01-z03-actions-runtime.md)。手臂掉落动作已有画面，但断臂替代袖片和死亡收尾还要单体复核；其他射手、寒冰弹丸和跨场景也仍待观察。
 
 ## 绿圈科豆如何进入这条链
 

@@ -13,7 +13,7 @@
 | 世界观与五章结构 | 设计完成 |
 | 49 个植物槽位原型 | 设计完成，包含数值、机制与图鉴文案 |
 | 26 个敌人图鉴槽位 | 设计完成，另含补考周变体 |
-| 原创贴图与 reanim 动画 | 首批五槽位均已有静态候选；P01 绿色圆圈通过飞行、命中、双发和三线复用、暖气片火化，P02 补到夜间眨眼，P04 完成白天三档，Z03 通过图鉴与泳池四阶段，Z01 袖片通过白天行走和装备受击层级；其他射手、断臂、死亡和跨场景仍待补 |
+| 原创贴图与 reanim 动画 | 首批五槽位均已有静态候选；P01 绿色圆圈通过飞行、命中、双发和三线复用、暖气片火化，P02 补到夜间眨眼，P04 完成白天三档，Z03 的四阶段又在十六项包中通过，Z01 袖片通过白天行走、啃食和头部脱落前后的层级观察；断臂替代袖片、死亡收尾、其他射手和跨场景仍待补 |
 | 数值补丁 | v0.3 可重复构建与回滚已建立；P01 临时费用 75、P04 临时耐久 4200 均已实机确认，跨场景回归待完成 |
 | 暖气片减速、GPA 评级、DDL 空投扣分 | 设计中，计划在逻辑钩子阶段实现 |
 
@@ -62,11 +62,11 @@ v0.2 只做完整文案版。目前全量名称、卡片提示和图鉴正文已
 1. 统一全部植物、敌人、选卡、商店、小游戏和通关文字。
 2. 保留原版槽位与大部分数值，不增加新角色数量。
 3. 检查 GBK 编码、控制标记、图鉴换行和五种场景。
-4. 首批资源清单已经完成；P01、P02、P04 的白天切片已通过各自范围内的观察，Z03 也已完成图鉴和泳池四阶段切片，其余项目继续按独立提交推进。
+4. 首批资源清单已经完成；P01、P02、P04 的白天切片已通过各自范围内的观察，Z03 已完成图鉴和泳池四阶段切片，Z01 也补到啃食与头部脱落动作，其余项目继续按独立提交推进。
 
 文案由[同步工具](tools/README.md)从设计文档生成，测试范围记录在 [v0.2 文案冒烟测试](tests/checklists/v0.2-text-smoke.md)。首批美术对象和概念稿见[资源清单](docs/art-resource-inventory.md)。P01 的圆框眼镜、《电磁学千题解》和绿色圆圈弹丸，P02 的学习头带与便签花瓣，P04 的三档校园墙体，Z01 的旧卷面共享躯干，以及 Z03 逐步破损的蓝色习题册书套，都由差分脚本从本地合法原件生成。Git 不保存混有原版像素的合成 PNG。
 
-构建细节见[原创素材 PAK 构建](docs/asset-build-pipeline.md)。静态与实机证据分别记录在 [P01 白天垂直切片](tests/checklists/v0.5-p01-ingame.md)、[P01 绿色圆圈静态验收](tests/checklists/v0.5-p01-green-circle-static.md)、[绿色圆圈与共享骨架实机观察](tests/checklists/v0.5-p01-z01-z03-runtime.md)、[绿色圆圈家族复用与火化](tests/checklists/v0.5-p01-family-fire-runtime.md)、[P02/P04 累计包观察](tests/checklists/v0.5-p02-p04-ingame.md)、[P02 夜间眨眼](tests/checklists/v0.5-p02-night-blink.md)、[P04 4200 组合验证](tests/checklists/v0.5-p04-4200-combo.md)、[Z01 静态验收](tests/checklists/v0.5-z01-static.md)、[Z01 图鉴层级](tests/checklists/v0.5-z01-almanac.md)、[Z01 袖片静态验收](tests/checklists/v0.5-z01-sleeves-static.md)、[Z03 静态验收](tests/checklists/v0.5-z03-static.md)和 [Z03 实机观察](tests/checklists/v0.5-z03-ingame.md)。当前累计开发包替换 16 项资源。绿色圆圈已经补到飞行、命中、双发和三线复用、暖气片火化；卷面袖片也在 Z01 行走和 Z03 受击时保持层级。下一轮检查其他射手、Z01 啃食、断臂、死亡和书套脱落。P01 眨眼与各槽位跨场景抽查也没有完成。v0.3 的[常量补丁框架](docs/v0.3-patching.md)已经能生成和逐字节回滚开发副本。完整安排见[开发路线图](docs/roadmap.md)。
+构建细节见[原创素材 PAK 构建](docs/asset-build-pipeline.md)。静态与实机证据分别记录在 [P01 白天垂直切片](tests/checklists/v0.5-p01-ingame.md)、[P01 绿色圆圈静态验收](tests/checklists/v0.5-p01-green-circle-static.md)、[绿色圆圈与共享骨架实机观察](tests/checklists/v0.5-p01-z01-z03-runtime.md)、[绿色圆圈家族复用与火化](tests/checklists/v0.5-p01-family-fire-runtime.md)、[P02/P04 累计包观察](tests/checklists/v0.5-p02-p04-ingame.md)、[P02 夜间眨眼](tests/checklists/v0.5-p02-night-blink.md)、[P04 4200 组合验证](tests/checklists/v0.5-p04-4200-combo.md)、[Z01 静态验收](tests/checklists/v0.5-z01-static.md)、[Z01 图鉴层级](tests/checklists/v0.5-z01-almanac.md)、[Z01 袖片静态验收](tests/checklists/v0.5-z01-sleeves-static.md)、[Z01 动作与 Z03 十六项包回归](tests/checklists/v0.5-z01-z03-actions-runtime.md)、[Z03 静态验收](tests/checklists/v0.5-z03-static.md)和 [Z03 实机观察](tests/checklists/v0.5-z03-ingame.md)。当前累计开发包替换 16 项资源。绿色圆圈已经补到飞行、命中、双发和三线复用、暖气片火化；Z01 也看到行走、啃食、头部脱落和手臂掉落，Z03 书套四阶段后的共享层级正常。手臂掉落画面有实例重叠，断臂替代袖片和死亡收尾仍需单体复核。其他射手、P01 眨眼与各槽位跨场景抽查也没有完成。v0.3 的[常量补丁框架](docs/v0.3-patching.md)已经能生成和逐字节回滚开发副本。完整安排见[开发路线图](docs/roadmap.md)。
 
 ## 开发记录
 

@@ -101,7 +101,7 @@
 
 图鉴已经实际显示无装备 Z01 和带完整书套的 Z03：卷面躯干、原版脸与领带、蓝色书套能按共享 reanim 正常叠放，没有黑块或锚点偏移。图鉴同时说明单改 `Zombie_body.png` 只覆盖外套后片，棕色上臂仍很醒目；下一轮若增强整套卷面感，应把 `Zombie_innerarm_upper.png`、`Zombie_outerarm_upper.png` 和 `Zombie_outerarm_upper2.png` 作为独立袖片切片。证据、恢复哈希和未覆盖动作见 [`v0.5-z01-almanac.md`](../tests/checklists/v0.5-z01-almanac.md)。
 
-三张袖片静态切片已经完成。内侧上臂、常规外侧上臂和替代/断臂图分别改动 157、397、367 个像素，纸色、铅笔线和批改红与躯干一致；三张 Alpha 和近黑墨线不变，替代图的白色骨口也被逐像素保护。袖片阶段的 15 项累计包输出哈希和实机门槛见 [`v0.5-z01-sleeves-static.md`](../tests/checklists/v0.5-z01-sleeves-static.md)。随后在 16 项包中看到无装备 Z01 行走，以及带书套 Z03 受击，卷面躯干和袖片都保持原层级；啃食、断臂、死亡和书套脱落后的组合仍未覆盖，见 [`v0.5-p01-z01-z03-runtime.md`](../tests/checklists/v0.5-p01-z01-z03-runtime.md)。
+三张袖片静态切片已经完成。内侧上臂、常规外侧上臂和替代/断臂图分别改动 157、397、367 个像素，纸色、铅笔线和批改红与躯干一致；三张 Alpha 和近黑墨线不变，替代图的白色骨口也被逐像素保护。袖片阶段的 15 项累计包输出哈希和实机门槛见 [`v0.5-z01-sleeves-static.md`](../tests/checklists/v0.5-z01-sleeves-static.md)。16 项包先确认无装备 Z01 行走和带书套 Z03 受击，随后又补到 Z01 啃食、头部脱落阶段，以及 Z03 书套四阶段和脱落后的卷面本体。手臂掉落动作已经拍到，但画面中有两只实例重叠，`Zombie_outerarm_upper2.png` 的白色骨口仍需单体复核。两轮记录见 [`v0.5-p01-z01-z03-runtime.md`](../tests/checklists/v0.5-p01-z01-z03-runtime.md)和 [`v0.5-z01-z03-actions-runtime.md`](../tests/checklists/v0.5-z01-z03-actions-runtime.md)。
 
 ### Z03 B 系列淑芬
 
@@ -120,7 +120,7 @@
 
 首轮静态稿已经完成。三档都把路障上半部重构为倾斜的厚蓝习题册，完整阶段保留白色“B”题签和一小段批改红，受损后封面逐步撕开、浅色页块不断露出。三张图仍是 59×57，也逐像素保留了 `y=43..56` 的头部接触带；露页像素为 481、652、726，可见轮廓则从 1654 递减到 1504、1334。候选已经通过受控轮廓契约，并进入 11 项替换的累计 PAK。
 
-图鉴放大能看清蓝色封面和白色“B”题签；“谁笑到最后”的泳池战场也依次出现了完整、轻伤、重伤和脱落。行走、啃食和阶段切换没有黑块或锚点跳动。测试包没有修改共享 reanim，也没有装入 Z01 躯干候选，所以书套脱落后显示的仍是原版基础僵尸。这证明装备层能正常清除，不代表 Z01 已经完成。静态数据见 [`v0.5-z03-static.md`](../tests/checklists/v0.5-z03-static.md)，截图与恢复记录见 [`v0.5-z03-ingame.md`](../tests/checklists/v0.5-z03-ingame.md)。
+图鉴放大能看清蓝色封面和白色“B”题签；“谁笑到最后”的泳池战场也依次出现了完整、轻伤、重伤和脱落。行走、啃食和阶段切换没有黑块或锚点跳动。早期测试包没有修改共享 reanim，也没有装入 Z01 躯干候选，所以书套脱落后显示的是原版基础僵尸。后来使用 16 项包复测同一过程，脱落后能正确露出 Z01 的卷面躯干与袖片。静态数据见 [`v0.5-z03-static.md`](../tests/checklists/v0.5-z03-static.md)，两轮运行记录见 [`v0.5-z03-ingame.md`](../tests/checklists/v0.5-z03-ingame.md)和 [`v0.5-z01-z03-actions-runtime.md`](../tests/checklists/v0.5-z01-z03-actions-runtime.md)。
 
 ## 首批制作顺序
 
