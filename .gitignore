@@ -18,6 +18,7 @@ __pycache__/
 /assets-src/game/z03/Zombie_cone1.png
 /assets-src/game/z03/Zombie_cone2.png
 /assets-src/game/z03/Zombie_cone3.png
+/assets-src/game/z01/Zombie_body.png
 
 *.dmp
 *.log
