@@ -330,7 +330,7 @@ python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-p02-p04-z01
 python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-z01-z03-ingame.json
 ```
 
-输出仍有 2413 个资源，SHA-256 为 `B89F7ACAB46F94EAD882D4AF81F08F6746FB08A3F9AA34E3F38D5DC11B4C76DD`。12 项资源均通过各自的原件哈希和像素契约，Z01 静态结果见 [`v0.5-z01-static.md`](../tests/checklists/v0.5-z01-static.md)。这份包尚未完成共享僵尸骨架的实机回归，不能用构建通过代替无装备、书套受损与脱落、死亡和游泳动画的观察。
+输出仍有 2413 个资源，SHA-256 为 `B89F7ACAB46F94EAD882D4AF81F08F6746FB08A3F9AA34E3F38D5DC11B4C76DD`。12 项资源均通过各自的原件哈希和像素契约，Z01 静态结果见 [`v0.5-z01-static.md`](../tests/checklists/v0.5-z01-static.md)。无装备 Z01 与完整书套 Z03 的图鉴层级后来也已实机通过，见 [`v0.5-z01-almanac.md`](../tests/checklists/v0.5-z01-almanac.md)；书套受损与脱落、行走、啃食、断臂、死亡和游泳动画仍不能用构建或图鉴结果代替。
 
 ## 绿圈科豆如何进入这条链
 
