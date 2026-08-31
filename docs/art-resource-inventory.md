@@ -1,6 +1,6 @@
 # v0.2.1 首批美术资源清单
 
-状态：资源清单和首批五槽位的 15 份像素契约已完成；P01、P02、P04 已完成首轮白天观察，P02 又补到夜间眨眼，Z03 已通过图鉴与泳池四阶段实机切片；Z01 躯干图鉴已通过，三张袖片静态候选已完成、实机回归待做。
+状态：资源清单和首批五槽位的 16 份像素契约已完成；P01 新增绿色圆圈弹丸并通过静态门禁，P02 已补到夜间眨眼，P04 完成白天三档，Z03 通过图鉴与泳池四阶段；Z01 三张袖片和 P01 新弹丸都还要做实机回归。
 
 盘点日期：2026-08-30
 
@@ -13,7 +13,7 @@
 - 选卡和图鉴没有为每个单位保存一张独立大图。`SeedPacket_Larger.png`、`Almanac_PlantCard.png` 和 `Almanac_ZombieCard.png` 是通用框，角色本体仍由动画部件绘制。因此替换角色部件后，选卡和图鉴也要一起复查。
 - 四份主动画都能从 PC 压缩格式读成 Raw XML，帧率均为 12 FPS。第三方转换工具只用于这次结构核对，尚未固定版本，也不进入正式构建依赖。
 - 原版 PNG 和解码后的动画只保存在被 Git 忽略的 `.work/pak-reference`。仓库只提交清单、工具、测试记录和原创概念稿。
-- 15 份契约统一登记在 [`v0.5-first-slice-contracts.json`](../patches/manifests/v0.5-first-slice-contracts.json)；登记项与磁盘契约、PAK 目标和五个槽位必须完全一致。
+- 16 份契约统一登记在 [`v0.5-first-slice-contracts.json`](../patches/manifests/v0.5-first-slice-contracts.json)；登记项与磁盘契约、PAK 目标和五个槽位必须完全一致。
 
 ## 共用美术规则
 
@@ -31,7 +31,7 @@
 | --- | --- |
 | 原槽位 | `PEASHOOTER` |
 | 动画 | `compiled/reanim/PeaShooter.reanim.compiled`：24 条轨道、19 个实际图像引用；另有 21 张 `PeaShooter_*.png` 和精简动画 `PeaShooterSingle.reanim.compiled` |
-| 必换部件 | `PeaShooter_Head.png` 增加小圆框眼镜；`PeaShooter_frontleaf.png` 或独立书本部件负责托住蓝色《电磁学千题解》；后续把 `ProjectilePea.png` 改成绿色圆圈 |
+| 必换部件 | `PeaShooter_Head.png` 增加小圆框眼镜；`PeaShooter_frontleaf.png` 托住蓝色《电磁学千题解》；`ProjectilePea.png` 改成绿色圆圈 |
 | 可复用 | 茎、后叶、头顶叶、嘴、眨眼、`PeaSplat` 粒子和原发射音效 |
 | 轮廓与主色 | 保留原版右向喷口和上下叶片；原版亮绿为主体，深蓝书本、黑色眼镜、少量蓝白书签为识别点 |
 | 选卡与图鉴 | 由同一套 reanim 缩放绘制，没有单独角色卡图；书名缩小时不要求逐字可读，但蓝书和眼镜必须可辨 |
@@ -45,6 +45,8 @@
 前叶原件为 67×40，中央空间足以放入缩放后仍可辨认的竖向蓝书。首版决定把书本合入前叶，不增加 reanim 轨道；[`PeaShooter_frontleaf.contract.json`](../assets-src/game/p01/PeaShooter_frontleaf.contract.json) 允许在中央新增书本 Alpha，但禁止削掉原叶片，并检查深蓝封面与浅色书页像素。
 
 首轮实机已经确认这两个部件能随原 reanim 正常待机和发射：眼镜没有遮住喷口或改变头部轮廓，蓝书随前叶留在中央，选卡和图鉴的缩放绘制也能看到两个识别点。实机截图与仍待检查的眨眼、跨场景项目见 [`v0.5-p01-ingame.md`](../tests/checklists/v0.5-p01-ingame.md)。
+
+绿色圆圈使用共享的 28×28 `images/ProjectilePea.png`。差分脚本保留外沿抗锯齿和原本的明暗方向，在中心删除 88 个可见像素，再用深绿内沿、浅绿高光和少量粉笔斑点重画外圈。候选仍有 396 个可见像素，没有向画布新增 Alpha。这个槽位会被普通科豆家族共同使用，寒冰弹丸和火化弹丸则有各自的资源。静态数据见 [`v0.5-p01-green-circle-static.md`](../tests/checklists/v0.5-p01-green-circle-static.md)；飞行、命中、火化和共享范围还没有实机结论。
 
 ### P02 学习蝌蝻
 
@@ -99,7 +101,7 @@
 
 图鉴已经实际显示无装备 Z01 和带完整书套的 Z03：卷面躯干、原版脸与领带、蓝色书套能按共享 reanim 正常叠放，没有黑块或锚点偏移。图鉴同时说明单改 `Zombie_body.png` 只覆盖外套后片，棕色上臂仍很醒目；下一轮若增强整套卷面感，应把 `Zombie_innerarm_upper.png`、`Zombie_outerarm_upper.png` 和 `Zombie_outerarm_upper2.png` 作为独立袖片切片。证据、恢复哈希和未覆盖动作见 [`v0.5-z01-almanac.md`](../tests/checklists/v0.5-z01-almanac.md)。
 
-三张袖片静态切片已经完成。内侧上臂、常规外侧上臂和替代/断臂图分别改动 157、397、367 个像素，纸色、铅笔线和批改红与躯干一致；三张 Alpha 和近黑墨线不变，替代图的白色骨口也被逐像素保护。当前 15 项累计包已生成，输出哈希和实机门槛见 [`v0.5-z01-sleeves-static.md`](../tests/checklists/v0.5-z01-sleeves-static.md)。上一份 12 项包的图鉴截图不能证明新袖片已经在游戏里通过。
+三张袖片静态切片已经完成。内侧上臂、常规外侧上臂和替代/断臂图分别改动 157、397、367 个像素，纸色、铅笔线和批改红与躯干一致；三张 Alpha 和近黑墨线不变，替代图的白色骨口也被逐像素保护。袖片阶段的 15 项累计包输出哈希和实机门槛见 [`v0.5-z01-sleeves-static.md`](../tests/checklists/v0.5-z01-sleeves-static.md)。上一份 12 项包的图鉴截图不能证明新袖片已经在游戏里通过。
 
 ### Z03 B 系列淑芬
 

@@ -53,13 +53,13 @@ python tools/apply_binary_patches.py --reverse
 
 ## PAK 增量构建
 
-从经过验证的本地原件生成 P01 圆框眼镜和蓝色《电磁学千题解》候选，并输出十倍静态预览：
+从经过验证的本地原件生成 P01 圆框眼镜、蓝色《电磁学千题解》和绿色圆圈弹丸，并输出角色部件预览与弹丸前后对照：
 
 ```powershell
 python tools/build_p01_sprites.py --build --preview --check
 ```
 
-两张候选 PNG 和预览都被 Git 忽略。仓库只保存局部像素配方、输出哈希和契约；不要手工把生成 PNG 强制加入版本控制。
+三张候选 PNG 和两份预览都被 Git 忽略。仓库只保存局部像素配方、输出哈希和契约；不要手工把生成 PNG 强制加入版本控制。
 
 生成 P02 专注头部和两组蓝白便签花瓣：
 
@@ -148,6 +148,13 @@ python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-p02-p04-z01
 python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-z01-sleeves-z03-ingame.json
 ```
 
+生成再加入 P01 绿色圆圈的十六替换开发包：
+
+```powershell
+python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-green-circle-p02-p04-z01-sleeves-z03-ingame.json
+python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-green-circle-p02-p04-z01-sleeves-z03-ingame.json
+```
+
 正式素材清单只允许引用 `assets-src` 下的原创替换件。格式与尺寸门禁见 [原创素材 PAK 构建](../docs/asset-build-pipeline.md)。
 
 检查 P01 眼镜头部的原件契约；加入 `--candidate` 后还会逐像素检查候选图：
@@ -155,12 +162,16 @@ python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-z01
 ```powershell
 python tools/check_game_asset.py --contract assets-src/game/p01/PeaShooter_Head.contract.json
 python tools/check_game_asset.py --contract assets-src/game/p01/PeaShooter_frontleaf.contract.json
+python tools/check_game_asset.py --contract assets-src/game/p01/ProjectilePea.contract.json
 python tools/check_game_asset.py `
   --contract assets-src/game/p01/PeaShooter_Head.contract.json `
   --candidate assets-src/game/p01/PeaShooter_Head.png
 python tools/check_game_asset.py `
   --contract assets-src/game/p01/PeaShooter_frontleaf.contract.json `
   --candidate assets-src/game/p01/PeaShooter_frontleaf.png
+python tools/check_game_asset.py `
+  --contract assets-src/game/p01/ProjectilePea.contract.json `
+  --candidate assets-src/game/p01/ProjectilePea.png
 ```
 
 PAK 替换记录可用 `contract` 字段引用同一份契约，构建时会再次执行相同门禁。
@@ -202,7 +213,7 @@ Get-ChildItem assets-src/game/z01/*.contract.json | ForEach-Object {
 
 躯干契约保护原图中所有深色外轮廓与破损线条；袖片契约保护更深的近黑墨线，同时允许棕色阴影转成纸色。两类保护都由 `protectedOriginalColors` 描述，不依赖固定矩形位置。
 
-一次检查首批五槽位全部 15 份契约，并确认没有未登记文件或重复 PAK 目标：
+一次检查首批五槽位全部 16 份契约，并确认没有未登记文件或重复 PAK 目标：
 
 ```powershell
 python tools/check_game_asset.py `

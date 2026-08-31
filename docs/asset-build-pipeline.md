@@ -1,6 +1,6 @@
 # 原创素材 PAK 开发构建
 
-状态：可重复构建链已完成；P01、P02、P04、Z03 共十一张原尺寸候选已通过契约并进入累计 PAK。四个槽位都已完成各自首轮实机切片，跨场景回归仍待补齐。
+状态：可重复构建链已完成；P01、P02、P04、Z01、Z03 共十六张原尺寸候选已通过契约并进入累计 PAK。绿色圆圈和 Z01 袖片还只有静态结果，其余首批对象已有各自范围内的实机切片。
 
 验证日期：2026-08-30
 
@@ -22,7 +22,7 @@
 
 ## P01 像素契约
 
-两份契约把“在原版素材上局部修改”写成了机器可检查的条件，而不是只靠肉眼判断。
+三份契约把“在原版素材上局部修改”写成了机器可检查的条件，而不是只靠肉眼判断。
 
 ### 圆框眼镜头部
 
@@ -36,7 +36,7 @@
 | 轮廓 | 4550 个像素的 Alpha 值必须逐一保持不变 |
 | 允许改色范围 | 双眼周围 `x=34..65, y=7..32` |
 | 保护范围 | 两只眼睛的瞳孔核心不得改色 |
-| 改动规模 | 24–260 个可见像素 |
+| 改动规模 | 24 至 260 个可见像素 |
 | 镜框要求 | 至少 18 个像素相对原件明显变暗 |
 
 这里的 Alpha 门禁保留全部半透明抗锯齿值，不只是要求四角透明。允许区域之外的可见 RGB 也必须与原件一致，因此放大重绘、整体调色、改变脸型、棋盘格背景和误伤喷口都会被拒绝。
@@ -48,18 +48,25 @@
 `assets-src/game/p01/PeaShooter_frontleaf.contract.json` 要求：
 
 - 不允许降低原件任何像素的 Alpha，原叶片不会被擦除。
-- 只能在中央矩形新增或覆盖 180–650 个可见像素。
-- 新增 Alpha 像素必须在 80–320 之间，防止整块画布变成不透明背景。
+- 只能在中央矩形新增或覆盖 180 至 650 个可见像素。
+- 新增 Alpha 像素必须在 80 至 320 之间，防止整块画布变成不透明背景。
 - 至少包含 120 个深蓝封面像素和 8 个浅色书页或书名像素。
 - 外侧叶片、画布尺寸和动画锚点保持原样。
 
 书名在游戏中会缩到十余像素高，不以逐字可读为验收条件；静态原尺寸稿可排“电磁”或简化白色题签，战场上优先保证蓝书轮廓可辨。
+
+### 绿色圆圈弹丸
+
+`assets-src/game/p01/ProjectilePea.contract.json` 绑定共享的 28×28 `images/ProjectilePea.png`。原件有 484 个可见像素。候选允许在中心挖孔，但外侧四条保护带的 Alpha 必须逐像素保持，画布外也不能新增像素。
+
+当前候选改动 484 个可见像素，中心删除 88 个，保留 396 个。Alpha 发生变化的像素为 124 个，其中一部分是内沿的渐隐。颜色门禁至少要求 80 个深绿墨线像素和 24 个浅绿粉笔高光像素；实际计数为 150 和 135。这个资源只替换普通绿色弹丸，不改 `ProjectileSnowPea.png`、`FirePea.png`、豌豆阴影、命中粒子或音效。
 
 只检查契约与 PAK 原件是否吻合：
 
 ```powershell
 python tools/check_game_asset.py --contract assets-src/game/p01/PeaShooter_Head.contract.json
 python tools/check_game_asset.py --contract assets-src/game/p01/PeaShooter_frontleaf.contract.json
+python tools/check_game_asset.py --contract assets-src/game/p01/ProjectilePea.contract.json
 ```
 
 完成候选图后再检查实际像素；候选图必须位于 `assets-src`：
@@ -72,6 +79,10 @@ python tools/check_game_asset.py `
 python tools/check_game_asset.py `
   --contract assets-src/game/p01/PeaShooter_frontleaf.contract.json `
   --candidate assets-src/game/p01/PeaShooter_frontleaf.png
+
+python tools/check_game_asset.py `
+  --contract assets-src/game/p01/ProjectilePea.contract.json `
+  --candidate assets-src/game/p01/ProjectilePea.png
 ```
 
 契约只保证“确实是在原件上做了受控的局部改动”。镜框是否圆润、书本是否像被叶片托住、缩放后是否清楚，仍要通过静态预览与实机动画截图验收。
@@ -149,7 +160,7 @@ P02 的最小可辨切片是三张：
 - 画布与整张 Alpha 不变。
 - 原件中满足深色墨线阈值的轮廓、衣物破口和阴影逐像素不变。
 - 候选必须同时包含足量旧纸米白、铅笔灰和批改红。
-- 改动量须在 1000–1700 个可见像素；最终候选实际改动 1134 个。
+- 改动量须在 1000 至 1700 个可见像素；最终候选实际改动 1134 个。
 
 “按原色保护”与矩形保护区不同：它会在整张图片中找出原始深色笔触，无论这些像素位于边缘还是内部破口都不能覆盖。这使新卷面继续沿用原版手绘线条，而不是只保留外框后把内部涂成一块平面。
 
@@ -181,7 +192,7 @@ python tools/build_z01_sprites.py --build --preview --check
 
 ## 首批契约注册表
 
-`patches/manifests/v0.5-first-slice-contracts.json` 是 P01、P02、P04、Z01、Z03 的完整注册表，当前包含 15 份契约和 15 个唯一 PAK 目标。它不是候选贴图清单，不会生成带替换资源的 PAK；作用是证明首批门禁本身没有漏项。
+`patches/manifests/v0.5-first-slice-contracts.json` 是 P01、P02、P04、Z01、Z03 的完整注册表，当前包含 16 份契约和 16 个唯一 PAK 目标。它不是候选贴图清单，不会生成带替换资源的 PAK；作用是证明首批门禁本身没有漏项。
 
 一条命令同时检查：
 
@@ -219,7 +230,7 @@ python tools/build_pak_overlay.py --build patches/manifests/v0.5-pak-roundtrip.j
 
 ## P01 差分生成
 
-P01 不把带有原版像素的合成 PNG 提交到 Git。`tools/build_p01_sprites.py` 从经过哈希验证的本地 `main.pak` 读取两张原件，只叠加圆框眼镜、深蓝书封、浅色书页、书名节奏线和金色书签，再生成被 `.gitignore` 排除的本地候选：
+P01 不把带有原版像素的合成 PNG 提交到 Git。`tools/build_p01_sprites.py` 从经过哈希验证的本地 `main.pak` 读取三张原件，生成圆框眼镜、蓝色课本和绿色圆圈，再把候选写到被 `.gitignore` 排除的路径：
 
 ```powershell
 python tools/build_p01_sprites.py --build --preview --check
@@ -231,8 +242,9 @@ python tools/build_p01_sprites.py --build --preview --check
 | --- | ---: | --- | --- |
 | `PeaShooter_Head.png` | 70×65 | `DE8EBE694C2AEF2D477EA3866332B32B5BC11F2F03B170EE2C47BDACBA7B5610` | 改动 144 像素，Alpha 零变化，117 个明显变暗像素 |
 | `PeaShooter_frontleaf.png` | 67×40 | `5814BE53B1EE2A122726FD1EE6E83C43A9599B529BA2E00B14B973BA4AC3624C` | 改动 551 像素，新增 117 个可见像素，未删除原叶片 |
+| `ProjectilePea.png` | 28×28 | `901888ADB37A41E275B5CF52321D10B200F6D48ADA311099D2665D8AEC25488A` | 改动 484 像素，删除中心 88 个可见像素，外沿保护带 Alpha 不变 |
 
-`--preview` 会在 `.work/previews/p01-sprites-10x.png` 生成十倍最近邻静态预览。预览和两张合成候选都属于本地测试产物；仓库保存的是差分配方、契约、候选哈希和构建清单。
+`--preview` 会生成角色部件十倍预览，以及 `.work/previews/p01-green-circle-before-after-16x.png` 的弹丸前后对照。后者用棋盘格显示中心透明孔，SHA-256 为 `441CF7370722EA687B567D005A930947C4D658B17B0B8210630F2F5F35304BA5`。两份预览和三张合成候选都只留在本地。
 
 ## P02 差分生成
 
@@ -344,23 +356,33 @@ python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-z01
 
 输出仍有 2413 个资源，SHA-256 为 `B89F7ACAB46F94EAD882D4AF81F08F6746FB08A3F9AA34E3F38D5DC11B4C76DD`。12 项资源均通过各自的原件哈希和像素契约，Z01 静态结果见 [`v0.5-z01-static.md`](../tests/checklists/v0.5-z01-static.md)。无装备 Z01 与完整书套 Z03 的图鉴层级后来也已实机通过，见 [`v0.5-z01-almanac.md`](../tests/checklists/v0.5-z01-almanac.md)；书套受损与脱落、行走、啃食、断臂、死亡和游泳动画仍不能用构建或图鉴结果代替。
 
-再加入三张 Z01 袖片后的当前累计清单为 `patches/manifests/v0.5-p01-p02-p04-z01-sleeves-z03-ingame.json`，共替换十五项：
+再加入三张 Z01 袖片后的累计清单为 `patches/manifests/v0.5-p01-p02-p04-z01-sleeves-z03-ingame.json`，共替换十五项：
 
 ```powershell
 python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-p02-p04-z01-sleeves-z03-ingame.json
 python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-z01-sleeves-z03-ingame.json
 ```
 
-输出仍有 2413 个资源，SHA-256 为 `8DBD88B7BE5A198F7B6D5308A4DDF5D3AE344B30DCD3DDC0D0002CC5506AA3D2`。15 项资源和 15 份首批契约均通过静态门禁；新袖片尚未做图鉴、行走、啃食、断臂和装备受损回归。
+输出仍有 2413 个资源，SHA-256 为 `8DBD88B7BE5A198F7B6D5308A4DDF5D3AE344B30DCD3DDC0D0002CC5506AA3D2`。这 15 项资源均通过静态门禁；新袖片尚未做图鉴、行走、啃食、断臂和装备受损回归。
+
+加入 P01 绿色圆圈后的当前累计清单为 `patches/manifests/v0.5-p01-green-circle-p02-p04-z01-sleeves-z03-ingame.json`，共替换十六项：
+
+```powershell
+python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-green-circle-p02-p04-z01-sleeves-z03-ingame.json
+python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-green-circle-p02-p04-z01-sleeves-z03-ingame.json
+```
+
+输出仍有 2413 个资源，SHA-256 为 `9DB70BB44031EF6B12ED92FF9F79BC9737B382D2F0D0383607DA1AAABAADB90B`。16 份契约、候选哈希和 PAK 重建都已通过；绿色圆圈的战场缩放、飞行、命中、火化和家族复用仍要实机观察。
 
 ## 绿圈科豆如何进入这条链
 
 1. 以[概念稿](../assets-src/concepts/p01-greencircle-pea-concept.png)确定眼镜、蓝书和蓝白书签的造型。
 2. 已用差分配方生成 70×65 的带眼镜头部，未移动原眼睛、嘴和喷口锚点，并通过 P01 像素契约。
 3. 已把书本合入 67×40 前叶画布并通过同尺寸门禁；只有实机遮挡失败时才修改 reanim。
-4. 两个部件都已记录原图哈希、新图哈希、尺寸和目标 PAK 路径。
-5. 双替换 PAK 已在白天场景完成待机、发射、选卡和图鉴检查；仍需单独捕捉眨眼帧并做跨场景抽查。
+4. 已把共享的 28×28 豌豆弹丸改成带透明中心的绿色圆圈，外沿抗锯齿和明暗方向继续沿用原件。
+5. 三个部件都已记录原图哈希、新图哈希、尺寸和目标 PAK 路径。
+6. 头部与蓝书组成的双替换 PAK 已在白天场景完成待机、发射、选卡和图鉴检查。绿色圆圈是后加入的第三项，只完成静态验收；眨眼、弹丸动作和跨场景抽查仍待补齐。
 
-实机步骤、证据截图和恢复哈希见 [`v0.5-p01-ingame.md`](../tests/checklists/v0.5-p01-ingame.md)。
+原双替换包的实机步骤、证据截图和恢复哈希见 [`v0.5-p01-ingame.md`](../tests/checklists/v0.5-p01-ingame.md)。新弹丸的静态边界见 [`v0.5-p01-green-circle-static.md`](../tests/checklists/v0.5-p01-green-circle-static.md)。
 
 公开发行时仍只提供原创素材、清单和应用工具，不提供这里生成的完整 PAK。

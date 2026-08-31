@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "p01-hand-drawn-green-circle-projectile",
+  "description": "Turn the shared standard pea projectile into a hand-drawn green ring while preserving the 28x28 canvas and outer antialiased silhouette.",
+  "pakPath": "images/ProjectilePea.png",
+  "original": {
+    "sha256": "24A9BE5E2DB62312BA359B15C367B8A8FB6D1764E4AF3A221D178622BEA7CAA9",
+    "width": 28,
+    "height": 28,
+    "visiblePixels": 484
+  },
+  "pixelPolicy": {
+    "alphaMode": "bounded",
+    "allowedChangeRect": {
+      "left": 0,
+      "top": 0,
+      "right": 27,
+      "bottom": 27
+    },
+    "protectedRects": [],
+    "preserveAlphaRects": [
+      {
+        "name": "top-silhouette-band",
+        "left": 0,
+        "top": 0,
+        "right": 27,
+        "bottom": 7
+      },
+      {
+        "name": "bottom-silhouette-band",
+        "left": 0,
+        "top": 20,
+        "right": 27,
+        "bottom": 27
+      },
+      {
+        "name": "left-silhouette-band",
+        "left": 0,
+        "top": 0,
+        "right": 7,
+        "bottom": 27
+      },
+      {
+        "name": "right-silhouette-band",
+        "left": 20,
+        "top": 0,
+        "right": 27,
+        "bottom": 27
+      }
+    ],
+    "minChangedPixels": 430,
+    "maxChangedPixels": 500,
+    "minVisiblePixels": 370,
+    "maxVisiblePixels": 410,
+    "minRetainedVisiblePixels": 370,
+    "maxRetainedVisiblePixels": 410,
+    "minAddedVisiblePixels": 0,
+    "maxAddedVisiblePixels": 0,
+    "minRemovedVisiblePixels": 74,
+    "maxRemovedVisiblePixels": 114,
+    "colorRequirements": [
+      {
+        "name": "deep-green-ink",
+        "changedOnly": true,
+        "minPixels": 80,
+        "redMax": 55,
+        "greenMin": 70,
+        "greenMax": 145,
+        "blueMax": 85,
+        "alphaMin": 120
+      },
+      {
+        "name": "chalk-lime-highlight",
+        "changedOnly": true,
+        "minPixels": 24,
+        "redMin": 135,
+        "greenMin": 175,
+        "blueMax": 180,
+        "alphaMin": 160
+      }
+    ]
+  }
+}

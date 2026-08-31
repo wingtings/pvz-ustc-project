@@ -9,6 +9,7 @@ __pycache__/
 # Keep the overlay recipe in Git, not derivative PNGs containing base-game pixels.
 /assets-src/game/p01/PeaShooter_Head.png
 /assets-src/game/p01/PeaShooter_frontleaf.png
+/assets-src/game/p01/ProjectilePea.png
 /assets-src/game/p02/SunFlower_head.png
 /assets-src/game/p02/SunFlower_toppetals.png
 /assets-src/game/p02/SunFlower_bottompetals.png

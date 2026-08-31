@@ -21,6 +21,11 @@
       "contract": "assets-src/game/p01/PeaShooter_frontleaf.contract.json"
     },
     {
+      "slot": "P01",
+      "role": "hand-drawn-green-circle-projectile",
+      "contract": "assets-src/game/p01/ProjectilePea.contract.json"
+    },
+    {
       "slot": "P02",
       "role": "focused-study-head",
       "contract": "assets-src/game/p02/SunFlower_head.contract.json"

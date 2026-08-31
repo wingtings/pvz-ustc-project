@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the first P01 sprites as deterministic overlays on a verified main.pak.
+"""Build the first P01 sprites as deterministic edits on a verified main.pak.
 
 The generated PNGs contain pixels from the original game and are local build
 artifacts.  Git keeps this overlay recipe, not the generated derivatives.
@@ -21,11 +21,16 @@ import png_assets
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_ROOT = ROOT / "assets-src" / "game" / "p01"
 PREVIEW_PATH = ROOT / ".work" / "previews" / "p01-sprites-10x.png"
+PROJECTILE_PREVIEW_PATH = (
+    ROOT / ".work" / "previews" / "p01-green-circle-before-after-16x.png"
+)
 
 HEAD_TARGET = "reanim/PeaShooter_Head.png"
 LEAF_TARGET = "reanim/PeaShooter_frontleaf.png"
+PROJECTILE_TARGET = "images/ProjectilePea.png"
 HEAD_SHA256 = "89489D1DF066B4C89541455525447220437C5913F0F1E3E850A7A6116F241882"
 LEAF_SHA256 = "26CE3AFA0788A624D8A1747DAB2BA51223489A04AED61F08A453C0D073BFBDDD"
+PROJECTILE_SHA256 = "24A9BE5E2DB62312BA359B15C367B8A8FB6D1764E4AF3A221D178622BEA7CAA9"
 
 FRAME_DARK = (10, 22, 31)
 FRAME_EDGE = (37, 54, 47)
@@ -43,7 +48,7 @@ def sha256(data: bytes) -> str:
 
 def pak_payloads() -> dict[str, bytes]:
     decoded, entries = pak_assets.parse_pak(pak_assets.PAK_PATH)
-    wanted = {HEAD_TARGET, LEAF_TARGET}
+    wanted = {HEAD_TARGET, LEAF_TARGET, PROJECTILE_TARGET}
     result: dict[str, bytes] = {}
     for entry in entries:
         target = pak_assets.normalize_name(entry.name)
@@ -52,7 +57,11 @@ def pak_payloads() -> dict[str, bytes]:
     missing = sorted(wanted - result.keys())
     if missing:
         raise ValueError(f"main.pak 缺少 P01 原件：{', '.join(missing)}")
-    expected = {HEAD_TARGET: HEAD_SHA256, LEAF_TARGET: LEAF_SHA256}
+    expected = {
+        HEAD_TARGET: HEAD_SHA256,
+        LEAF_TARGET: LEAF_SHA256,
+        PROJECTILE_TARGET: PROJECTILE_SHA256,
+    }
     for target, payload in result.items():
         actual = sha256(payload)
         if actual != expected[target]:
@@ -255,6 +264,85 @@ def build_frontleaf(original: bytes) -> bytes:
     )
 
 
+def build_projectile(original: bytes) -> bytes:
+    """Turn the shared pea projectile into a hand-drawn green ring.
+
+    The original 28×28 canvas and outer antialiased silhouette stay fixed.  A
+    small transparent centre makes the design read as a circle rather than a
+    pea, while the recoloured rim keeps the original top-left light and
+    bottom-right volume.  The shared slot intentionally covers the standard
+    Peashooter family; snow and fire projectiles use separate resources.
+    """
+
+    image = png_assets.decode_rgba8(original)
+    if (image.width, image.height) != (28, 28):
+        raise ValueError("P01 绿圈弹丸画布不是 28×28")
+    pixels = bytearray(image.pixels)
+
+    for y in range(image.height):
+        for x in range(image.width):
+            red, green, blue, alpha = rgba_at(pixels, image.width, x, y)
+            if alpha == 0:
+                continue
+
+            # Doubled coordinates keep the half-pixel centre (13.5, 13.5)
+            # deterministic without depending on floating-point rounding.
+            delta_x = 2 * x - 27
+            delta_y = 2 * y - 27
+            radius_squared = delta_x * delta_x + delta_y * delta_y
+            if radius_squared <= 121:
+                set_rgba(pixels, image.width, x, y, (0, 0, 0, 0))
+                continue
+
+            luminance = (77 * red + 150 * green + 29 * blue) // 256
+            tone = max(0, min(255, (luminance - 20) * 255 // 205))
+            ring_red = 18 + tone * 182 // 255
+            ring_green = 84 + tone * 161 // 255
+            ring_blue = 43 + tone * 86 // 255
+
+            # The inner edge is dark and softly antialiased.  Alpha outside
+            # this narrow band stays byte-identical to the original sprite.
+            if radius_squared <= 169:
+                ring_red, ring_green, ring_blue = (16, 82, 43)
+                alpha = max(28, alpha * (radius_squared - 121) // 48)
+            elif radius_squared >= 441:
+                ring_red = min(ring_red, 38)
+                ring_green = min(ring_green, 118)
+                ring_blue = min(ring_blue, 62)
+            elif (x * 5 + y * 7) % 19 in {0, 1}:
+                # Sparse pale flecks give the rim a chalk/hand-drawn texture
+                # without changing the collision-sized outer silhouette.
+                ring_red = min(226, ring_red + 28)
+                ring_green = min(248, ring_green + 24)
+                ring_blue = min(164, ring_blue + 22)
+
+            # Two compact upper-left highlights survive at combat scale and
+            # retain the volume language of the original PopCap projectile.
+            if (x, y) in {
+                (8, 7),
+                (9, 6),
+                (9, 7),
+                (10, 6),
+                (10, 7),
+                (11, 6),
+                (7, 8),
+                (8, 8),
+            }:
+                ring_red, ring_green, ring_blue = (218, 246, 158)
+
+            set_rgba(
+                pixels,
+                image.width,
+                x,
+                y,
+                (ring_red, ring_green, ring_blue, alpha),
+            )
+
+    return png_assets.encode_rgba8(
+        png_assets.RgbaPng(image.width, image.height, bytes(pixels))
+    )
+
+
 def atomic_write(path: Path, payload: bytes, force: bool) -> None:
     if path.exists() and path.read_bytes() == payload:
         print(f"已验证：{path.relative_to(ROOT)}")
@@ -312,11 +400,41 @@ def preview(head: bytes, leaf: bytes) -> bytes:
     return png_assets.encode_rgba8(png_assets.RgbaPng(width, height, bytes(canvas)))
 
 
+def projectile_preview(original: bytes, candidate: bytes) -> bytes:
+    scale = 16
+    originals = nearest(png_assets.decode_rgba8(original), scale)
+    candidates = nearest(png_assets.decode_rgba8(candidate), scale)
+    gap = 4 * scale
+    padding = 2 * scale
+    width = originals.width + candidates.width + gap + 2 * padding
+    height = max(originals.height, candidates.height) + 2 * padding
+    canvas = bytearray(width * height * 4)
+
+    # Opaque checkerboard makes the new transparent centre visible in review.
+    tile = 2 * scale
+    for y in range(height):
+        for x in range(width):
+            shade = 70 if (x // tile + y // tile) % 2 == 0 else 98
+            set_rgba(canvas, width, x, y, (shade, shade, shade, 255))
+    for source_image, left in (
+        (originals, padding),
+        (candidates, padding + originals.width + gap),
+    ):
+        for y in range(source_image.height):
+            for x in range(source_image.width):
+                source_color = rgba_at(source_image.pixels, source_image.width, x, y)
+                if source_color[3] == 0:
+                    continue
+                set_rgba(canvas, width, left + x, padding + y, source_color)
+    return png_assets.encode_rgba8(png_assets.RgbaPng(width, height, bytes(canvas)))
+
+
 def build_all() -> dict[str, bytes]:
     originals = pak_payloads()
     return {
         "PeaShooter_Head.png": build_head(originals[HEAD_TARGET]),
         "PeaShooter_frontleaf.png": build_frontleaf(originals[LEAF_TARGET]),
+        "ProjectilePea.png": build_projectile(originals[PROJECTILE_TARGET]),
     }
 
 
@@ -339,6 +457,13 @@ def main() -> int:
         atomic_write(
             PREVIEW_PATH,
             preview(candidates["PeaShooter_Head.png"], candidates["PeaShooter_frontleaf.png"]),
+            args.force,
+        )
+        atomic_write(
+            PROJECTILE_PREVIEW_PATH,
+            projectile_preview(
+                pak_payloads()[PROJECTILE_TARGET], candidates["ProjectilePea.png"]
+            ),
             args.force,
         )
     return 0
