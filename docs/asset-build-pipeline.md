@@ -1,8 +1,8 @@
 # 原创素材 PAK 开发构建
 
-状态：可重复构建链已完成；P01、P02、P04、Z01、Z03 共十六张原尺寸候选已通过契约并进入累计 PAK。绿色圆圈和 Z01 袖片还只有静态结果，其余首批对象已有各自范围内的实机切片。
+状态：可重复构建链已完成；P01、P02、P04、Z01、Z03 共十六张原尺寸候选已通过契约并进入累计 PAK。绿色圆圈通过白天飞行与命中，Z01 袖片通过白天行走和装备受击层级，其余首批对象也有各自范围内的实机切片。
 
-验证日期：2026-08-30
+验证日期：2026-08-31
 
 ## 为什么单独做构建链
 
@@ -188,7 +188,7 @@ python tools/build_z01_sprites.py --build --preview --check
 | `Zombie_outerarm_upper.png` | 17×35 | `41BD9C001C6F58BF88FEE39F8BCF739E4E3C7716D3524C9EBE9DEC559AAB9ECB` | 397 | 308 / 30 / 8 |
 | `Zombie_outerarm_upper2.png` | 17×35 | `D0F2143D926AD4E7DCABFCB26E17D45CD9C80C6780CFFB75AC199084F13B8CD5` | 367 | 266 / 24 / 8 |
 
-三张候选的 Alpha、新增可见、删除可见和受保护墨线改动均为 0。十二倍预览写到 `.work/previews/z01-sleeves-before-after-12x.png`；详细静态门槛见 [`v0.5-z01-sleeves-static.md`](../tests/checklists/v0.5-z01-sleeves-static.md)。这套袖片尚未继承 12 项包的图鉴结论，必须在新累计包中重新观察。
+三张候选的 Alpha、新增可见、删除可见和受保护墨线改动均为 0。十二倍预览写到 `.work/previews/z01-sleeves-before-after-12x.png`；详细静态门槛见 [`v0.5-z01-sleeves-static.md`](../tests/checklists/v0.5-z01-sleeves-static.md)。16 项包已经补到白天基础行走和带书套 Z03 受击，袖片与共享躯干保持原层级；啃食、断臂、死亡和书套脱落仍要继续观察。
 
 ## 首批契约注册表
 
@@ -363,7 +363,7 @@ python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-p02-p04-z01
 python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-p02-p04-z01-sleeves-z03-ingame.json
 ```
 
-输出仍有 2413 个资源，SHA-256 为 `8DBD88B7BE5A198F7B6D5308A4DDF5D3AE344B30DCD3DDC0D0002CC5506AA3D2`。这 15 项资源均通过静态门禁；新袖片尚未做图鉴、行走、啃食、断臂和装备受损回归。
+输出仍有 2413 个资源，SHA-256 为 `8DBD88B7BE5A198F7B6D5308A4DDF5D3AE344B30DCD3DDC0D0002CC5506AA3D2`。这 15 项资源均通过静态门禁。袖片的首轮实机证据来自随后加入绿色圆圈的 16 项包，不把旧图鉴截图当作这一版的结果。
 
 加入 P01 绿色圆圈后的当前累计清单为 `patches/manifests/v0.5-p01-green-circle-p02-p04-z01-sleeves-z03-ingame.json`，共替换十六项：
 
@@ -372,7 +372,7 @@ python tools/build_pak_overlay.py --check patches/manifests/v0.5-p01-green-circl
 python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-green-circle-p02-p04-z01-sleeves-z03-ingame.json
 ```
 
-输出仍有 2413 个资源，SHA-256 为 `9DB70BB44031EF6B12ED92FF9F79BC9737B382D2F0D0383607DA1AAABAADB90B`。16 份契约、候选哈希和 PAK 重建都已通过；绿色圆圈的战场缩放、飞行、命中、火化和家族复用仍要实机观察。
+输出仍有 2413 个资源，SHA-256 为 `9DB70BB44031EF6B12ED92FF9F79BC9737B382D2F0D0383607DA1AAABAADB90B`。16 份契约、候选哈希和 PAK 重建都已通过。白天冒险切片也确认绿色圆圈能保持透明中心飞行，并在命中后触发原版反馈；Z01 袖片在基础行走和带书套 Z03 受击时没有跳层。火化、家族复用、啃食、断臂、死亡和跨场景仍待观察，见 [`v0.5-p01-z01-z03-runtime.md`](../tests/checklists/v0.5-p01-z01-z03-runtime.md)。
 
 ## 绿圈科豆如何进入这条链
 
@@ -381,8 +381,8 @@ python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-green-circl
 3. 已把书本合入 67×40 前叶画布并通过同尺寸门禁；只有实机遮挡失败时才修改 reanim。
 4. 已把共享的 28×28 豌豆弹丸改成带透明中心的绿色圆圈，外沿抗锯齿和明暗方向继续沿用原件。
 5. 三个部件都已记录原图哈希、新图哈希、尺寸和目标 PAK 路径。
-6. 头部与蓝书组成的双替换 PAK 已在白天场景完成待机、发射、选卡和图鉴检查。绿色圆圈是后加入的第三项，只完成静态验收；眨眼、弹丸动作和跨场景抽查仍待补齐。
+6. 头部与蓝书组成的双替换 PAK 已在白天场景完成待机、发射、选卡和图鉴检查。绿色圆圈是后加入的第三项，已经补到白天飞行和命中；眨眼、火化、家族复用和跨场景抽查仍待补齐。
 
-原双替换包的实机步骤、证据截图和恢复哈希见 [`v0.5-p01-ingame.md`](../tests/checklists/v0.5-p01-ingame.md)。新弹丸的静态边界见 [`v0.5-p01-green-circle-static.md`](../tests/checklists/v0.5-p01-green-circle-static.md)。
+原双替换包的实机步骤、证据截图和恢复哈希见 [`v0.5-p01-ingame.md`](../tests/checklists/v0.5-p01-ingame.md)。新弹丸的静态边界见 [`v0.5-p01-green-circle-static.md`](../tests/checklists/v0.5-p01-green-circle-static.md)，白天飞行、命中和共享骨架层级见 [`v0.5-p01-z01-z03-runtime.md`](../tests/checklists/v0.5-p01-z01-z03-runtime.md)。
 
 公开发行时仍只提供原创素材、清单和应用工具，不提供这里生成的完整 PAK。
