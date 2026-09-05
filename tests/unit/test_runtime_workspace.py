@@ -21,12 +21,12 @@ class BaselineInputTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             chosen = Path(temporary)
             with mock.patch.dict(os.environ, {inputs.BASELINE_ENV: "unused-location"}):
-                self.assertEqual(inputs.source_path("main.pak", baseline_dir=chosen), chosen / "main.pak")
+                self.assertEqual(inputs.source_path("main.pak", baseline_dir=chosen), (chosen / "main.pak").resolve())
 
     def test_environment_selects_input_without_changing_outputs(self):
         with tempfile.TemporaryDirectory() as temporary:
             with mock.patch.dict(os.environ, {inputs.BASELINE_ENV: temporary}):
-                self.assertEqual(inputs.source_path("main.pak"), Path(temporary) / "main.pak")
+                self.assertEqual(inputs.source_path("main.pak"), (Path(temporary) / "main.pak").resolve())
                 self.assertEqual(runtime.RUNTIME_ROOT, ROOT / "dist/runtime")
 
     def test_parent_and_absolute_paths_are_rejected(self):

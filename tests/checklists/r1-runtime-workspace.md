@@ -12,6 +12,7 @@
 | 完整目录装配 | visuals / constant-proof 均生成 96 个游戏文件及 runtime.json |
 | 配套文件 | 90 个原件配套文件逐个校验，四个 properties 文件取自当前工程 |
 | 输出完整性 | 两个运行目录的全部文件哈希通过校验 |
+| 真实重复构建 | visuals 再次构建后，96 个游戏文件及 runtime.json 的字节和修改时间均不变 |
 | 失败路径 | 原件被修改/缺失、未托管输出、不同构建覆盖、安装中断、损坏文件、越界路径和伪造 EXE 记录均有拒绝测试 |
 | 原目录保持 | 根目录 EXE 与开发 PAK 保持构建前哈希 |
 | GitHub Actions | 已配置 Windows/Ubuntu 公开检查，远端运行结果待核对 |
@@ -32,6 +33,8 @@
 ## 实机观察待补
 
 首轮远端 [33946052556](https://github.com/wingtings/pvz-ustc-project/actions/runs/33946052556) 在两种系统上都被现有 CRLF 检查拦下：旧 Git blob 为 LF，本机自动换行转换掩盖了问题。保留 `-text` 规则并重新登记已有 GBK/CRLF 文案后，Git 中的字节与游戏工作文件一致，SHA-256 为 `967513723EA933BB5D4F98E16CDE40EC737C6E417DA25BA1E527417BCA2BA77F`；归一化换行后正文逐字节相同。未放宽检查，也未修改文字内容。
+
+第二轮 [33946226467](https://github.com/wingtings/pvz-ustc-project/actions/runs/33946226467) 的 Ubuntu 检查通过，Windows 暴露了两个测试的路径表示假设：临时目录使用 `RUNNER~1` 短名，而工具正确返回解析后的长名。测试改为比较规范化后的路径，仍校验输入目录选择和输出目录不变。
 
 Windows computer-use 的 JavaScript 环境初始化报告 `failed to write kernel assets: 系统找不到指定的路径。 (os error 3)`；重置环境再初始化仍报同一错误。因此本轮没有通过该工具启动或操作原版游戏，没有新增启动、选卡、关卡或存档观察证据。
 
