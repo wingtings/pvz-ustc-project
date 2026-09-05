@@ -1,0 +1,65 @@
+{
+  "name": "MechanicsLab",
+  "root": {
+    "id": "mechanics-lab",
+    "name": "MechanicsLab",
+    "script": "MechanicsLab",
+    "config": {
+      "initialGpa": 100,
+      "insurancePenalty": 8,
+      "ddlPenalty": 4,
+      "ddlPenaltyCap": 4
+    },
+    "children": [
+      {
+        "id": "lane",
+        "name": "Lane",
+        "visual": { "type": "rect", "width": 900, "height": 118, "color": "0x315c43" },
+        "config": { "x": 480, "y": 310 }
+      },
+      {
+        "id": "home-line",
+        "name": "HomeLine",
+        "visual": { "type": "rect", "width": 12, "height": 118, "color": "0xe8f0d8" },
+        "config": { "x": 80, "y": 310 }
+      },
+      {
+        "id": "heater-a",
+        "name": "HeaterA",
+        "tags": ["heater"],
+        "visual": { "type": "rect", "width": 92, "height": 74, "color": "0xf07832" },
+        "config": { "x": 460, "y": 310, "radius": 100 }
+      },
+      {
+        "id": "heater-b",
+        "name": "HeaterB",
+        "tags": ["heater"],
+        "visual": { "type": "rect", "width": 92, "height": 74, "color": "0xffb52f" },
+        "config": { "x": 540, "y": 310, "radius": 100 }
+      },
+      {
+        "id": "enemy",
+        "name": "Enemy",
+        "tags": ["enemy"],
+        "script": "LaneEnemy",
+        "visual": { "type": "rect", "width": 54, "height": 82, "color": "0x8d3434" },
+        "config": {
+          "x": 760,
+          "y": 310,
+          "startX": 760,
+          "overlapX": 500,
+          "baseSpeed": 60,
+          "heaterMultiplier": 0.8,
+          "iceMultiplier": 0.5,
+          "leftBound": 65
+        }
+      },
+      {
+        "id": "ddl-marker",
+        "name": "DdlMarker",
+        "visual": { "type": "rect", "width": 38, "height": 38, "color": "0xb36ee8" },
+        "config": { "x": 860, "y": 126 }
+      }
+    ]
+  }
+}

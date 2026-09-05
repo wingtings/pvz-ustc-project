@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PvZ-USTC 机制沙盘</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: #09110e; }
+    body { display: grid; place-items: center; font-family: "Microsoft YaHei", sans-serif; }
+    #game-container { position: relative; width: 960px; height: 540px; overflow: hidden; }
+    #game-container canvas { display: block; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js" crossorigin="anonymous"></script>
+  <script>window.__APP_CONFIG__ = window.__APP_CONFIG__ || { appBasePath: '', apiBaseUrl: '' }</script>
+</head>
+<body>
+  <div id="game-container"></div>
+  <script type="module">
+    const cfg = window.__APP_CONFIG__ || {}
+    const base = String(cfg.appBasePath || '').replace(/\/+$/, '')
+    const { boot } = await import(`${base}/engine/boot.js`)
+    boot(document.getElementById('game-container'))
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "actions": {
+    "place_overlap": { "keys": ["P"] },
+    "toggle_ice": { "keys": ["I"] },
+    "trigger_insurance": { "keys": ["Q"] },
+    "ddl_success": { "keys": ["D"] },
+    "ddl_blocked": { "keys": ["F"] },
+    "reset_lab": { "keys": ["R"] }
+  }
+}

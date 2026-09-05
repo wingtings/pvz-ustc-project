@@ -26,3 +26,6 @@ __pycache__/
 
 *.dmp
 *.log
+
+# VibeGame prototype runtime output. Keep the executable specification only.
+/prototypes/**/.vibegame/

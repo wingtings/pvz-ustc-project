@@ -1,85 +1,127 @@
 # PvZ-USTC
 
-一个以中国科学技术大学校园生活为背景的《植物大战僵尸》一代同人改版。玩家在教学沙盘里用科豆、蝌蝻和实验器材抵挡课程、报告与截止日期形成的"错题潮"，守住成绩终端里的 GPA 数据。
+一个以中国科学技术大学校园生活为背景的《植物大战僵尸》一代同人改版。玩家用科豆、蝌蝻和实验器材抵挡课程、报告与截止日期形成的“错题潮”，守住成绩终端里的 GPA 数据。
 
-项目最早来自 2025 年新生科学社会研讨课，搁置一年后于 2026 年重新开始。旧版完成了部分中文文案和界面文字，原创贴图、动画与主要机制还没有真正落地。本轮先把设定和数值写清楚，再按可验证的小版本推进。
+项目起于 2025 年新生科学社会研讨课，2026 年 8 月重启。当前处于**可运行的早期改版阶段：全量文案已同步，首批局部美术已进入游戏，构建与回滚可复现；招牌机制和五章关卡重排仍待接入。** 日常战斗主要沿用原版规则。
 
-## 当前状态
+## 当前完成度
 
-| 内容 | 状态 |
-| --- | --- |
-| 运行基线 | PC 版 `1.0.0.1051` |
-| USTC 文案 | 49 个植物和 26 个图鉴敌人已同步，完整回归测试中 |
-| 世界观与五章结构 | 设计完成 |
-| 49 个植物槽位原型 | 设计完成，包含数值、机制与图鉴文案 |
-| 26 个敌人图鉴槽位 | 设计完成，另含补考周变体 |
-| 原创贴图与 reanim 动画 | 首批五槽位均已有静态候选；P01 绿色圆圈通过飞行、命中、双发和三线复用、暖气片火化，P02 补到夜间眨眼，P04 完成白天三档，Z03 的四阶段又在十六项包中通过，Z01 袖片通过白天行走、啃食和头部脱落前后的层级观察；断臂替代袖片、死亡收尾、其他射手和跨场景仍待补 |
-| 数值补丁 | v0.3 可重复构建与回滚已建立；P01 临时费用 75、P04 临时耐久 4200 均已实机确认，跨场景回归待完成 |
-| 暖气片减速、GPA 评级、DDL 空投扣分 | 设计中，计划在逻辑钩子阶段实现 |
+核查日期：**2026-09-05**。GitHub `main` 与本地 HEAD 均为 [`3fd3d3a`](https://github.com/wingtings/pvz-ustc-project/commit/3fd3d3a4b5271bad4b01043e1b42aab8b0f6d253)。下表分别统计文案、资源与玩法，避免把设计稿、共享贴图或测试数量折算成一个失真的总完成率。
 
-"设计完成"表示原型文档已经定稿，不表示对应内容已经写进游戏。
-
-## 设计文档
-
-- [文档入口](docs/README.md)
-- [世界观与战役](docs/worldbuilding.md)
-- [改版技术调研](docs/modding-research.md)
-- [数值与关卡规范](docs/balance-and-levels.md)
-- [植物原型](docs/plants.md)
-- [敌人原型](docs/zombies.md)
-- [首批美术资源清单](docs/art-resource-inventory.md)
-- [v0.3 常量补丁](docs/v0.3-patching.md)
-- [原创素材 PAK 构建](docs/asset-build-pipeline.md)
-- [开发路线图](docs/roadmap.md)
-
-## 五章方向
-
-| 章节 | 场景 | 主要规则 |
+| 方向 | 已有成果 | 距离完成还缺什么 |
 | --- | --- | --- |
-| 数院草坪 | 东区草坪意象 | 白天基础教学，建立专注值经济 |
-| 物院实验夜 | 一教实验区域 | 夜间、报告墓碑、穿透和全屏控制 |
-| 化院花园 | 花园与实验水槽 | 水道、防水实验台、冰道和车辆 |
-| 计算机雾夜 | 西区机房意象 | 雾、云端作业、地下与空投威胁 |
-| 生院温室顶 | 虚构屋顶温室 | 培养皿、抛射、投递车和最终首领 |
+| 运行基线 | Windows PC `1.0.0.1051`；已有图鉴、白天与泳池等实机切片记录 | 新存档连续通关、五场景完整回归、第二台 Windows 验证 |
+| USTC 文案 | **49/49 植物、26/26 图鉴敌人**的名称与说明已同步；869 个文本键通过检查 | 75 个槽位逐项截断检查，商店、小游戏、结局及跨场景人工验收 |
+| 角色美术 | **5 个目标槽位、16 项资源替换**：P01、P02、P04、Z01、Z03；已有局部实机验证 | 首批动作与场景缺口，其他角色、场景和界面；现阶段仍复用原版动画骨架 |
+| 数值与构建 | 两处临时常量补丁、原件校验、确定性 PAK 构建、逐字节回滚；干净基线 **77 项自动测试通过** | 最终平衡决定，五场景及三个小游戏回归，独立运行目录的自动装配 |
+| 三项招牌机制 | 原版游戏接入 **0/3**；本地 Web 沙盘已有减速与扣分规则的初步验证 | 暖气片范围减速、GPA 结算评级、DDL 真实离场事件及逻辑钩子 |
+| 五章战役 | 世界观、50 关节奏与解锁方向已写入设计文档 | 可审查的关卡配置/补丁，以及逐章通关证据 |
+| 发布与协作 | 构建脚本、清单和测试记录已入库 | 尚无 Release、版本标签或 GitHub Actions 运行记录；玩家用安装与回滚流程待完成 |
 
-战斗资源暂定名为"专注值"，沿用原版阳光经济。GPA 是 v0.4 计划加入的关末完整度评级，不会被拿来支付卡片费用。
+首批视觉覆盖的是 75 个目标槽位中的 5 个，约 **6.7% 的槽位已开始定向制作**，并不表示这五个角色已完成全部美术验收。共享弹丸和躯干会影响更多单位，也不据此增加“已完成角色”数量。
 
-## 技术基线
+本地另有 [VibeGame 机制沙盘](prototypes/vibegame-mechanics-lab/README.md)和[调研记录](docs/vibegame-evaluation.md)，截至本次核查尚未提交到上述 GitHub 版本。沙盘用模拟输入验证速度倍率、扣分与上限；它还没有真实空投事件链或关末评级界面，不能算作原版机制已实现。
 
-当前仓库中的关键文件：
+## 改动是否丰富
 
-| 文件 | SHA-256 |
+**文案、制作工具和验证资料已经比较充实，玩家可感知的新玩法仍然偏少。** 相比 2025 年 v0.1 提交 `7f44e19`，当前 GitHub 版本新增 28 次提交，涉及 102 个文件，增加 12,104 行、删除 978 行。其中有 13 个 Python 工具、13 个自动测试模块、16 份素材契约和 18 份已有验收记录；行数包含文档、测试和配置。
+
+现在能在游戏里看到眼镜与蓝书、学习便签花瓣、三档校园墙体、卷面衣袖、破损书套和绿色圆圈。场景、音效、主要动画动作与关卡规则仍大量沿用原版。下一阶段最能提高辨识度的工作是**让第一章形成完整试玩体验，并把暖气片范围减速接入原版**。
+
+![白天实机切片：眼镜蓝书科豆、绿色圆圈、校园墙体、卷面本体与蓝色书套](docs/images/v0.5/p01-z01-z03-adventure-v01.png)
+
+上图来自 2026-08-31 的局部实机观察，不代表整章验收。更多证据见[绿色圆圈飞行与共享躯干](tests/checklists/v0.5-p01-z01-z03-runtime.md)、[双发/三线复用与火化](tests/checklists/v0.5-p01-family-fire-runtime.md)、[Z01 动作与 Z03 书套四阶段](tests/checklists/v0.5-z01-z03-actions-runtime.md)。火化仍使用原版火球资源，暖气片的范围减速尚未生效。
+
+## 运行与开发检查
+
+目前提供的是开发工程，尚无面向玩家的一键安装包。游戏需要匹配基线的合法原版文件。在包含 EXE、DLL、PAK 和配套资源的完整运行目录中启动：
+
+```powershell
+.\PlantsVsZombies.exe
+```
+
+工作目录必须是该完整运行目录。只运行 `dist` 里的补丁 EXE 不会自动带齐资源。干净仓库基线包含文案改动，首批美术需要另行构建并装入独立的运行副本。
+
+以下命令在**EXE 和 PAK 均匹配基线哈希的独立工作副本根目录**执行。本轮使用 Windows / Python 3.12.8 验证；原版改版工具不依赖 VibeGame。
+
+```powershell
+python tools/check_lawnstrings.py
+python tools/sync_lawnstrings.py --check
+python -m unittest discover -s tests -p "test_*.py"
+python tools/apply_binary_patches.py --check
+python tools/build_pak_overlay.py --roundtrip-check
+python tools/check_game_asset.py --registry patches/manifests/v0.5-first-slice-contracts.json
+```
+
+生成首批五槽位的本地候选，再构建十六项累计资源包：
+
+```powershell
+python tools/build_p01_sprites.py --build --check
+python tools/build_p02_sprites.py --build --check
+python tools/build_p04_sprites.py --build --check
+python tools/build_z01_sprites.py --build --check
+python tools/build_z03_sprites.py --build --check
+python tools/build_pak_overlay.py --build patches/manifests/v0.5-p01-green-circle-p02-p04-z01-sleeves-z03-ingame.json
+```
+
+输出为 `dist/v0.5/main-p01-green-circle-p02-p04-z01-sleeves-z03-ingame.pak`，不是完整游戏目录。数值验证副本可用 `python tools/apply_binary_patches.py --apply` 生成，用 `--reverse` 另行生成回滚副本；**P01 费用 75、P04 耐久 4200 是临时测试值**，基线仍为 100 和 4000。详细参数见[工具说明](tools/README.md)和[PAK 构建说明](docs/asset-build-pipeline.md)。
+
+### 基线与开发包
+
+| 文件角色 | SHA-256 |
 | --- | --- |
-| `PlantsVsZombies.exe` | `6F1729369AC9C5F859E8F3B55FE7D513FBC20B5C54127FD3A1C7E500237FDE6F` |
-| `main.pak` | `3B5291C6600076AAF1791AE1FB2DBF247290A23E903D1D376413DA17358E049D` |
+| 干净基线 `PlantsVsZombies.exe` | `6F1729369AC9C5F859E8F3B55FE7D513FBC20B5C54127FD3A1C7E500237FDE6F` |
+| 干净基线 `main.pak` | `3B5291C6600076AAF1791AE1FB2DBF247290A23E903D1D376413DA17358E049D` |
+| 十六项美术累计 PAK | `9DB70BB44031EF6B12ED92FF9F79BC9737B382D2F0D0383607DA1AAABAADB90B` |
 
-`properties/LawnStrings.txt` 使用 CP936/GBK。不要直接转成 UTF-8，也不要把其他版本教程中的地址写入当前 EXE。资源、动画和玩法修改的具体方法见[改版技术调研](docs/modding-research.md)。
+2026-09-05 核查时，本地根目录的 `main.pak` 已是上表第三项开发包，因此直接在该目录运行资源检查会报“基线哈希不匹配”。本次在独立的干净副本中完成了 77 项测试、完整素材构建和补丁回滚，未覆盖现有开发包。遇到同样情况，应保留当前文件并换用干净的构建副本；不能把开发包哈希改填为原件哈希来绕过校验。具体结果见[本轮仓库核查](tests/checklists/2026-09-05-repository-audit.md)。
 
-## 当前开发阶段
+`properties/LawnStrings.txt` 使用 CP936/GBK 和 CRLF；设计文档使用 UTF-8。通过同步工具更新游戏文案，避免直接改变编码。不同 EXE 版本的地址与数据布局不能混用。
 
-v0.2 只做完整文案版。目前全量名称、卡片提示和图鉴正文已经写入 GBK 游戏文件，并通过自动检查和首轮游戏内冒烟测试。尚未完成的是逐项截断检查、五种场景回归和新存档完整通关。
+## 下一步开发方向
 
-1. 统一全部植物、敌人、选卡、商店、小游戏和通关文字。
-2. 保留原版槽位与大部分数值，不增加新角色数量。
-3. 检查 GBK 编码、控制标记、图鉴换行和五种场景。
-4. 首批资源清单已经完成；P01、P02、P04 的白天切片已通过各自范围内的观察，Z03 已完成图鉴和泳池四阶段切片，Z01 也补到啃食与头部脱落动作，其余项目继续按独立提交推进。
+1. **收口构建与运行流程。** 分离干净输入、生成包和运行目录；整理本地沙盘及其证据入库，补上自动检查入口。
+2. **交付第一章完整试玩。** 沿用当前关序，从新存档连续完成 1-1 至 1-10；补齐关键文案、Z01 单体断臂/死亡、P01 眨眼与必要场景检查。这一步验收现有改版，不提前算作自定义关卡完成。
+3. **让暖气片成为第一项原版新机制。** 先补规则沙盘边界，再在独立测试关验证 80% 范围减速、不叠加、寒冰优先及独立开关。
+4. **随后接 GPA 与 DDL，再扩关卡和美术。** 第二批视觉优先服务暖气片、寒冰科豆、专注值图标和首章界面；其余四章逐章制作可玩切片。
 
-文案由[同步工具](tools/README.md)从设计文档生成，测试范围记录在 [v0.2 文案冒烟测试](tests/checklists/v0.2-text-smoke.md)。首批美术对象和概念稿见[资源清单](docs/art-resource-inventory.md)。P01 的圆框眼镜、《电磁学千题解》和绿色圆圈弹丸，P02 的学习头带与便签花瓣，P04 的三档校园墙体，Z01 的旧卷面共享躯干，以及 Z03 逐步破损的蓝色习题册书套，都由差分脚本从本地合法原件生成。Git 不保存混有原版像素的合成 PNG。
+完整依赖、验收条件与首批遗留项见[开发路线图](docs/roadmap.md)。`v0.2/v0.3/v0.4/v0.5` 是沿用的工作轨道编号，当前存在交叉推进，不表示已发布到 v0.5。
 
-构建细节见[原创素材 PAK 构建](docs/asset-build-pipeline.md)。静态与实机证据分别记录在 [P01 白天垂直切片](tests/checklists/v0.5-p01-ingame.md)、[P01 绿色圆圈静态验收](tests/checklists/v0.5-p01-green-circle-static.md)、[绿色圆圈与共享骨架实机观察](tests/checklists/v0.5-p01-z01-z03-runtime.md)、[绿色圆圈家族复用与火化](tests/checklists/v0.5-p01-family-fire-runtime.md)、[P02/P04 累计包观察](tests/checklists/v0.5-p02-p04-ingame.md)、[P02 夜间眨眼](tests/checklists/v0.5-p02-night-blink.md)、[P04 4200 组合验证](tests/checklists/v0.5-p04-4200-combo.md)、[Z01 静态验收](tests/checklists/v0.5-z01-static.md)、[Z01 图鉴层级](tests/checklists/v0.5-z01-almanac.md)、[Z01 袖片静态验收](tests/checklists/v0.5-z01-sleeves-static.md)、[Z01 动作与 Z03 十六项包回归](tests/checklists/v0.5-z01-z03-actions-runtime.md)、[Z03 静态验收](tests/checklists/v0.5-z03-static.md)和 [Z03 实机观察](tests/checklists/v0.5-z03-ingame.md)。当前累计开发包替换 16 项资源。绿色圆圈已经补到飞行、命中、双发和三线复用、暖气片火化；Z01 也看到行走、啃食、头部脱落和手臂掉落，Z03 书套四阶段后的共享层级正常。手臂掉落画面有实例重叠，断臂替代袖片和死亡收尾仍需单体复核。其他射手、P01 眨眼与各槽位跨场景抽查也没有完成。v0.3 的[常量补丁框架](docs/v0.3-patching.md)已经能生成和逐字节回滚开发副本。完整安排见[开发路线图](docs/roadmap.md)。
+## 世界与文档
+
+| 章节方向 | 场景意象 | 设计重点 |
+| --- | --- | --- |
+| 数院草坪 | 东区草坪 | 白天教学、专注值经济 |
+| 物院实验夜 | 一教实验区域 | 夜间、报告墓碑、穿透与控制 |
+| 化院花园 | 花园与实验水槽 | 水道、防水实验台、冰道与车辆 |
+| 计算机雾夜 | 西区机房 | 雾、云端作业、地下与空投 |
+| 生院温室顶 | 虚构屋顶温室 | 培养皿、抛射与最终首领 |
+
+战斗资源“专注值”沿用原版阳光经济。GPA 计划用于关末完整度评级，不用于支付卡片费用。上表是章节设计方向，尚未完成对应场景重绘和关卡重排。
+
+- [文档入口](docs/README.md) · [世界观与战役](docs/worldbuilding.md)
+- [植物原型](docs/plants.md) · [敌人原型](docs/zombies.md) · [数值与关卡规范](docs/balance-and-levels.md)
+- [改版技术调研](docs/modding-research.md) · [首批美术资源清单](docs/art-resource-inventory.md)
+- [v0.3 常量补丁](docs/v0.3-patching.md) · [原创素材 PAK 构建](docs/asset-build-pipeline.md)
+- [VibeGame 调研与接入建议（本地试验）](docs/vibegame-evaluation.md) · [开发路线图](docs/roadmap.md)
 
 ## 开发记录
 
-- 2025-02-25：记录最初背景、暖气片、绿色圆圈、五个专业章节等想法。
-- 2025-03-03：确认 `LawnStrings.txt`、PAK 解包和反汇编修改路线。
+- 2025-02-25：记录暖气片、绿色圆圈、五个专业章节等初始想法。
+- 2025-03-03：确认文案、PAK 解包和反汇编路线。
 - 2025-04-14：提交 v0.1 小型文案修改。
-- 2026-08-30：重启项目，建立完整设计文档与技术路线。
+- 2026-08-30：重启，完成设计基线与全量文案同步，建立常量补丁、PAK 构建和首批美术流程。
+- 2026-08-31：累计到 16 项资源，补充绿色圆圈复用、火化、Z01 动作和 Z03 书套实机证据。
+- 2026-09-04：本地机制沙盘留下首轮规则验证记录，尚未接入原版。
+- 2026-09-05：核查 GitHub 与工作目录，重跑干净基线测试、构建与回滚，更新开发优先级。
 
-去年的原始记录仍可在[开发日志](https://wingtings.pages.dev/2025/02/25/pvz-ustc%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/)查看。
+最初的想法见[开发日志](https://wingtings.pages.dev/2025/02/25/pvz-ustc%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/)。
 
 ## 分发与声明
 
-本项目是非官方、非商业的学习与同人创作，不代表中国科学技术大学、Electronic Arts、PopCap 或其许可方。仓库保留了早期开发快照中的游戏文件，但公开发行前需要单独审查仓库历史，并改为让玩家自备合法原版文件后应用差分补丁。不要把原版 EXE、PAK、音乐或整套贴图打入发布包。
+本项目是非官方、非商业的学习与同人创作，不代表中国科学技术大学、Electronic Arts、PopCap 或其许可方。仓库保留了早期开发快照中的游戏文件；公开发行前需要审查仓库历史，并改为让玩家自备合法原版文件后应用差分补丁。发布包不应包含原版 EXE、PAK、音乐或整套贴图。
+
+混有原版像素的合成 PNG 和生成包仅用于本地构建，Git 保存制作配方、契约和验证记录。
 
 This project is not endorsed by or affiliated with EA or its licensors. It is also not endorsed by or affiliated with PopCap or the University of Science and Technology of China.
 
