@@ -15,7 +15,7 @@
 | 真实重复构建 | visuals 再次构建后，96 个游戏文件及 runtime.json 的字节和修改时间均不变 |
 | 失败路径 | 原件被修改/缺失、未托管输出、不同构建覆盖、安装中断、损坏文件、越界路径和伪造 EXE 记录均有拒绝测试 |
 | 原目录保持 | 根目录 EXE 与开发 PAK 保持构建前哈希 |
-| GitHub Actions | 已配置 Windows/Ubuntu 公开检查，远端运行结果待核对 |
+| GitHub Actions | [33946361436](https://github.com/wingtings/pvz-ustc-project/actions/runs/33946361436)：7d3984d 的 Windows/Ubuntu 两项任务及公开测试步骤均成功 |
 | 无原件副本 | 仅复制源码、文案和清单，15 项公开测试及文案检查通过；另从 Git 暂存内容逐字节导出复测通过 |
 | Web 沙盘复跑 | 固定引擎、隔离环境中 bot 返回 done；11 次决策通过，无控制台错误 |
 
