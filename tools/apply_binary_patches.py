@@ -13,6 +13,8 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
+from baseline_inputs import source_path as baseline_source_path
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = ROOT / "patches" / "manifests" / "v0.3-constant-proof.json"
@@ -216,7 +218,7 @@ def main() -> int:
     elif reverse:
         source_path = resolve_repo_path(manifest["outputs"]["patchedPath"])
     else:
-        source_path = resolve_repo_path(manifest["baseline"]["path"])
+        source_path = baseline_source_path(manifest["baseline"]["path"])
     source_path = source_path.resolve()
     source = source_path.read_bytes()
     source_hash = validate_source_hash(source, manifest, reverse)

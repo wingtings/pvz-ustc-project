@@ -14,9 +14,11 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 
+from baseline_inputs import source_path
+
 
 ROOT = Path(__file__).resolve().parents[1]
-PAK_PATH = ROOT / "main.pak"
+PAK_PATH = source_path("main.pak")
 DEFAULT_OUT = ROOT / ".work" / "pak-reference"
 PAK_SHA256 = "3B5291C6600076AAF1791AE1FB2DBF247290A23E903D1D376413DA17358E049D"
 MAGIC = 0xBAC04AC0

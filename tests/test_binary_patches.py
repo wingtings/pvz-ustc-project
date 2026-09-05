@@ -21,7 +21,7 @@ class BinaryPatchTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.manifest = patcher.load_manifest(MANIFEST_PATH)
-        cls.baseline = (ROOT / cls.manifest["baseline"]["path"]).read_bytes()
+        cls.baseline = patcher.baseline_source_path(cls.manifest["baseline"]["path"]).read_bytes()
 
     def test_baseline_hash(self) -> None:
         self.assertEqual(

@@ -14,7 +14,8 @@
 | [首批美术资源清单](art-resource-inventory.md) | P01、P02、P04、Z01、Z03 的动画部件、替换范围与制作顺序 | 开始画首批角色之前 |
 | [v0.3 常量补丁](v0.3-patching.md) | 哈希门禁、AOB 清单、开发副本和逐字节回滚 | 修改固定数值时 |
 | [原创素材 PAK 构建](asset-build-pipeline.md) | 增量清单、原图隔离、同尺寸门禁和本地 PAK 输出 | 把原创部件接入游戏时 |
-| [VibeGame 调研与接入建议](vibegame-evaluation.md) | 框架实测、适配边界和三机制 Web 沙盘；核查时尚未提交 GitHub | 评估 v0.4 规则验证时 |
+| [独立开发运行目录](runtime-workspace.md) | 原件选择、96 文件装配、两种配置、启动及公开 CI | 构建与运行当前开发版时 |
+| [VibeGame 调研与接入建议](vibegame-evaluation.md) | 框架实测、适配边界和三机制 Web 沙盘；已随 485559f 入库 | 评估 v0.4 规则验证时 |
 | [仓库核查记录（2026-09-05）](../tests/checklists/2026-09-05-repository-audit.md) | GitHub 状态、改动规模、干净基线测试与本地开发包差异 | 核对完成度和构建问题时 |
 | [开发路线图](roadmap.md) | 当前状态、开发优先级、交付物、遗留项与验收条件 | 安排实际开发时 |
 

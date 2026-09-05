@@ -1,5 +1,7 @@
 # 文案工具
 
+完整开发检查和独立运行目录优先使用[运行目录工具](../docs/runtime-workspace.md)：`python tools/check_project.py --baseline-dir <干净原件目录>`。原件选择不会覆盖根目录的开发 PAK；只做无需原版文件的检查时使用 `--public`。
+
 `LawnStrings.txt` 继续使用游戏需要的 CP936/GBK，设计文档则保持 UTF-8。不要用普通编辑器直接转换游戏文件编码。
 
 从植物与敌人原型文档生成游戏文案：

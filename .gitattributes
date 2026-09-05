@@ -1,0 +1,14 @@
+# Preserve the original binary baseline and GBK text bytes across platforms.
+*.pak binary
+*.exe binary
+*.dll binary
+*.png binary
+*.jpg binary
+*.compiled binary
+properties/LawnStrings.txt -text
+
+*.py text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf

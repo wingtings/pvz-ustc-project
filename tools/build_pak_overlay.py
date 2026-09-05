@@ -15,6 +15,7 @@ from typing import Any
 
 import pak_assets
 import png_assets
+from baseline_inputs import source_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -489,7 +490,7 @@ def roundtrip_check() -> None:
 
 def build_from_manifest(manifest: dict[str, Any]) -> tuple[bytes, str]:
     baseline = manifest["baseline"]
-    baseline_path = (ROOT / baseline["path"]).resolve()
+    baseline_path = source_path(baseline["path"])
     encoded = baseline_path.read_bytes()
     baseline_hash = sha256(encoded)
     if baseline_hash != baseline["sha256"].upper():
